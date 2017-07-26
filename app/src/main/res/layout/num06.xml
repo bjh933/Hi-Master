@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#e6e3d8"
+    tools:context="com.example.a1.himaster.num06_Main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:text="7월 15일"
+            android:textColor="#000000"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="120dp">
+
+        <ImageView
+            android:id="@+id/sun"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/f_sun" />
+
+        <TextView
+            android:id="@+id/temperature"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="20℃ / 7℃"
+            android:textColor="#000000"
+            android:layout_marginTop="20dp"
+            android:padding="20dp"
+            android:textSize="30dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/rain_percent"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="top|center"
+                android:text="강수확률"
+                android:textColor="#000000"
+                android:layout_marginTop="5dp"
+                android:padding="20dp"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/st_percent"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="top|center"
+                android:text="50%"
+                android:textColor="#000000"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/rain"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/f_rain" />
+            <TextView
+                android:id="@+id/rain_ment"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:gravity="top|center"
+                android:text="우산 챙기세요"
+                android:textColor="#000000"
+                android:layout_marginTop="5dp"
+                android:padding="20dp"
+                android:textSize="25dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="300dp"
+            android:background="#333"></LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/dust"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="top|center"
+                android:text="미세먼지"
+                android:textColor="#000000"
+                android:layout_marginTop="5dp"
+                android:padding="20dp"
+                android:textSize="30dp" />
+            <TextView
+                android:id="@+id/dust_percent"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="top|center"
+                android:text="매우 나쁨"
+                android:textColor="#000000"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/mask"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/f_mask" />
+
+            <TextView
+                android:id="@+id/dust_ment"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:gravity="top|center"
+                android:text="마스크 꼭 챙기세요"
+                android:textColor="#000000"
+                android:layout_marginTop="5dp"
+                android:padding="20dp"
+                android:textSize="25dp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

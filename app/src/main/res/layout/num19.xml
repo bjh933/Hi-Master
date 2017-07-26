@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#e6e3d8"
+    tools:context="com.example.a1.himaster.num19_Main">
+    <TextView
+        android:id="@+id/tomoText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:text="내일 할 일"
+        android:textColor="#000000"
+        android:textSize="30dp"/>
+
+    <TextView
+        android:id="@+id/tomoCheckText"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/b_test"
+        android:gravity="center"
+        android:text="고정 스케줄"
+        android:textColor="#000000"
+        android:textSize="13dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/checkBox1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="15dp"
+            android:checked="false"
+            android:textSize="20dp"
+            android:text="알바 가기" />
+
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="15dp"
+            android:checked="false"
+            android:textSize="20dp"
+            android:text="스터디 모임" />
+
+        <CheckBox
+            android:id="@+id/checkBox3"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="15dp"
+            android:checked="false"
+            android:textSize="20dp"
+            android:text="회의 하기" />
+
+        <CheckBox
+            android:id="@+id/checkBox4"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="15dp"
+            android:checked="false"
+            android:textSize="20dp"
+            android:text="친구 만나기" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:background="@drawable/b_test01"
+            android:layout_gravity="center"
+            android:text="일정 추가"
+            android:textSize="13dp"
+            android:layout_marginLeft="150dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/checked"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="13dp"
+            android:src="@drawable/r_checked" />
+
+        <TextView
+            android:id="@+id/tomoWeatherText"
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:text="내일 날씨"
+            android:textColor="#000000"
+            android:textSize="23dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/rain"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="13dp"
+            android:src="@drawable/r_rain" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tomoWeatherPercentText"
+                android:layout_width="140dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="17dp"
+                android:text="강수확률 90%"
+                android:textColor="#000000"
+                android:textSize="15dp"/>
+
+            <TextView
+                android:id="@+id/tomoWeatherMentText"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="1dp"
+                android:text="우산을 꼭 챙기세요!"
+                android:textColor="#000000"
+                android:textSize="23dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/okButton"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:background="@drawable/b_test01"
+        android:text="완료"
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="50dp"
+        android:textSize="13dp"/>
+</LinearLayout>

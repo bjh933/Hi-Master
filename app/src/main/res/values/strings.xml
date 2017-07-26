@@ -1,0 +1,164 @@
+<resources>
+
+    <string name="app_name">Hi master</string>
+    <string-array name="city_names">
+        <item>서울/경기지역</item>
+        <item>강원영서지역</item>
+        <item>강원영동지역</item>
+        <item>충청북도지역</item>
+        <item>충청남도지역</item>
+        <item>경상북도지역</item>
+        <item>경상남도지역</item>
+        <item>전라북도지역</item>
+        <item>전라남도지역</item>
+        <item>제주지역</item>
+    </string-array>
+
+        <string-array name="transportation">
+            <item>버스</item>
+            <item>지하철</item>
+        </string-array>
+
+
+        <string-array name="timeSpinner">
+            <item>오전</item>
+            <item>오후</item>
+        </string-array>
+
+        <string-array name="hourSpinner">
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+            <item>5</item>
+            <item>6</item>
+            <item>7</item>
+            <item>8</item>
+            <item>9</item>
+            <item>10</item>
+            <item>11</item>
+            <item>12</item>
+        </string-array>
+
+        <string-array name="minSpinner">
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+            <item>5</item>
+            <item>6</item>
+            <item>7</item>
+            <item>8</item>
+            <item>9</item>
+            <item>10</item>
+            <item>11</item>
+            <item>12</item>
+        </string-array>
+
+        <string-array name="reSpinner">
+            <item>1회</item>
+            <item>2회</item>
+            <item>3회</item>
+            <item>5회</item>
+            <item>10회</item>
+        </string-array>
+
+        <string-array name="yearStartSpinner">
+            <item>2017</item>
+            <item>2018</item>
+            <item>2019</item>
+        </string-array>
+
+        <string-array name="monthStartSpinner">
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array>
+
+        <string-array name="dateStartSpinner">
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array>
+
+        <string-array name="yearEndSpinner">
+            <item>2017</item>
+            <item>2018</item>
+            <item>2019</item>
+        </string-array>
+
+        <string-array name="monthEndSpinner">
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array>
+
+        <string-array name="dateEndSpinner">
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array>
+
+
+    <string-array name="alarm">
+        <item>소리</item>
+        <item>진동</item>
+        <item>소리+진동</item>
+        <item>무음</item>
+    </string-array>
+
+    <string-array name="alarmSound">
+        <item>Marry you</item>
+        <item>빨간맛</item>
+        <item>happy</item>
+        <item>Love on top</item>
+    </string-array>
+
+    <string-array name="repeti">
+        <item>1회</item>
+        <item>2회</item>
+        <item>3회</item>
+        <item>5회</item>
+        <item>10회</item>
+    </string-array>
+
+
+    <string-array name="citySpinner">
+        <item>서울특별시</item>
+        <item>부산광역시</item>
+        <item>대구광역시</item>
+        <item>광주광역시</item>
+        <item>대전광역시</item>
+        <item>울산광역시</item>
+        <item>세종특별시</item>
+        <item>경기도</item>
+        <item>강원도</item>
+        <item>충청북도</item>
+    </string-array>
+
+    <string-array name="guSpinner">
+        <item>구로구</item>
+        <item>광진구</item>
+        <item>영등포구</item>
+        <item>마포구</item>
+        <item>종로구</item>
+        <item>중구</item>
+        <item>관악구</item>
+        <item>금천구</item>
+        <item>노원구</item>
+        <item>양천구</item>
+    </string-array>
+
+    <string-array name="dongSpinner">
+        <item>고척동</item>
+        <item>개봉동</item>
+        <item>오류동</item>
+    </string-array>
+
+    <string-array name="jobSpinner">
+        <item>주부</item>
+        <item>직장인</item>
+        <item>학생</item>
+    </string-array>
+
+</resources>

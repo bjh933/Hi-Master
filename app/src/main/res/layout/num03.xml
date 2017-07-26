@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#e6e3d8"
+        tools:context="com.example.a1.himaster.num03_Main">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spiner"
+            android:entries="@array/city_names"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            ></Spinner>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp">
+
+            <ImageView
+                android:id="@+id/umbrella"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/c_umbrella" />
+
+            <TextView
+                android:id="@+id/umText01"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="우산지수"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/rain_Activity"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="50"
+                android:textColor="#ff0000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/umText03"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="-110dp"
+                android:layout_marginTop="80dp"
+                android:text="필요없어요"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:layout_height="120dp">
+
+            <ImageView
+                android:id="@+id/sleep"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/c_sleep" />
+
+            <TextView
+                android:id="@+id/slText01"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="수면지수"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/slText02"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="70"
+                android:textColor="#ff0000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/slText03"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="-110dp"
+                android:layout_marginTop="80dp"
+                android:text="쾌적한 편입니다"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:layout_height="120dp">
+
+            <ImageView
+                android:id="@+id/washing"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/c_washing" />
+
+            <TextView
+                android:id="@+id/washText01"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="세차지수"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/washText02"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="100"
+                android:textColor="#ff0000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/washText03"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="-110dp"
+                android:layout_marginTop="80dp"
+                android:text="세차효과 길어요"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:layout_height="120dp">
+
+            <ImageView
+                android:id="@+id/health"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/c_health" />
+
+            <TextView
+                android:id="@+id/healText01"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="운동지수"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/healText02"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="60"
+                android:textColor="#ff0000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/healText03"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="-110dp"
+                android:layout_marginTop="80dp"
+                android:text="준비 운동 철저히 하세요"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:layout_height="120dp">
+
+            <ImageView
+                android:id="@+id/washingmachine"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/c_washingmachine" />
+
+            <TextView
+                android:id="@+id/wmText01"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="빨래지수"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/wmText02"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="90"
+                android:textColor="#ff0000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/wmText03"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="-110dp"
+                android:layout_marginTop="80dp"
+                android:text="빨래하기 좋은 날"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_height="150dp">
+
+            <TextView
+                android:id="@+id/season"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="50dp"
+                android:text="계절별 생활지수"
+                android:textColor="#000000"
+                android:textSize="18dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:layout_height="120dp">
+
+            <ImageView
+                android:id="@+id/summer"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/c_summer" />
+
+            <TextView
+                android:id="@+id/sumText01"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="자외선지수"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/sumText02"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="80"
+                android:textColor="#ff0000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/sumText03"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="-110dp"
+                android:layout_marginTop="80dp"
+                android:text="외출은 짧게 하세요"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:layout_height="120dp">
+
+            <ImageView
+                android:id="@+id/angry"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/c_angry" />
+
+            <TextView
+                android:id="@+id/angText01"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="불쾌지수"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/angText02"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="50"
+                android:textColor="#ff0000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/angText03"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="-110dp"
+                android:layout_marginTop="80dp"
+                android:text="쾌적함이 느껴져요"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:layout_height="120dp">
+
+            <ImageView
+                android:id="@+id/airconditioner"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/c_airconditioner" />
+
+            <TextView
+                android:id="@+id/airText01"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="냉방지수"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/airText02"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="60"
+                android:textColor="#ff0000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/airText03"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="-110dp"
+                android:layout_marginTop="80dp"
+                android:text="낮 시간 사용 좋아요"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:layout_height="120dp">
+
+            <ImageView
+                android:id="@+id/hospital"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/c_hospital" />
+
+            <TextView
+                android:id="@+id/hosText01"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="식중독지수"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/hosText02"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:text="70"
+                android:textColor="#ff0000"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/hosText03"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="-120dp"
+                android:layout_marginTop="80dp"
+                android:text="6~11시간 지난 음식 조심하세요"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_movePage"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+    </LinearLayout>
+
+</ScrollView>
+
