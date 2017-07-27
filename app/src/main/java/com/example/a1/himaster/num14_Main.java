@@ -16,6 +16,10 @@ import static android.view.LayoutInflater.from;
 public class num14_Main extends AppCompatActivity {
 
     ImageView backBtn;
+    Button myInfo;
+    Button appConfig;
+    Button help;
+    Button logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +28,60 @@ public class num14_Main extends AppCompatActivity {
 
         setCustomActionbar();
         backBtn = (ImageView)findViewById(R.id.menu_back);
+        myInfo = (Button)findViewById(R.id.myInfoBtn);
+        appConfig = (Button)findViewById(R.id.appConfigBtn);
+        help = (Button)findViewById(R.id.helpBtn);
+        logout = (Button)findViewById(R.id.logoutBtn);
 
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(num14_Main.this, num15_Main.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+
+        });
+
+        myInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num14_Main.this, num20_Main.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+
+        });
+
+        appConfig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num14_Main.this, num15_Main.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+
+        });
+
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num14_Main.this, num16_Main.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num14_Main.this, num13_Main.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();

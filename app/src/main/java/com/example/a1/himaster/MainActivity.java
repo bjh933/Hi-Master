@@ -8,25 +8,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import static android.view.LayoutInflater.from;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView backBtn;
+    Button skip;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_main);
 
+        skip = (Button)findViewById(R.id.skipBtn);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.abs_layout);
-        setCustomActionbar();
-        backBtn = (ImageView)findViewById(R.id.menu_back);
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, num02_Main.class);
@@ -38,26 +40,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setCustomActionbar()
-    {
-        ActionBar actionBar = getSupportActionBar();
-
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        View mCustomView = from(this).inflate(R.layout.abs_layout, null);
-        actionBar.setCustomView(mCustomView);
-
-        Toolbar parent = (Toolbar) mCustomView.getParent();
-        parent.setContentInsetsAbsolute(0, 0);
-
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#999999")));
-
-
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT);
-
-        actionBar.setCustomView(mCustomView, params);
-
-    }
 }

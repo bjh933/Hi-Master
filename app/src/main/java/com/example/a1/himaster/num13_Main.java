@@ -16,6 +16,11 @@ package com.example.a1.himaster;
 public class num13_Main extends AppCompatActivity {
 
     ImageView backBtn;
+    Button myInfo;
+    Button appConfig;
+    Button help;
+    Button login;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +28,10 @@ public class num13_Main extends AppCompatActivity {
 
         setCustomActionbar();
         backBtn = (ImageView)findViewById(R.id.menu_back);
-
+        myInfo = (Button)findViewById(R.id.myInfoBtn);
+        appConfig = (Button)findViewById(R.id.appConfigBtn);
+        help = (Button)findViewById(R.id.helpBtn);
+        login = (Button)findViewById(R.id.loginBtn);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +43,42 @@ public class num13_Main extends AppCompatActivity {
             }
 
         });
+
+
+        myInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num13_Main.this, num20_Main.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+
+        });
+
+        appConfig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num13_Main.this, num15_Main.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+
+        });
+
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num13_Main.this, num16_Main.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+
+        });
+
+
 
     }
 

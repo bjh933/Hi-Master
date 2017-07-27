@@ -27,6 +27,7 @@
         <activity android:name=".num04_Main"/>
         <activity android:name=".num05_Main"/>
         <activity android:name=".num06_Main"/>
+        <activity android:name=".num09_Main"/>
         <activity android:name=".num10_Main"/>
         <activity android:name=".num13_Main"/>
         <activity android:name=".num14_Main"/>

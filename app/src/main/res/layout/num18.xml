@@ -106,7 +106,7 @@
             android:textSize="20dp"/>
 
         <ImageView
-            android:id="@+id/right"
+            android:id="@+id/rightBtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"

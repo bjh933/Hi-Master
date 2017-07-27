@@ -13,8 +13,8 @@ package com.example.a1.himaster;
 
         import static android.view.LayoutInflater.from;
 
-public class num02_Main extends AppCompatActivity implements View.OnClickListener {
-    private Button btn_movePage;
+public class num02_Main extends AppCompatActivity {
+
     ImageView backBtn;
 
     @Override
@@ -22,16 +22,13 @@ public class num02_Main extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.num02);
 
-        btn_movePage = (Button) findViewById(R.id.btn_movePage);
-        btn_movePage.setOnClickListener(this);
-
         setCustomActionbar();
         backBtn = (ImageView)findViewById(R.id.menu_back);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num02_Main.this, num03_Main.class);
+                Intent intent = new Intent(num02_Main.this, num02_RecommandLocationActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();
@@ -41,17 +38,6 @@ public class num02_Main extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-
-        switch (id) {
-            case R.id.btn_movePage:
-                Intent i = new Intent(this, num02_RecommandLocationActivity.class);
-                startActivity(i);
-                break;
-        }
-    }
 
 
 

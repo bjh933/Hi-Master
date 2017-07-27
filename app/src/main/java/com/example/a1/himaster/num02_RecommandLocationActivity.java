@@ -13,8 +13,8 @@ import android.widget.ImageView;
 
 import static android.view.LayoutInflater.from;
 
-public class num02_RecommandLocationActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button btn_movePage;
+public class num02_RecommandLocationActivity extends AppCompatActivity {
+
     ImageView backBtn;
 
     @Override
@@ -22,35 +22,19 @@ public class num02_RecommandLocationActivity extends AppCompatActivity implement
         super.onCreate(savedInstanceState);
         setContentView(R.layout.num02_recommand_location);
 
-        btn_movePage = (Button) findViewById(R.id.btn_movePage);
-        btn_movePage.setOnClickListener(this);
-
         setCustomActionbar();
         backBtn = (ImageView)findViewById(R.id.menu_back);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num02_RecommandLocationActivity.this, num02_Main.class);
+                Intent intent = new Intent(num02_RecommandLocationActivity.this, num03_Main.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();
             }
 
         });
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-
-        switch (id) {
-            case R.id.btn_movePage:
-                Intent i = new Intent(this, num02_RecommandLocationActivity.class);
-                startActivity(i);
-                break;
-        }
     }
 
     private void setCustomActionbar()

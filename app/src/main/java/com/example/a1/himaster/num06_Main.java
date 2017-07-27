@@ -27,7 +27,7 @@ public class num06_Main extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num06_Main.this, num10_Main.class);
+                Intent intent = new Intent(num06_Main.this, num09_Main.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();
