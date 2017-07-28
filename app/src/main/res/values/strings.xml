@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name">Hi master</string>
+    <string name="facebook_app_id">107258223282560</string>
     <string-array name="city_names">
         <item>서울/경기지역</item>
         <item>강원영서지역</item>

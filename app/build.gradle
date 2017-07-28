@@ -3,6 +3,9 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+    repositories {
+        mavenCentral()
+    }
     defaultConfig {
         applicationId "com.example.a1.himaster"
         minSdkVersion 16
@@ -32,6 +35,7 @@ dependencies {
     })
     compile 'com.github.MorochoRochaDarwin:OneCalendarView:3.1.1'
     compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.google.android.gms:play-services:10.0.1'
