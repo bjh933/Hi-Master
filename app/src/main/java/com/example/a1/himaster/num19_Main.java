@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import static android.view.LayoutInflater.from;
@@ -15,6 +16,7 @@ import static android.view.LayoutInflater.from;
 public class num19_Main extends AppCompatActivity {
 
     ImageView backBtn;
+    Button okBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class num19_Main extends AppCompatActivity {
 
         setCustomActionbar();
         backBtn = (ImageView)findViewById(R.id.menu_back);
+        okBtn = (Button)findViewById(R.id.okButton);
 
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -31,6 +34,14 @@ public class num19_Main extends AppCompatActivity {
                 Intent intent = new Intent(num19_Main.this, num20_Main.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+
+        });
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
             }
 

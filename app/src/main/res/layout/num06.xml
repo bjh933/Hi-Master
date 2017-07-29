@@ -51,13 +51,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="match_parent">
+        android:layout_height="260dp">
 
         <LinearLayout
             android:layout_weight="1"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="260dp">
 
             <TextView
                 android:id="@+id/rain_percent"
@@ -89,26 +89,26 @@
             <TextView
                 android:id="@+id/rain_ment"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="50dp"
                 android:gravity="top|center"
                 android:text="우산 챙기세요"
                 android:textColor="#000000"
-                android:layout_marginTop="5dp"
-                android:padding="20dp"
-                android:textSize="25dp" />
+                android:layout_marginTop="3dp"
+                android:padding="15dp"
+                android:textSize="20dp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="1dp"
-            android:layout_height="300dp"
+            android:layout_height="230dp"
             android:background="#333"></LinearLayout>
 
         <LinearLayout
             android:layout_weight="1"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="260dp">
             <TextView
                 android:id="@+id/dust"
                 android:layout_width="match_parent"
@@ -139,13 +139,25 @@
             <TextView
                 android:id="@+id/dust_ment"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="50dp"
                 android:gravity="top|center"
                 android:text="마스크 꼭 챙기세요"
                 android:textColor="#000000"
-                android:layout_marginTop="5dp"
-                android:padding="20dp"
-                android:textSize="25dp" />
+                android:layout_marginTop="3dp"
+                android:padding="15dp"
+                android:textSize="20dp" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/sanghwal"
+            android:text="생활지수 확인"/>
     </LinearLayout>
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import static android.view.LayoutInflater.from;
@@ -15,6 +16,8 @@ import static android.view.LayoutInflater.from;
 public class num06_Main extends AppCompatActivity {
 
     ImageView backBtn;
+    Button sanghwalBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,18 @@ public class num06_Main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(num06_Main.this, num09_Main.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+
+        });
+
+        sanghwalBtn = (Button)findViewById(R.id.sanghwal);
+        sanghwalBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num06_Main.this, num03_Main.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();

@@ -45,7 +45,7 @@ public class num03_Main extends AppCompatActivity implements View.OnClickListene
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num03_Main.this, num04_Main.class);
+                Intent intent = new Intent(num03_Main.this, num06_Main.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();

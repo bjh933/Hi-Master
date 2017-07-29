@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#e6e3d8"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity_backup">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -72,6 +72,9 @@
             android:background="@drawable/a_kakao"
             android:layout_gravity="center"
             android:layout_margin="10dp"/>
+
+
+
     </LinearLayout>
 
     <Button

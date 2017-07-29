@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "289616510372",
+    "project_id": "himaster-175115"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289616510372:android:5a5492dd16a0df7d",
+        "android_client_info": {
+          "package_name": "com.example.a1.himaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289616510372-638e1adr77pg72vun3oqucbc57tt9mcf.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "289616510372-d5dghjqpcghjplhuka6gimp4qk46l9ju.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.a1.himaster",
+            "certificate_hash": "6e405be3a3f526fb04bde871a15a939b21964ab5"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIr1ey5-SwZr1QGJdmCBz9T_G8J-pozyE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
