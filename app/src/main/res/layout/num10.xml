@@ -325,7 +325,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="120dp">
 
         <TextView
             android:id="@+id/scheduleMemoText"
@@ -334,17 +334,38 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
             android:text="메모 : "
-            android:textSize="25dp"/>
+            android:textSize="25dp" />
 
         <TextView
             android:id="@+id/scheMemoText"
             android:layout_width="250dp"
-            android:layout_height="130dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="80dp"
             android:layout_marginLeft="20dp"
-            android:text="    내용을 입력해주세요"
+            android:layout_marginTop="10dp"
             android:background="@drawable/j_border"
-            />
+            android:text="    내용을 입력해주세요" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="취소"/>
+
+        <Button
+            android:id="@+id/okBtn"
+            android:layout_marginLeft="80dp"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="완료"/>
+
+        </LinearLayout>
 </LinearLayout>

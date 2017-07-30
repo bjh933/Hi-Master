@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -20,11 +21,16 @@ public class num10_Main extends AppCompatActivity {
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
     ImageView backBtn;
+    Button cancelBtn;
+    Button okBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.num10);
+
+        okBtn = (Button)findViewById(R.id.okBtn);
+        cancelBtn = (Button)findViewById(R.id.cancelBtn);
 
         spinner = (Spinner) findViewById(R.id.timeSpinner);
         spinner = (Spinner) findViewById(R.id.hourSpinner);
@@ -91,6 +97,19 @@ public class num10_Main extends AppCompatActivity {
             }
 
         });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num10_Main.this, num09_Main.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+
+        });
+
+
     }
 
     private void setCustomActionbar()

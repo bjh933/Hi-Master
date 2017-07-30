@@ -17,6 +17,7 @@ public class num19_Main extends AppCompatActivity {
 
     ImageView backBtn;
     Button okBtn;
+    Button addBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class num19_Main extends AppCompatActivity {
         setCustomActionbar();
         backBtn = (ImageView)findViewById(R.id.menu_back);
         okBtn = (Button)findViewById(R.id.okButton);
-
+        addBtn = (Button)findViewById(R.id.addButton);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +43,20 @@ public class num19_Main extends AppCompatActivity {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(num19_Main.this, num02_Schedule.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+
+        });
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num19_Main.this, num10_Main.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();
             }
 

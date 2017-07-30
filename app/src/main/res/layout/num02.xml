@@ -20,7 +20,7 @@
 
 
         <TextView
-            android:id="@+id/startPo"
+            android:id="@+id/startPoint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -43,7 +43,7 @@
             android:gravity="center"/>
 
         <TextView
-            android:id="@+id/d"
+            android:id="@+id/destination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -219,4 +219,6 @@
         android:id="@+id/btn_movePage"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
+
+
 </LinearLayout>
