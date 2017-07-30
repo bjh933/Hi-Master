@@ -1,3 +1,4 @@
+/*
 package com.example.a1.himaster;
 
 import android.content.Intent;
@@ -7,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,14 +22,12 @@ import java.util.Date;
 import static android.view.LayoutInflater.from;
 
 
-public class num09_Main extends AppCompatActivity {
+public class num09_Main_backup extends AppCompatActivity {
     private OneCalendarView calendarView;
     ImageView backBtn;
     Button detailBtn;
     Button addBtn;
-    int dateCheck = -1;
-    int datePos;
-
+    int check=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +40,7 @@ public class num09_Main extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num09_Main.this, num10_Main.class);
+                Intent intent = new Intent(num09_Main_backup.this, num10_Main.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();
@@ -53,9 +51,6 @@ public class num09_Main extends AppCompatActivity {
         calendarView = (OneCalendarView) findViewById(R.id.oneCalendar);
         detailBtn = (Button)findViewById(R.id.detailBtn);
         addBtn = (Button)findViewById(R.id.addBtn);
-
-        detailBtn.setVisibility(View.GONE);
-        addBtn.setVisibility(View.GONE);
 
         calendarView.setOneCalendarClickListener(new OneCalendarView.OneCalendarClickListener() {
             @Override
@@ -117,12 +112,12 @@ public class num09_Main extends AppCompatActivity {
 
             @Override
             public void prevMonth() {
-                Toast.makeText(num09_Main.this, calendarView.getStringMonth(calendarView.getMonth()) + " " + calendarView.getYear(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(num09_Main_backup.this, calendarView.getStringMonth(calendarView.getMonth()) + " " + calendarView.getYear(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void nextMonth() {
-                Toast.makeText(num09_Main.this, calendarView.getStringMonth(calendarView.getMonth()) + " " + calendarView.getYear(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(num09_Main_backup.this, calendarView.getStringMonth(calendarView.getMonth()) + " " + calendarView.getYear(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -133,50 +128,19 @@ public class num09_Main extends AppCompatActivity {
             @Override
             public void dateOnClick(Day day, int position) {
 
-                detailBtn.setVisibility(View.VISIBLE);
-                addBtn.setVisibility(View.VISIBLE);
-
+                check = 1;
                 Date date = day.getDate();
                 int year = date.getYear();
                 int month = date.getMonth();
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date);
                 int numDay = cal.get(Calendar.DAY_OF_MONTH);
-                //Toast.makeText(num09_Main.this, numDay + " " + calendarView.getStringMonth(month) + " " + year, Toast.LENGTH_SHORT).show();
+                Toast.makeText(num09_Main_backup.this, numDay + " " + calendarView.getStringMonth(month) + " " + year, Toast.LENGTH_SHORT).show();
 
-                if(dateCheck == -1)
-                {
-                    datePos = position;
-                    dateCheck  = 0;
-                }
-                else if(dateCheck == 0) {
-                    calendarView.removeDaySeleted(datePos);
-                    dateCheck = 1;
-                    datePos = position;
-                }
-                else if(dateCheck == 1)
-                {
-                    calendarView.removeDaySeleted(datePos);
-                    dateCheck = 0;
-                    datePos = position;
-                }
-                calendarView.addDaySelected(datePos);
-
-                    detailBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(num09_Main.this, num21_Main.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-                            finish();
-                        }
-
-                    });
-
-                addBtn.setOnClickListener(new View.OnClickListener() {
+                detailBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(num09_Main.this, num10_Main.class);
+                        Intent intent = new Intent(num09_Main_backup.this, num21_Main.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                         finish();
@@ -184,19 +148,23 @@ public class num09_Main extends AppCompatActivity {
 
                 });
 
-
+                if (calendarView.isDaySelected(position)) {
+                    calendarView.removeDaySeleted(position);
+                } else {
+                    calendarView.addDaySelected(position);
+                }
 
 
             }
 
-                @Override
-                public void dateOnLongClick(Day day, int position) {
-                    Intent intent = new Intent(num09_Main.this, MainActivity.class);
-                    startActivity(intent);
+            @Override
+            public void dateOnLongClick(Day day, int position) {
+                Intent intent = new Intent(num09_Main_backup.this, MainActivity.class);
+                startActivity(intent);
 
-                }
-            });
+            }
+        });
     }
 
 }
-
+*/
