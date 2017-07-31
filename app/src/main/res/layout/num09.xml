@@ -28,13 +28,11 @@
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="100dp">
 
-        <TextView
-            android:layout_margin="10dp"
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:text="일정이 담길 공간"
-            android:textColor="#000000"
-            android:textSize="18dp"/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
