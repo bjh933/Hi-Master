@@ -170,7 +170,6 @@ public class num09_Main_backup extends AppCompatActivity {
 
 
 =========================================
-
 package com.example.a1.himaster;
 
 import android.content.Intent;
@@ -179,10 +178,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -190,8 +192,10 @@ import android.widget.Toast;
 import com.darwindeveloper.onecalendar.clases.Day;
 import com.darwindeveloper.onecalendar.views.OneCalendarView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static android.view.LayoutInflater.from;
 
@@ -201,12 +205,17 @@ public class num09_Main extends AppCompatActivity {
     ImageView backBtn;
     Button detailBtn;
     Button addBtn;
-    TextView calTV;
+    int thisPos;
     int dateCheck = -1;
     int datePos;
     String cMonth;
     int cDay;
     int cYear;
+    int boolpos[] = new int[60];
+    RecyclerView rv;
+    LinearLayoutManager llm;
+    List<String> count = null;
+    String text;
 
     public static final int REQUEST_CODE = 1001;    //  달력 날짜 데이터 전달
 
@@ -217,13 +226,19 @@ public class num09_Main extends AppCompatActivity {
 
         setCustomActionbar();
 
-        calTV = (TextView)findViewById(R.id.calTv);
+        rv = (RecyclerView)findViewById(R.id.rv);
+        llm = new LinearLayoutManager(this);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(llm);
+        count = new ArrayList<>();
+
+
         backBtn = (ImageView) findViewById(R.id.menu_back);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num09_Main.this, num10_Main.class);
+                Intent intent = new Intent(num09_Main.this, num13_Main.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();
@@ -314,33 +329,45 @@ public class num09_Main extends AppCompatActivity {
             @Override
             public void dateOnClick(Day day, int position) {
 
+                thisPos = position;
                 detailBtn.setVisibility(View.VISIBLE);
                 addBtn.setVisibility(View.VISIBLE);
-
+                String toast;
                 Date date = day.getDate();
                 final int year = date.getYear();
                 final int month = date.getMonth();
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date);
                 final int numDay = cal.get(Calendar.DAY_OF_MONTH);
-                //Toast.makeText(num09_Main.this, numDay + " " + calendarView.getStringMonth(month) + " " + year, Toast.LENGTH_SHORT).show();
+                toast = String.valueOf(date.getDate());
 
-                if(dateCheck == -1)
+                //Toast.makeText(num09_Main.this, numDay + " " + calendarView.getStringMonth(month) + " " + year, Toast.LENGTH_SHORT).show();
+                Toast.makeText(num09_Main.this, toast, Toast.LENGTH_SHORT).show();
+                if(boolpos[position] == 1)
+                {
+                    //calendarView.isDaySelected(position);
+                   //calendarView.addDaySelected(position);
+
+                }
+                else if(dateCheck == -1)
                 {
                     datePos = position;
                     dateCheck  = 0;
                 }
                 else if(dateCheck == 0) {
                     calendarView.removeDaySeleted(datePos);
+                    //calendarView.addDaySelected(exPos);
                     dateCheck = 1;
                     datePos = position;
                 }
                 else if(dateCheck == 1)
                 {
                     calendarView.removeDaySeleted(datePos);
+                    //calendarView.addDaySelected(exPos);
                     dateCheck = 0;
                     datePos = position;
                 }
+
                 calendarView.addDaySelected(datePos);
                 cYear = year;
                 cMonth = calendarView.getStringMonth(month);
@@ -362,9 +389,9 @@ public class num09_Main extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(num09_Main.this, num10_Main.class);
                         intent.putExtra("calDay", numDay);
-                        intent.putExtra("calMonth", calendarView.getStringMonth(month));
+                        intent.putExtra("calMonth", month);
                         intent.putExtra("calYear", year);
-
+                        //Toast.makeText(num09_Main.this, cDay, Toast.LENGTH_SHORT).show();
                         startActivityForResult(intent, REQUEST_CODE);
 
                         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
@@ -392,9 +419,16 @@ public class num09_Main extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE) {
             //num10의 날짜와 같은 달력날짜라면 출력하도록
-            if(data.getExtras().getInt("calYear") == cYear && data.getExtras().getString("calMonth") == cMonth && data.getExtras().getInt("calDay") == cDay)
-                calTV.setText(data.getExtras().getString("todo"));
+            //if(data.getExtras().getInt("Year") == cYear && data.getExtras().getInt("Month") == cMonth && data.getExtras().getInt("Day") == cDay) {
 
+            String dayText = data.getExtras().getString("dayFrom");
+            int schePos = Integer.parseInt(dayText);
+            text = data.getExtras().getString("todo");
+            count.add(text);
+            rv.setAdapter(new CountAdapter(getApplication(), count, text));
+
+            calendarView.addDaySelected(schePos+1);
+            boolpos[schePos+1] = 1;
         } else {
             Toast.makeText(num09_Main.this, "REQUEST_CODE가 아님", Toast.LENGTH_SHORT).show();
         }

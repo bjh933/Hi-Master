@@ -9,6 +9,7 @@ package com.example.a1.himaster;
         import android.support.v7.widget.Toolbar;
         import android.view.View;
         import android.widget.Button;
+        import android.widget.CheckBox;
         import android.widget.ImageView;
 
         import static android.view.LayoutInflater.from;
@@ -20,6 +21,7 @@ public class num13_Main extends AppCompatActivity {
     Button appConfig;
     Button help;
     Button login;
+    CheckBox repCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class num13_Main extends AppCompatActivity {
         appConfig = (Button)findViewById(R.id.appConfigBtn);
         help = (Button)findViewById(R.id.helpBtn);
         login = (Button)findViewById(R.id.loginBtn);
+        repCheck = (CheckBox)findViewById(R.id.repeatCheck);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

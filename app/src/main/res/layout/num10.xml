@@ -46,9 +46,45 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/hangsaIconLayout"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/b_cake"
+            android:layout_marginLeft="40dp"/>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/e_music"
+            android:layout_marginLeft="40dp"/>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/c_hospital"
+            android:layout_marginLeft="40dp"/>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/j_confetti"
+            android:layout_marginLeft="40dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_margin="3dp">
 
         <TextView
             android:id="@+id/scheduleText"
@@ -67,10 +103,10 @@
             android:id="@+id/todoEt"
             android:hint="내용을 입력해주세요"/>
 
-
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/siganLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
@@ -84,73 +120,34 @@
             android:text="시간 : "
             android:textSize="25dp"/>
 
-        <Button
-            android:id="@+id/okButton01"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/b_test01"
-            android:text="월"
-            android:layout_marginLeft="20dp"
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textSize="20dp"/>
+            android:layout_marginLeft="2dp"
+            android:id="@+id/timeStartSpinner"
+            android:entries="@array/timeSpinner"
+            ></Spinner>
 
-        <Button
-            android:id="@+id/okButton02"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/b_test01"
-            android:text="화"
-            android:layout_marginLeft="10dp"
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textSize="20dp"/>
-        <Button
-            android:id="@+id/okButton03"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/b_test01"
-            android:text="수"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"/>
-        <Button
-            android:id="@+id/okButton04"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/b_test01"
-            android:text="목"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"/> <Button
-        android:id="@+id/okButton05"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/b_test01"
-        android:text="금"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:textSize="20dp"/>
-        <Button
-            android:id="@+id/okButton06"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/b_test01"
-            android:text="토"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"/>
-        <Button
-            android:id="@+id/okButton07"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/b_test01"
-            android:text="일"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"/>
+            android:id="@+id/hourStartSpinner"
+            android:entries="@array/hourSpinner"
+            ></Spinner>
 
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/minStartSpinner"
+            android:entries="@array/minSpinner"
+            ></Spinner>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/siganLayout2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="100dp"
@@ -184,6 +181,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/fixLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -193,21 +191,21 @@
             android:layout_height="45dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
-            android:text="반복 : "
+            android:text="고정 여부 : "
             android:textSize="25dp"/>
 
-        <Spinner
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:layout_marginLeft="40dp"
-            android:id="@+id/reSpinner"
-            android:entries="@array/reSpinner"
-            ></Spinner>
+            android:layout_marginLeft="5dp"
+            android:id="@+id/repeatCheck"
+            ></CheckBox>
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/giganLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -257,6 +255,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/giganLayout2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="105dp">
@@ -289,6 +288,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/destLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -336,14 +336,14 @@
             android:text="메모 : "
             android:textSize="25dp" />
 
-        <TextView
+        <EditText
             android:id="@+id/scheMemoText"
             android:layout_width="250dp"
             android:layout_height="80dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/j_border"
-            android:text="    내용을 입력해주세요" />
+            android:paddingLeft="10dp"
+            android:background="@drawable/j_border"/>
 
     </LinearLayout>
 
