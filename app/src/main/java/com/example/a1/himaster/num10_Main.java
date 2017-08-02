@@ -38,7 +38,6 @@ public class num10_Main extends AppCompatActivity {
     EditText todoTitle;
     RadioButton iljung, halil, hangsa;
     LinearLayout giganLay, giganLay2, siganLay, siganLay2, destLay, fixLay, hangsaLay;
-    Hashtable<String, ArrayList> ht = new Hashtable<String, ArrayList>();  //일정 저장용 테이블
     public static final int REQUEST_CODE = 1001;
     int pos1, pos2, pos3, pos;
 
@@ -223,9 +222,18 @@ public class num10_Main extends AppCompatActivity {
                 intent.putExtra("listItem", item);
                 intent.putExtra("hashKey", key);
 
-                setResult(RESULT_OK, intent);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-                finish();
+                if(doTitle.length() != 0)
+                {
+                    setResult(RESULT_OK, intent);
+                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                    finish();
+                 }
+
+            else
+                {
+                    setResult(RESULT_CANCELED);
+                }
+
             }
 
         });

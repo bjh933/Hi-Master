@@ -87,7 +87,7 @@
             android:layout_height="30dp"
             android:background="@drawable/b_test01"
             android:layout_gravity="center"
-            android:text="일정 추가"
+            android:text="수 정"
             android:textSize="13dp"
             android:layout_marginLeft="150dp"/>
     </LinearLayout>

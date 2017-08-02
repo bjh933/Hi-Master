@@ -31,8 +31,8 @@ import static android.view.LayoutInflater.from;
 public class num09_Main extends AppCompatActivity {
     private OneCalendarView calendarView;
     ImageView backBtn;
-    Button detailBtn;
-    Button addBtn;
+    Button detailBtn, addBtn;
+    Button rewriteBtn, deleteBtn;
     int thisPos;
     int dateCheck = -1;
     int datePos;
@@ -180,6 +180,10 @@ public class num09_Main extends AppCompatActivity {
                     }
 
                     listView.setAdapter(listAdapter);  //연결
+                    listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+
+
 
                 }
                 else{
@@ -252,14 +256,14 @@ public class num09_Main extends AppCompatActivity {
 
         if (resultCode != RESULT_OK) {
             Toast.makeText(num09_Main.this, "데이터 수신 실패", Toast.LENGTH_SHORT).show();
-            return;
+            //return;
         }
 
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == REQUEST_CODE || resultCode == 1002) {
             //num10의 날짜와 같은 달력날짜라면 출력하도록
             //if(data.getExtras().getInt("Year") == cYear && data.getExtras().getInt("Month") == cMonth && data.getExtras().getInt("Day") == cDay) {
 
-            String dayText = data.getExtras().getString("dayFrom");
+            String dayText = data.getExtras().getString("dayTo");
             int schePos = Integer.parseInt(dayText);
 
 

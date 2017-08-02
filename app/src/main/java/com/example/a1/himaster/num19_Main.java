@@ -10,6 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static android.view.LayoutInflater.from;
 
@@ -18,6 +22,7 @@ public class num19_Main extends AppCompatActivity {
     ImageView backBtn;
     Button okBtn;
     Button addBtn;
+    public static final int REQUEST_CODE = 1001;    //  달력 날짜 데이터 전달
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,18 @@ public class num19_Main extends AppCompatActivity {
         backBtn = (ImageView)findViewById(R.id.menu_back);
         okBtn = (Button)findViewById(R.id.okButton);
         addBtn = (Button)findViewById(R.id.addButton);
+        long now = System.currentTimeMillis();
+
+        Date date = new Date(now);
+        final SimpleDateFormat CurYear = new SimpleDateFormat("yyyy");
+        final SimpleDateFormat CurMonth = new SimpleDateFormat("M");
+        final SimpleDateFormat CurDay = new SimpleDateFormat("d");
+        final String strCurYear = CurYear.format(date);
+        final String strCurMonth = CurMonth.format(date);
+        final String strCurDay = CurDay.format(date);
+        final int curYear = Integer.valueOf(strCurYear);
+        final int curMonth = Integer.valueOf(strCurMonth)-1;
+        final int tomorrow = Integer.valueOf(strCurDay)+1;
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,13 +71,17 @@ public class num19_Main extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num19_Main.this, num10_Main.class);
+                Intent intent = new Intent(num19_Main.this, num09_Main.class);
+
+                //startActivityForResult(intent, REQUEST_CODE);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();
             }
 
         });
+
+
 
     }
 
