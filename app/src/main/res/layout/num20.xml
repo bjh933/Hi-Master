@@ -11,61 +11,90 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:text="거주지 정보"
-        android:textSize="20dp"
+        android:layout_height="wrap_content"
+        android:text="회원 정보"
+        android:textSize="35dp"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="40dp"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:orientation="horizontal">
 
-        <Spinner
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:id="@+id/citySpinner"
-            android:entries="@array/citySpinner"
-            ></Spinner>
+            android:text="이 름"
+            android:textSize="20dp"
+            android:layout_marginTop="25dp"
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:id="@+id/guSpinner"
-            android:entries="@array/guSpinner"
-            ></Spinner>
+            />
 
-        <Spinner
-            android:layout_width="wrap_content"
+        <EditText
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:id="@+id/dongSpinner"
-            android:entries="@array/dongSpinner"
-            ></Spinner>
+            android:id="@+id/nameEdit"
+            android:layout_marginLeft="10dp"
+            android:hint="이름"/>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="-5dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="이메일"
+            android:textSize="20dp"
+            android:layout_marginTop="25dp"
+            />
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/emailEdit"
+            android:hint="이메일"/>
+
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="거주지 정보"
+        android:textSize="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="25dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
         android:layout_height="70dp">
 
         <EditText
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/addressEdit"
             android:hint="상세 주소"/>
 
         <Button
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/s_maps"/>
     </LinearLayout>
 
@@ -155,7 +184,7 @@
 
 
             <RadioButton
-                android:id="@+id/checkBox1"
+                android:id="@+id/male"
                 android:layout_width="50dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="40dp"
@@ -165,7 +194,7 @@
                 android:text="남" />
 
             <RadioButton
-                android:id="@+id/checkBox2"
+                android:id="@+id/female"
                 android:layout_width="50dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="40dp"

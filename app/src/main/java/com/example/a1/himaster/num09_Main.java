@@ -180,10 +180,6 @@ public class num09_Main extends AppCompatActivity {
                     }
 
                     listView.setAdapter(listAdapter);  //연결
-                    listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
-
-
 
                 }
                 else{

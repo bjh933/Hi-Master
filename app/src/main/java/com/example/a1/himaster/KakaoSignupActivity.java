@@ -6,6 +6,7 @@ package com.example.a1.himaster;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -57,15 +58,28 @@ public class KakaoSignupActivity extends Activity{
 
             @Override
             public void onSuccess(UserProfile userProfile) {  //성공 시 userProfile 형태로 반환
-                Logger.d("UserProfile : " + userProfile);
-                redirectMainActivity(); // 로그인 성공시 MainActivity로
+
+                String kname = userProfile.getNickname();
+                //String kemail = userProfile.getEmail();
+                long kid = userProfile.getId();
+                SharedPreferences ka_login = getSharedPreferences("ka_login", MODE_PRIVATE);
+                SharedPreferences.Editor editor = ka_login.edit();
+                //editor.putString("EMAIL", kemail);
+                editor.putString("NAME", kname);
+                editor.commit();
+               // Log.d("UserProfile", userProfile.getNickname());
+               // Log.d("UserProfile", userProfile.getEmail());
+               // Log.d("myLog", "userProfile " + userProfile.getId());
+               // Log.d("myLog",  userProfile.getThumbnailImagePath());
+               redirectMainActivity(); // 로그인 성공
             }
         });
     }
 
     private void redirectMainActivity() {
 
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, num02_Schedule.class));
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
         finish();
     }
     protected void redirectLoginActivity() {

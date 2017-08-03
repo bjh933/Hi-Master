@@ -46,12 +46,10 @@ dependencies {
     compile 'com.github.MorochoRochaDarwin:OneCalendarView:3.1.1'
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.facebook.android:facebook-android-sdk:4.4.0'
-
     compile group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
 
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.google.android.gms:play-services:10.0.1'
-    compile 'com.android.support:recyclerview-v7:25.3.0'
 
 }

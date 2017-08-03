@@ -27,7 +27,7 @@ public class num21_Main extends AppCompatActivity {
         setCustomActionbar();
         backBtn = (ImageView)findViewById(R.id.menu_back);
         okBtn = (Button)findViewById(R.id.okButton);
-
+        changeBtn = (Button)findViewById(R.id.changeButton);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +51,16 @@ public class num21_Main extends AppCompatActivity {
 
         });
 
+        changeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num21_Main.this, num09_Main.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+
+        });
     }
 
     private void setCustomActionbar()
