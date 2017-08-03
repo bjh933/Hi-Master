@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#e6e3d8"
-    tools:context=".MainActivity_backup">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:orientation="horizontal"

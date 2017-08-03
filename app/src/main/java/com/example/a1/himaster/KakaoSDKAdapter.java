@@ -36,6 +36,7 @@ public class KakaoSDKAdapter extends KakaoAdapter {
                 return false;
             }
 
+
             @Override
             public ApprovalType getApprovalType() {
                 return ApprovalType.INDIVIDUAL;

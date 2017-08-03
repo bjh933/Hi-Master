@@ -81,7 +81,16 @@ public class num13_Main extends AppCompatActivity {
 
         });
 
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num13_Main.this, MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
 
+        });
 
     }
 

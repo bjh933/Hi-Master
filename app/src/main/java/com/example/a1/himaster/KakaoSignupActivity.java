@@ -60,12 +60,18 @@ public class KakaoSignupActivity extends Activity{
             public void onSuccess(UserProfile userProfile) {  //성공 시 userProfile 형태로 반환
 
                 String kname = userProfile.getNickname();
-                //String kemail = userProfile.getEmail();
+               // String kemail = userProfile.getEmail();
                 long kid = userProfile.getId();
+
+                SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putString("FLAG", "3");
+                edit.commit();
+
                 SharedPreferences ka_login = getSharedPreferences("ka_login", MODE_PRIVATE);
                 SharedPreferences.Editor editor = ka_login.edit();
                 //editor.putString("EMAIL", kemail);
-                editor.putString("NAME", kname);
+                editor.putString("KNAME", kname);
                 editor.commit();
                // Log.d("UserProfile", userProfile.getNickname());
                // Log.d("UserProfile", userProfile.getEmail());

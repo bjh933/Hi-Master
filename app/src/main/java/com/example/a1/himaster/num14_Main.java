@@ -81,7 +81,7 @@ public class num14_Main extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num14_Main.this, num13_Main.class);
+                Intent intent = new Intent(num14_Main.this, MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();

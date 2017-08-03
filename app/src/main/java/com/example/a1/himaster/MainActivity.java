@@ -115,6 +115,11 @@ public class MainActivity extends AppCompatActivity {
                                                     String name = object.getString("name");
                                                     String gender = object.getString("gender");
 
+                                                    SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
+                                                    SharedPreferences.Editor edit = pref.edit();
+                                                    edit.putString("FLAG", "1");
+                                                    edit.commit();
+
                                                     SharedPreferences fb_login = getSharedPreferences("fb_login", MODE_PRIVATE);
                                                     SharedPreferences.Editor editor = fb_login.edit();
                                                     editor.putString("EMAIL", email);
@@ -208,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
         else    //  페이스북 콜백
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
     private void handleSignInResult(GoogleSignInResult result) {
 
         if (result.isSuccess()) {
@@ -219,9 +225,14 @@ public class MainActivity extends AppCompatActivity {
             String gidToken = acct.getIdToken() == null ? "" : acct.getIdToken();                       // Android support this via OAuth2.0 but have failed to retrieve
             String gaccessToken = acct.getServerAuthCode() == null ? "" : acct.getServerAuthCode();     // Android support this via OAuth2.0 but have failed to retrieve
 
+            SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
+            SharedPreferences.Editor edit = pref.edit();
+            edit.putString("FLAG", "2");
+            edit.commit();
+
             SharedPreferences gg_login = getSharedPreferences("gg_login", MODE_PRIVATE);
             SharedPreferences.Editor editor = gg_login.edit();
-            editor.putString("EMAIL", gemail);
+            editor.putString("GMAIL", gemail);
             //editor.putString("NAME", gname);
             editor.commit();
 
