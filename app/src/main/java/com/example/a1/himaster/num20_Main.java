@@ -151,7 +151,7 @@ public class num20_Main extends AppCompatActivity {
                 editor.putString("FLAG", loginFlag);
                 Log.d("dfdf", loginFlag);
                 editor.commit();
-                Intent intent = new Intent(num20_Main.this, num02_Schedule.class);
+                Intent intent = new Intent(num20_Main.this, num14_Main.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();

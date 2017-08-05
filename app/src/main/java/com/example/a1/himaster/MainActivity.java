@@ -33,6 +33,7 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.People;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
@@ -103,40 +104,40 @@ public class MainActivity extends AppCompatActivity {
                             public void onSuccess(LoginResult loginResult) {
                                 Log.e("onSuccess", "onSuccess");
                                 GraphRequest request = GraphRequest.newMeRequest(
-                                        loginResult.getAccessToken(),
-                                        new GraphRequest.GraphJSONObjectCallback() {
-                                            @Override
-                                            public void onCompleted(
-                                                    JSONObject object,
-                                                    GraphResponse response) {
-                                                // Application code
-                                                try{
-                                                    String email = object.getString("email");
-                                                    String name = object.getString("name");
-                                                    String gender = object.getString("gender");
+                                loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(
+                                            JSONObject object,
+                                            GraphResponse response) {
+                                        // Application code
+                                        try{
+                                            String email = object.getString("email");
+                                            String name = object.getString("name");
+                                            String gender = object.getString("gender");
 
-                                                    SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
-                                                    SharedPreferences.Editor edit = pref.edit();
-                                                    edit.putString("FLAG", "1");
-                                                    edit.commit();
+                                            SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
+                                            SharedPreferences.Editor edit = pref.edit();
+                                            edit.putString("FLAG", "1");
+                                            edit.commit();
 
-                                                    SharedPreferences fb_login = getSharedPreferences("fb_login", MODE_PRIVATE);
-                                                    SharedPreferences.Editor editor = fb_login.edit();
-                                                    editor.putString("EMAIL", email);
-                                                    editor.putString("NAME", name);
-                                                    editor.putString("GENDER", gender);
-                                                    editor.commit();
+                                            SharedPreferences fb_login = getSharedPreferences("fb_login", MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = fb_login.edit();
+                                            editor.putString("EMAIL", email);
+                                            editor.putString("NAME", name);
+                                            editor.putString("GENDER", gender);
+                                            editor.commit();
 
-                                                    Intent intent = new Intent(MainActivity.this, num02_Schedule.class);
-                                                    startActivity(intent);
-                                                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-                                                    finish();
-                                                }
-                                                catch(Exception e){
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        });
+                                            Intent intent = new Intent(MainActivity.this, num02_Schedule.class);
+                                            startActivity(intent);
+                                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                                            finish();
+                                        }
+                                        catch(Exception e){
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
                                 Bundle parameters = new Bundle();
                                 parameters.putString("fields", "id,name,email,gender, birthday");
                                 request.setParameters(parameters);
@@ -170,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 //.requestIdToken(getString(R.string.server_client_id))
                 //.requestServerAuthCode(getString(R.string.server_client_id))
@@ -187,6 +187,10 @@ public class MainActivity extends AppCompatActivity {
         googleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mGoogleApiClient.isConnected())
+                {
+                    mGoogleApiClient.clearDefaultAccountAndReconnect();
+                }
                 if (!mResolvingError) {
                     signIn();
                 }
@@ -202,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
         // and messes it up
         startActivityForResult(signInIntent, REQUEST_CODE_SIGN_IN);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

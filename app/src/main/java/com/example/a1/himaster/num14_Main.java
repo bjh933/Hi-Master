@@ -1,15 +1,26 @@
 package com.example.a1.himaster;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 import static android.view.LayoutInflater.from;
 
@@ -20,7 +31,7 @@ public class num14_Main extends AppCompatActivity {
     Button appConfig;
     Button help;
     Button logout;
-
+    private GoogleApiClient mGoogleApiClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +43,62 @@ public class num14_Main extends AppCompatActivity {
         appConfig = (Button)findViewById(R.id.appConfigBtn);
         help = (Button)findViewById(R.id.helpBtn);
         logout = (Button)findViewById(R.id.logoutBtn);
+
+        SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
+        String loginFlag = pref.getString("FLAG", "4");
+        if(loginFlag.equals("4") || loginFlag.equals(""))
+        {
+            logout.setText("로그인");
+        }
+        else
+            logout.setText("로그아웃");
+
+        if(logout.getText().toString().equals("로그인"))
+        {
+            logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(num14_Main.this, MainActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                    finish();
+                }
+            });
+
+        }
+        else
+        {
+            logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
+                    String loginFlag = pref.getString("FLAG", "4");
+
+                    if(loginFlag.equals("1"))
+                        LoginManager.getInstance().logOut();    //  페이스북 로그아웃
+                    else if(loginFlag.equals("2"))  //  구글 로그아웃
+                    {
+
+                    }
+                    else if(loginFlag.equals("3"))  //  카톡 로그아웃
+                    {
+                        onClickLogout();
+                    }
+
+                    SharedPreferences logoutFlag = getSharedPreferences("loginFlag", MODE_PRIVATE);
+                    SharedPreferences.Editor edit = logoutFlag.edit();
+                    edit.putString("FLAG", "");
+                    edit.commit();
+
+                    Intent intent = new Intent(num14_Main.this, MainActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                    finish();
+                }
+
+            });
+
+        }
 
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,15 +145,14 @@ public class num14_Main extends AppCompatActivity {
 
         });
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(num14_Main.this, MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-                finish();
-            }
+    }
 
+    private void onClickLogout() {
+        UserManagement.requestLogout(new LogoutResponseCallback() {
+            @Override
+            public void onCompleteLogout() {
+
+            }
         });
     }
 

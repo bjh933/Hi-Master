@@ -56,7 +56,6 @@
         <activity android:name=".num06_Main"/>
         <activity android:name=".num09_Main"/>
         <activity android:name=".num10_Main"/>
-        <activity android:name=".num13_Main"/>
         <activity android:name=".num14_Main"/>
         <activity android:name=".num15_Main"/>
         <activity android:name=".num16_Main"/>
