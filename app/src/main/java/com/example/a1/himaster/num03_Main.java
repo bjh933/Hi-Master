@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import static android.view.LayoutInflater.from;
 
-public class num03_Main extends AppCompatActivity implements View.OnClickListener {
+public class num03_Main extends AppCompatActivity {
     private Button button;
     private TextView rain_Activity;
 
@@ -32,8 +32,6 @@ public class num03_Main extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.num03);
 
         spinner = (Spinner) findViewById(R.id.spiner);
-        button = (Button) findViewById(R.id.btn_movePage);
-        button.setOnClickListener(this);
         setCustomActionbar();
         backBtn = (ImageView)findViewById(R.id.menu_back);
 
@@ -56,17 +54,6 @@ public class num03_Main extends AppCompatActivity implements View.OnClickListene
 
     }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-
-        switch (id) {
-            case R.id.btn_movePage:
-                Intent i = new Intent(this, num03_ViewActivity.class);
-                startActivity(i);
-                break;
-        }
-    }
 
     private void setCustomActionbar()
     {

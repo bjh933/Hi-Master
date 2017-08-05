@@ -43,6 +43,9 @@ public class num09_Main extends AppCompatActivity {
     Hashtable<String, ArrayList> ht = new Hashtable<String, ArrayList>();  //일정 저장용 테이블
     ListView listView;  //리스트뷰
     listItemAdapter listAdapter;  //리스트 어댑터
+    Calendar mCalendar;
+    int firstDay;
+    int firstPos = 0;
 
 
     public static final int REQUEST_CODE = 1001;    //  달력 날짜 데이터 전달
@@ -100,7 +103,7 @@ public class num09_Main extends AppCompatActivity {
         });
 
         initCalendar();
-
+        recalculate();
     }
 
 
@@ -128,17 +131,23 @@ public class num09_Main extends AppCompatActivity {
     }
 
     private void initCalendar() {
-        //el siguiente fragmento puede ser usado para capturar los swipes en el calendar
+        mCalendar = Calendar.getInstance();
+        mCalendar.set(Calendar.DAY_OF_MONTH, 1);
+
         calendarView.setOnCalendarChangeListener(new OneCalendarView.OnCalendarChangeListener() {
 
 
             @Override
             public void prevMonth() {
+                mCalendar.add(Calendar.MONTH, -1);
+                recalculate();
                 Toast.makeText(num09_Main.this, calendarView.getStringMonth(calendarView.getMonth()) + " " + calendarView.getYear(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void nextMonth() {
+                mCalendar.add(Calendar.MONTH, 1);
+                recalculate();
                 Toast.makeText(num09_Main.this, calendarView.getStringMonth(calendarView.getMonth()) + " " + calendarView.getYear(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -149,28 +158,23 @@ public class num09_Main extends AppCompatActivity {
 
             @Override
             public void dateOnClick(Day day, int position) {
+                Calendar cal = Calendar.getInstance();
 
                 thisPos = position;
                 detailBtn.setVisibility(View.VISIBLE);
                 addBtn.setVisibility(View.VISIBLE);
-                String toast;
                 Date date = day.getDate();
                 final int year = date.getYear();
                 final int month = date.getMonth();
-                Calendar cal = Calendar.getInstance();
                 cal.setTime(date);
                 final int numDay = cal.get(Calendar.DAY_OF_MONTH);
-                toast = String.valueOf(date.getDate());
                 String key = Integer.toString(year) + "-" + Integer.toString(month+1) + "-"
                         + Integer.toString(numDay);
                 listView = (ListView) findViewById(R.id.listview);
 
 
-                //Toast.makeText(num09_Main.this, numDay + " " + calendarView.getStringMonth(month) + " " + year, Toast.LENGTH_SHORT).show();
-                Toast.makeText(num09_Main.this, toast, Toast.LENGTH_SHORT).show();
                 if(boolpos[position] == 1)
                 {
-
                     listAdapter = new listItemAdapter();
 
                     ArrayList<listItem> al = ht.get(key);
@@ -192,16 +196,14 @@ public class num09_Main extends AppCompatActivity {
                     datePos = position;
                     dateCheck  = 0;
                 }
-                else if(dateCheck == 0) {
+                else if(dateCheck == 0 && boolpos[position] != 1) {
                     calendarView.removeDaySeleted(datePos);
-                    //calendarView.addDaySelected(exPos);
                     dateCheck = 1;
                     datePos = position;
                 }
-                else if(dateCheck == 1)
+                else if(dateCheck == 1 && boolpos[position] != 1)
                 {
                     calendarView.removeDaySeleted(datePos);
-                    //calendarView.addDaySelected(exPos);
                     dateCheck = 0;
                     datePos = position;
                 }
@@ -229,7 +231,6 @@ public class num09_Main extends AppCompatActivity {
                         intent.putExtra("calDay", numDay);
                         intent.putExtra("calMonth", month);
                         intent.putExtra("calYear", year);
-                        //Toast.makeText(num09_Main.this, cDay, Toast.LENGTH_SHORT).show();
                         startActivityForResult(intent, REQUEST_CODE);
 
                         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
@@ -246,6 +247,17 @@ public class num09_Main extends AppCompatActivity {
         });
     }
 
+    public void recalculate() {
+        mCalendar.set(Calendar.DAY_OF_MONTH, 1);  //날짜를 현재달의 1일로 설정
+        int dayOfWeek = mCalendar.get(Calendar.DAY_OF_WEEK);  //현재요일을 얻는다.
+        String dow = Integer.toString(dayOfWeek);
+        Log.d("dayofWeek : ", dow);
+        firstDay = getFirstDay(dayOfWeek);
+        String fd = Integer.toString(firstDay);
+        Log.d("firstDay : ", fd);
+        firstPos = firstDay;
+
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -256,15 +268,13 @@ public class num09_Main extends AppCompatActivity {
         }
 
         if (requestCode == REQUEST_CODE || resultCode == 1002) {
-            //num10의 날짜와 같은 달력날짜라면 출력하도록
-            //if(data.getExtras().getInt("Year") == cYear && data.getExtras().getInt("Month") == cMonth && data.getExtras().getInt("Day") == cDay) {
 
             String dayText = data.getExtras().getString("dayTo");
             int schePos = Integer.parseInt(dayText);
 
 
-            calendarView.addDaySelected(schePos+1);
-            boolpos[schePos+1] = 1;
+            calendarView.addDaySelected(schePos+firstPos-1);
+            boolpos[schePos+firstPos-1] = 1;
 
             String key = data.getExtras().getString("hashKey");
             listItem item = (listItem)data.getSerializableExtra("listItem");
@@ -285,5 +295,23 @@ public class num09_Main extends AppCompatActivity {
         }
     }
 
+    private int getFirstDay(int dayOfWeek) {  //요일을 알아온다.
+        int result = 0;
 
+        if (dayOfWeek == Calendar.SUNDAY)
+            result = 0;
+        else if (dayOfWeek == Calendar.MONDAY)
+            result = 1;
+        else if (dayOfWeek == Calendar.TUESDAY)
+            result = 2;
+        else if (dayOfWeek == Calendar.WEDNESDAY)
+            result = 3;
+        else if (dayOfWeek == Calendar.THURSDAY)
+            result = 4;
+        else if (dayOfWeek == Calendar.FRIDAY)
+            result = 5;
+        else if (dayOfWeek == Calendar.SATURDAY)
+            result = 6;
+        return result;
+    }
 }

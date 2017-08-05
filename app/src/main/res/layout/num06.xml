@@ -57,7 +57,7 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="260dp">
+            android:layout_height="280dp">
 
             <TextView
                 android:id="@+id/rain_percent"
@@ -89,7 +89,7 @@
             <TextView
                 android:id="@+id/rain_ment"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="top|center"
                 android:text="우산 챙기세요"
                 android:textColor="#000000"
@@ -108,7 +108,7 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="260dp">
+            android:layout_height="280dp">
             <TextView
                 android:id="@+id/dust"
                 android:layout_width="match_parent"
@@ -139,7 +139,7 @@
             <TextView
                 android:id="@+id/dust_ment"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="top|center"
                 android:text="마스크 꼭 챙기세요"
                 android:textColor="#000000"
