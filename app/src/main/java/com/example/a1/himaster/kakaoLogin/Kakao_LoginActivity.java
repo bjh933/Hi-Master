@@ -1,6 +1,5 @@
-package com.example.a1.himaster;
+package com.example.a1.himaster.kakaoLogin;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -8,16 +7,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.a1.himaster.MainActivity;
+import com.example.a1.himaster.R;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
-import com.kakao.network.ErrorResult;
-import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.MeResponseCallback;
-import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 

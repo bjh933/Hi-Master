@@ -1,4 +1,4 @@
-package com.example.a1.himaster;
+package com.example.a1.himaster.kakaoLogin;
 
 /**
  * Created by a1 on 2017. 7. 28..

@@ -15,7 +15,7 @@
 
 
     <application
-        android:name=".GlobalApplication"
+        android:name=".kakaoLogin.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -32,7 +32,7 @@
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".IntroActivity">
+        <activity android:name=".BottombarActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,8 +41,8 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".num02_Main" />
-        <activity android:name=".Kakao_LoginActivity" />
-        <activity android:name=".KakaoSignupActivity" />
+        <activity android:name=".kakaoLogin.Kakao_LoginActivity" />
+        <activity android:name=".kakaoLogin.KakaoSignupActivity" />
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"

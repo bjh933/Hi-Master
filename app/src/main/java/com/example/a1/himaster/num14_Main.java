@@ -31,7 +31,7 @@ public class num14_Main extends AppCompatActivity {
     Button appConfig;
     Button help;
     Button logout;
-    private GoogleApiClient mGoogleApiClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

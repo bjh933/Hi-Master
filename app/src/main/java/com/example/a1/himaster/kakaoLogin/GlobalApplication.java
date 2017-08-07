@@ -1,4 +1,4 @@
-package com.example.a1.himaster;
+package com.example.a1.himaster.kakaoLogin;
 
 import android.app.Activity;
 import android.app.Application;

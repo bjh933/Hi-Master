@@ -1,6 +1,5 @@
 package com.example.a1.himaster;
 
-import android.accounts.Account;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -12,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.a1.himaster.kakaoLogin.Kakao_LoginActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -21,23 +21,12 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
-import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.Scopes;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Scope;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.plus.People;
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
-import com.google.android.gms.plus.model.people.PersonBuffer;
 
 import org.json.JSONObject;
 
@@ -272,8 +261,5 @@ public class MainActivity extends AppCompatActivity {
     };
 
     /////구글 로그인 관련 함수/////
-
-
-
 
 }

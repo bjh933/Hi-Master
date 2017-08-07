@@ -1,4 +1,4 @@
-package com.example.a1.himaster;
+package com.example.a1.himaster.kakaoLogin;
 
 /**
  * Created by a1 on 2017. 7. 28..
@@ -8,8 +8,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
+import com.example.a1.himaster.R;
+import com.example.a1.himaster.num02_Schedule;
 import com.kakao.auth.ErrorCode;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;

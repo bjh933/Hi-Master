@@ -268,10 +268,13 @@ public class num09_Main extends AppCompatActivity {
         }
 
         if (requestCode == REQUEST_CODE || resultCode == 1002) {
-
-            String dayText = data.getExtras().getString("dayTo");
-            int schePos = Integer.parseInt(dayText);
-
+            String monthfromText = data.getExtras().getString("monthFrom");
+            String dayfromText = data.getExtras().getString("dayFrom");
+            String monthtoText = data.getExtras().getString("monthTo");
+            String daytoText = data.getExtras().getString("dayTo");
+            int schePos = Integer.parseInt(daytoText);
+            int from = Integer.parseInt(dayfromText);
+            int sub = schePos - from;
 
             calendarView.addDaySelected(schePos+firstPos-1);
             boolpos[schePos+firstPos-1] = 1;
