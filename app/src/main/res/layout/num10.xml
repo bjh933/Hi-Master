@@ -92,7 +92,7 @@
             android:layout_height="45dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
-            android:text="일정 : "
+            android:text="제목 : "
             android:textSize="25dp"/>
 
         <EditText
@@ -146,39 +146,7 @@
             ></Spinner>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/siganLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="100dp"
-        android:orientation="horizontal">
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="2dp"
-            android:id="@+id/timeSpinner"
-            android:entries="@array/timeSpinner"
-            ></Spinner>
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:id="@+id/hourSpinner"
-            android:entries="@array/hourSpinner"
-            ></Spinner>
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:id="@+id/minSpinner"
-            android:entries="@array/minSpinner"
-            ></Spinner>
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/fixLayout"

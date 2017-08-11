@@ -30,7 +30,7 @@ public class IntroActivity extends Activity {
             handler.postDelayed(new Runnable() {
                 public void run() {
                     Intent intent = new Intent(IntroActivity.this,
-                            num02_Schedule.class);
+                            BottombarActivity.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                     finish();

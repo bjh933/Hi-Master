@@ -34,7 +34,7 @@ public class FourthFragment extends Fragment {
     private OneCalendarView calendarView;
     Button detailBtn, addBtn;
     Button rewriteBtn, deleteBtn;
-    int thisPos;
+    int thisPos, exPos;
     int dateCheck = -1;
     int datePos;
     String cMonth;
@@ -136,8 +136,6 @@ public class FourthFragment extends Fragment {
         public void dateOnClick(Day day, int position) {
             Calendar cal = Calendar.getInstance();
 
-            thisPos = position;
-            //detailBtn.setVisibility(View.VISIBLE);
             addBtn.setVisibility(View.VISIBLE);
             Date date = day.getDate();
             final int year = date.getYear();
@@ -148,9 +146,14 @@ public class FourthFragment extends Fragment {
                     + Integer.toString(numDay);
 
 
+            if(boolpos[position] != 1)
+                exPos = position;
 
             if(boolpos[position] == 1)
             {
+                if(exPos != position)
+                     calendarView.removeDaySeleted(exPos);
+
                 listAdapter = new listItemAdapter();
 
                 ArrayList<listItem> al = ht.get(key);
@@ -171,32 +174,26 @@ public class FourthFragment extends Fragment {
             {
                 datePos = position;
                 dateCheck  = 0;
+                calendarView.addDaySelected(datePos);
             }
             else if(dateCheck == 0 && boolpos[position] != 1) {
                 calendarView.removeDaySeleted(datePos);
                 dateCheck = 1;
                 datePos = position;
+                calendarView.addDaySelected(datePos);
             }
             else if(dateCheck == 1 && boolpos[position] != 1)
             {
                 calendarView.removeDaySeleted(datePos);
                 dateCheck = 0;
                 datePos = position;
+                calendarView.addDaySelected(datePos);
             }
 
-            calendarView.addDaySelected(datePos);
+
             cYear = year;
             cMonth = calendarView.getStringMonth(month);
             cDay = numDay;
-
-            detailBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), num21_Main.class);
-                    startActivity(intent);
-                }
-
-            });
 
             addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -207,7 +204,7 @@ public class FourthFragment extends Fragment {
                     intent.putExtra("calYear", year);
                     startActivityForResult(intent, REQUEST_CODE);
 
-                    //overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                    getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                     //finish();
                 }
 
@@ -231,14 +228,16 @@ public class FourthFragment extends Fragment {
         Log.d("firstDay : ", fd);
         firstPos = firstDay;
 
+        for(int i=0;i<42;i++)
+            boolpos[i] = 0;
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode != RESULT_OK) {
-            //Toast.makeText(com.example.a1.himaster.num09_Main.this, "데이터 수신 실패", Toast.LENGTH_SHORT).show();
-            //return;
+            return;
         }
 
         if (requestCode == REQUEST_CODE || resultCode == 1002) {
@@ -249,9 +248,19 @@ public class FourthFragment extends Fragment {
             int schePos = Integer.parseInt(daytoText);
             int from = Integer.parseInt(dayfromText);
             int sub = schePos - from;
+            int fromPos = from;
 
-            calendarView.addDaySelected(schePos+firstPos-1);
-            boolpos[schePos+firstPos-1] = 1;
+            if(datePos == schePos+firstPos-1)
+                datePos = 41;
+            /*
+            for(int i=-1;i<sub;i++) {
+                calendarView.addDaySelected(fromPos + firstPos - 1);
+                boolpos[fromPos + firstPos - 1] = 1;
+                fromPos++;
+            }
+            */
+            calendarView.addDaySelected(schePos + firstPos - 1);
+            boolpos[schePos + firstPos - 1] = 1;
 
             String key = data.getExtras().getString("hashKey");
             listItem item = (listItem)data.getSerializableExtra("listItem");
@@ -267,8 +276,6 @@ public class FourthFragment extends Fragment {
                 ht.put(key, al);
             }
 
-        } else {
-            //Toast.makeText(com.example.a1.himaster.num09_Main.this, "REQUEST_CODE가 아님", Toast.LENGTH_SHORT).show();
         }
     }
 

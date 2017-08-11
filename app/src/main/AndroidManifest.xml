@@ -32,7 +32,7 @@
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".BottombarActivity">
+        <activity android:name=".IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,6 +40,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <activity android:name=".BottombarActivity" />
         <activity android:name=".num02_Main" />
         <activity android:name=".kakaoLogin.Kakao_LoginActivity" />
         <activity android:name=".kakaoLogin.KakaoSignupActivity" />

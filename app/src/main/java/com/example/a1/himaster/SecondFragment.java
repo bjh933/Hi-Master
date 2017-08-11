@@ -37,7 +37,7 @@ public class SecondFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), num19_Main.class);
                 startActivity(intent);
-
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
             }
 
         });

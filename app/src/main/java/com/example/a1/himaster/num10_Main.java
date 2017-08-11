@@ -55,7 +55,6 @@ public class num10_Main extends AppCompatActivity {
         giganLay = (LinearLayout)findViewById(R.id.giganLayout);
         giganLay2 = (LinearLayout)findViewById(R.id.giganLayout2);
         siganLay = (LinearLayout)findViewById(R.id.siganLayout);
-        siganLay2 = (LinearLayout)findViewById(R.id.siganLayout2);
         destLay = (LinearLayout)findViewById(R.id.destLayout);
         fixLay = (LinearLayout)findViewById(R.id.fixLayout);
         hangsaLay = (LinearLayout)findViewById(R.id.hangsaIconLayout);
@@ -71,7 +70,6 @@ public class num10_Main extends AppCompatActivity {
                         giganLay.setVisibility(View.VISIBLE);
                         giganLay2.setVisibility(View.VISIBLE);
                         siganLay.setVisibility(View.VISIBLE);
-                        siganLay2.setVisibility(View.VISIBLE);
                         destLay.setVisibility(View.VISIBLE);
                         fixLay.setVisibility(View.VISIBLE);
                         hangsaLay.setVisibility(View.GONE);
@@ -79,7 +77,6 @@ public class num10_Main extends AppCompatActivity {
                     case R.id.radio1:
                         giganLay.setVisibility(View.GONE);
                         siganLay.setVisibility(View.GONE);
-                        siganLay2.setVisibility(View.GONE);
                         destLay.setVisibility(View.GONE);
                         fixLay.setVisibility(View.VISIBLE);
                         hangsaLay.setVisibility(View.GONE);
@@ -88,7 +85,6 @@ public class num10_Main extends AppCompatActivity {
                         giganLay.setVisibility(View.VISIBLE);
                         giganLay2.setVisibility(View.VISIBLE);
                         siganLay.setVisibility(View.VISIBLE);
-                        siganLay2.setVisibility(View.VISIBLE);
                         destLay.setVisibility(View.VISIBLE);
                         fixLay.setVisibility(View.GONE);
                         hangsaLay.setVisibility(View.VISIBLE);
@@ -208,8 +204,6 @@ public class num10_Main extends AppCompatActivity {
                 String dEText = spinner10.getSelectedItem().toString();
 
                 String key = yEText + "-" + mEText + "-" + dEText;  //해쉬 Key
-
-
 
                 Intent intent = new Intent(num10_Main.this, num09_Main.class);
                 intent.putExtra("todo", doTitle);
