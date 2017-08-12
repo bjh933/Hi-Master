@@ -32,7 +32,7 @@ public class num10_Main extends AppCompatActivity {
     Spinner spinner1, spinner2, spinner3, spinner4, spinner5, spinner6, spinner7, spinner8,
             spinner9, spinner10;
     ArrayAdapter<CharSequence> adapter;
-    ImageView backBtn;
+
     Button cancelBtn;
     Button okBtn;
     EditText todoTitle;
@@ -151,8 +151,6 @@ public class num10_Main extends AppCompatActivity {
         pos2 = data.getExtras().getInt("calMonth");
         pos3 = data.getExtras().getInt("calDay");
 
-
-
         spinner5.setSelection(pos);
         spinner6.setSelection(pos2);
         spinner7.setSelection(pos3-1);
@@ -161,25 +159,10 @@ public class num10_Main extends AppCompatActivity {
         spinner9.setSelection(pos2);
         spinner10.setSelection(pos3-1);
 
-        setCustomActionbar();
-        backBtn = (ImageView) findViewById(R.id.menu_back);
-
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(num10_Main.this, num14_Main.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-                finish();
-            }
-
-        });
-
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num10_Main.this, num09_Main.class);
+                Intent intent = new Intent(num10_Main.this, BottombarActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 //finish();
@@ -205,7 +188,7 @@ public class num10_Main extends AppCompatActivity {
 
                 String key = yEText + "-" + mEText + "-" + dEText;  //해쉬 Key
 
-                Intent intent = new Intent(num10_Main.this, num09_Main.class);
+                Intent intent = new Intent(num10_Main.this, BottombarActivity.class);
                 intent.putExtra("todo", doTitle);
                 intent.putExtra("dayFrom", dText);
                 intent.putExtra("monthFrom", mText);
@@ -233,28 +216,6 @@ public class num10_Main extends AppCompatActivity {
         });
 
 
-
-    }
-
-    private void setCustomActionbar() {
-        ActionBar actionBar = getSupportActionBar();
-
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        View mCustomView = from(this).inflate(R.layout.abs_layout, null);
-        actionBar.setCustomView(mCustomView);
-
-        Toolbar parent = (Toolbar) mCustomView.getParent();
-        parent.setContentInsetsAbsolute(0, 0);
-
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#999999")));
-
-
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT);
-
-        actionBar.setCustomView(mCustomView, params);
 
     }
 

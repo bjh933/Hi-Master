@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 public class ThirdFragment extends Fragment {
@@ -79,12 +82,18 @@ public class ThirdFragment extends Fragment {
             baseTime = "1100";
         else if(compTime >= 1400 && compTime < 1700)
             baseTime = "1400";
-        else if(compTime >= 1700 && compTime < 2000 || compTime <= 200)
+        else if(compTime >= 1700 && compTime < 2000)
             baseTime = "1700";
-        else if(compTime >= 2000 && compTime < 2300 || compTime <= 200)
+        else if(compTime >= 2000 && compTime < 2300)
             baseTime = "2000";
-        else if(compTime >= 2300 && compTime < 2459 || compTime < 200)
+        else if((compTime >= 2300 && compTime < 2459) || compTime < 200)
+        {
+            SimpleDateFormat yday = new SimpleDateFormat("yyyyMMdd");
+            Calendar cal = new GregorianCalendar();
+            cal.add(Calendar.DATE, -1);
+            baseDate = yday.format(cal.getTime());
             baseTime = "2300";
+        }
 
         String serviceKey = "lstxToevjq2KVH%2F%2Bd1w9iJauN%2BP7ejDclyyy%2Bd3L%2BYYm0G6WoBqpvb5Xeo1K5yqpY1jWebRCwTqnmw%2Fo%2BkyMPA%3D%3D";
         String url = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData?serviceKey="
@@ -97,13 +106,18 @@ public class ThirdFragment extends Fragment {
 
         SimpleDateFormat dday = new SimpleDateFormat("yyyyMMdd06");
         String today = dday.format(date);
+
+        Calendar cal = new GregorianCalendar();
+        cal.add(Calendar.DATE, -1);
+
         String jisuUrl1 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getDsplsLifeList?serviceKey="+
                 serviceKey+"&areaNo=1100000000&time="+today+"&type=json";   // 불쾌지수
-        String jisuUrl2 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getUltrvLifeList?serviceKey="+
-                serviceKey+"&areaNo=1100000000&time="+today+"&type=json";   // 자외선지수
-        String jisuUrl3 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getFsnLifeList?serviceKey="+
-                serviceKey+"&areaNo=1100000000&time="+today+"&type=json";   // 식중독지수
 
+        String yesterday = dday.format(cal.getTime());
+        String jisuUrl2 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getUltrvLifeList?serviceKey="+
+                serviceKey+"&areaNo=1100000000&time="+yesterday+"&type=json";   // 자외선지수
+        String jisuUrl3 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getFsnLifeList?serviceKey="+
+                serviceKey+"&areaNo=1100000000&time="+yesterday+"&type=json";   // 식중독지수
 
         getData(url);
         getDustData(url2);
