@@ -1,4 +1,4 @@
-package com.example.a1.himaster;
+package com.example.a1.himaster.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.a1.himaster.R;
+import com.example.a1.himaster.listItem;
 
 import java.util.ArrayList;
 

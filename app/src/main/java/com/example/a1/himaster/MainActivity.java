@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, num02_Schedule.class);
+                Intent intent = new Intent(MainActivity.this, BottombarActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                                             editor.putString("GENDER", gender);
                                             editor.commit();
 
-                                            Intent intent = new Intent(MainActivity.this, num02_Schedule.class);
+                                            Intent intent = new Intent(MainActivity.this, BottombarActivity.class);
                                             startActivity(intent);
                                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                                             finish();
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
             //editor.putString("NAME", gname);
             editor.commit();
 
-            Intent intent = new Intent(MainActivity.this, num02_Schedule.class);
+            Intent intent = new Intent(MainActivity.this, BottombarActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
             finish();

@@ -41,7 +41,6 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".BottombarActivity" />
-        <activity android:name=".num02_Main" />
         <activity android:name=".kakaoLogin.Kakao_LoginActivity" />
         <activity android:name=".kakaoLogin.KakaoSignupActivity" />
         <activity android:name="com.facebook.FacebookActivity"
@@ -49,12 +48,7 @@
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
-        <activity android:name=".num02_Schedule" />
-        <activity android:name=".num03_Main"/>
-        <activity android:name=".num03_ViewActivity"/>
         <activity android:name=".num04_Main"/>
-        <activity android:name=".num05_Main"/>
-        <activity android:name=".num06_Main"/>
         <activity android:name=".num09_Main"/>
         <activity android:name=".num10_Main"/>
         <activity android:name=".num14_Main"/>

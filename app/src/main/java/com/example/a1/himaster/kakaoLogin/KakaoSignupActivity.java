@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.a1.himaster.BottombarActivity;
 import com.example.a1.himaster.R;
-import com.example.a1.himaster.num02_Schedule;
 import com.kakao.auth.ErrorCode;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
@@ -85,7 +85,7 @@ public class KakaoSignupActivity extends Activity{
 
     private void redirectMainActivity() {
 
-        startActivity(new Intent(this, num02_Schedule.class));
+        startActivity(new Intent(this, BottombarActivity.class));
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
         finish();
     }

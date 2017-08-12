@@ -2,7 +2,6 @@ package com.example.a1.himaster;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.widget.Toast;
 
 import com.example.a1.himaster.bottomtab.BottomBarHolderActivity;
 import com.example.a1.himaster.bottomtab.NavigationPage;
@@ -18,7 +17,7 @@ public class BottombarActivity extends BottomBarHolderActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        NavigationPage page1 = new NavigationPage("홈", ContextCompat.getDrawable(this, R.drawable.ic_home_black_24dp), RvFirstFragment.newInstance());
+        NavigationPage page1 = new NavigationPage("홈", ContextCompat.getDrawable(this, R.drawable.ic_home_black_24dp), FirstFragment.newInstance());
         NavigationPage page2 = new NavigationPage("오늘 할일", ContextCompat.getDrawable(this, R.drawable.ic_mail_black_24dp), SecondFragment.newInstance());
         NavigationPage page3 = new NavigationPage("날씨", ContextCompat.getDrawable(this, R.drawable.ic_assessment_black_24dp), ThirdFragment.newInstance());
         NavigationPage page4 = new NavigationPage("달력", ContextCompat.getDrawable(this, R.drawable.ic_person_black_24dp), FourthFragment.newInstance());

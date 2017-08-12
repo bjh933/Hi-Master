@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#e6e3d8"
-    tools:context="com.example.a1.himaster.num13_Main">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
