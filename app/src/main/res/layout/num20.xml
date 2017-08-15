@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#e6e3d8"
+    android:background="#F3F2EE"
     tools:context="com.example.a1.himaster.num20_Main">
 
     <TextView
@@ -98,113 +98,7 @@
             android:background="@drawable/s_maps"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
 
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:text="직업"
-            android:textSize="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="40dp"
-            />
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:id="@+id/jobSpinner"
-            android:entries="@array/jobSpinner"
-            ></Spinner>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="생년월일"
-            android:textSize="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="40dp"
-            />
-
-        <EditText
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:id="@+id/yearEdit"
-            android:hint="년"/>
-
-        <EditText
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="5dp"
-            android:id="@+id/monthEdit"
-            android:hint="월"/>
-
-        <EditText
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="5dp"
-            android:id="@+id/dateEdit"
-            android:hint="일"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="성별"
-            android:textSize="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="40dp"
-            />
-
-        <RadioGroup
-            android:id="@+id/sexRadioGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <RadioButton
-                android:id="@+id/male"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="10dp"
-                android:checked="false"
-                android:textSize="15dp"
-                android:text="남" />
-
-            <RadioButton
-                android:id="@+id/female"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="10dp"
-                android:checked="false"
-                android:textSize="15dp"
-                android:text="여" />
-        </RadioGroup>
-
-    </LinearLayout>
 
     <Button
         android:id="@+id/okButton"
@@ -213,7 +107,7 @@
         android:background="@drawable/s_test01"
         android:text="완료"
         android:layout_gravity="right"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="50dp"
         android:textSize="13dp"/>
 

@@ -2,6 +2,7 @@ package com.example.a1.himaster;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
@@ -21,6 +22,12 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -39,7 +46,7 @@ public class num10_Main extends AppCompatActivity {
     RadioButton iljung, halil, hangsa;
     LinearLayout giganLay, giganLay2, siganLay, siganLay2, destLay, fixLay, hangsaLay;
     public static final int REQUEST_CODE = 1001;
-    int pos1, pos2, pos3, pos;
+    int pos1, pos2, pos3, pos, flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,7 @@ public class num10_Main extends AppCompatActivity {
                         destLay.setVisibility(View.VISIBLE);
                         fixLay.setVisibility(View.VISIBLE);
                         hangsaLay.setVisibility(View.GONE);
+                        flag=0;
                         break;
                     case R.id.radio1:
                         giganLay.setVisibility(View.GONE);
@@ -80,6 +88,7 @@ public class num10_Main extends AppCompatActivity {
                         destLay.setVisibility(View.GONE);
                         fixLay.setVisibility(View.VISIBLE);
                         hangsaLay.setVisibility(View.GONE);
+                        flag=1;
                         break;
                     case R.id.radio2:
                         giganLay.setVisibility(View.VISIBLE);
@@ -88,6 +97,7 @@ public class num10_Main extends AppCompatActivity {
                         destLay.setVisibility(View.VISIBLE);
                         fixLay.setVisibility(View.GONE);
                         hangsaLay.setVisibility(View.VISIBLE);
+                        flag=2;
                        break;
                 }
             }
@@ -139,6 +149,10 @@ public class num10_Main extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner10.setAdapter(adapter);
 
+        SharedPreferences saveInfo = getSharedPreferences("loginFlag", MODE_PRIVATE);
+        final String userId = saveInfo.getString("USERID", "");   //  userId 가져옴
+        Log.d("uid", userId);
+
         Intent data = getIntent();
         pos1 = data.getExtras().getInt("calYear");
         if(pos1 == 2017)
@@ -158,14 +172,14 @@ public class num10_Main extends AppCompatActivity {
         spinner8.setSelection(pos);
         spinner9.setSelection(pos2);
         spinner10.setSelection(pos3-1);
+        final Intent intent = new Intent(num10_Main.this, BottombarActivity.class);
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num10_Main.this, BottombarActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-                //finish();
+                setResult(RESULT_CANCELED, intent);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                finish();
             }
 
         });
@@ -178,6 +192,9 @@ public class num10_Main extends AppCompatActivity {
                         " : " + spinner3.getSelectedItem().toString();
                 listItem item = new listItem(time, doTitle);
 
+                String ampm = spinner1.getSelectedItem().toString();
+                String startHour = spinner2.getSelectedItem().toString();
+                String startMinute = spinner3.getSelectedItem().toString();
 
                 String yText = spinner5.getSelectedItem().toString();
                 String mText = spinner6.getSelectedItem().toString();
@@ -186,9 +203,14 @@ public class num10_Main extends AppCompatActivity {
                 String mEText = spinner9.getSelectedItem().toString();
                 String dEText = spinner10.getSelectedItem().toString();
 
+                String startDate = yText + "-"+ mText + "-" + dText;
                 String key = yEText + "-" + mEText + "-" + dEText;  //해쉬 Key
+                String endDate = key;
+                String fix = "true";
+                String destination = "Seoul";
+                String memo = "test";
 
-                Intent intent = new Intent(num10_Main.this, BottombarActivity.class);
+
                 intent.putExtra("todo", doTitle);
                 intent.putExtra("dayFrom", dText);
                 intent.putExtra("monthFrom", mText);
@@ -199,10 +221,116 @@ public class num10_Main extends AppCompatActivity {
                 intent.putExtra("listItem", item);
                 intent.putExtra("hashKey", key);
 
+                if(flag == 0) {
+                    String Schedule = "[{\"userid\":"+ userId + ", \"title\":" + doTitle + ", \"ampm\":" + ampm + ", \"startHour\":"
+                            + startHour + ", \"startMinute\":" + startMinute + ", \"startDate\":" + startDate + ", " +
+                            "\"endDate\":" + endDate + ", \"fix\":" + fix + ", \"destination\":" + destination +
+                            ", \"memo\":" + memo + "}]";
+
+                    //Log.d("test1", Schedule);
+
+                    try {
+                        String result = "";
+                        JSONArray ja = new JSONArray(Schedule);
+                        for (int i = 0; i < ja.length(); i++) {
+                            JSONObject order = ja.getJSONObject(i);
+                            result += "userid : "+order.getString("userid") + ", title : " + order.getString("title") + ", ampm : " +
+                                    order.getString("ampm") + ", startHour : " + order.getString("startHour") +
+                                    ", startMinute : " + order.getString("startMinute") + ", startDate : "
+                                    + order.getString("startDate") + ", endDate : " + order.getString("endDate")
+                                    + ", fix : " + order.getString("fix") + ", destination : " + order.getString("destination")
+                                    + ", memo : " + order.getString("memo") + "\n";
+
+                            //Log.d("jsontest", result);
+                        }
+
+                        JSONObject obj = new JSONObject();
+                        for (int i = 0; i < ja.length(); i++) {
+                            obj = ja.getJSONObject(i);
+                        }
+
+                        Log.d("jsonob", obj.toString());
+
+
+                    } catch (JSONException e) {
+                        //Log.d("why", "fail");
+
+                    }
+                }
+
+                else if(flag == 1) {
+                    String Todo = "[{\"userid\":"+ userId + ", \"title\":" + doTitle + ", \"endDate\":" + endDate + ", \"fix\":" + fix + ", \"destination\":" + destination +
+                            ", \"memo\":" + memo + "}]";
+
+                    //Log.d("test1", Todo);
+
+                    try {
+                        String result = "";
+                        JSONArray ja = new JSONArray(Todo);
+                        for (int i = 0; i < ja.length(); i++) {
+                            JSONObject order = ja.getJSONObject(i);
+                            result += "userid : "+order.getString("userid") + ", title : " + order.getString("title") + ", endDate : " + order.getString("endDate")
+                                    + ", fix : " + order.getString("fix") + ", destination : " + order.getString("destination")
+                                    + ", memo : " + order.getString("memo") + "\n";
+
+                            //Log.d("jsontest", result);
+                        }
+
+                        JSONObject obj = new JSONObject();
+                        for (int i = 0; i < ja.length(); i++) {
+                            obj = ja.getJSONObject(i);
+                        }
+
+                        //Log.d("jsonob", obj.toString());
+
+
+                    } catch (JSONException e) {
+                        //Log.d("why", "fail");
+
+                    }
+                }
+
+                else if(flag == 2) {
+                    String Event = "[{\"userid\":"+ userId + ", \"title\":" + doTitle + ", \"ampm\":" + ampm + ", \"startHour\":"
+                            + startHour + ", \"startMinute\":" + startMinute + ", \"startDate\":" + startDate + ", " +
+                            "\"endDate\":" + endDate + ", \"destination\":" + destination +
+                            ", \"memo\":" + memo + "}]";
+
+                    //Log.d("test1", Schedule);
+
+                    try {
+                        String result = "";
+                        JSONArray ja = new JSONArray(Event);
+                        for (int i = 0; i < ja.length(); i++) {
+                            JSONObject order = ja.getJSONObject(i);
+                            result += "userid : "+order.getString("userid") + ", title : " + order.getString("title") + ", ampm : " +
+                                    order.getString("ampm") + ", startHour : " + order.getString("startHour") +
+                                    ", startMinute : " + order.getString("startMinute") + ", startDate : "
+                                    + order.getString("startDate") + ", endDate : " + order.getString("endDate")
+                                    + ", destination : " + order.getString("destination")
+                                    + ", memo : " + order.getString("memo") + "\n";
+
+                            //Log.d("jsontest", result);
+                        }
+
+                        JSONObject obj = new JSONObject();
+                        for (int i = 0; i < ja.length(); i++) {
+                            obj = ja.getJSONObject(i);
+                        }
+
+                        //Log.d("jsonob", obj.toString());
+
+
+                    } catch (JSONException e) {
+                        //Log.d("why", "fail");
+
+                    }
+                }
+
                 if(doTitle.length() != 0)
                 {
                     setResult(RESULT_OK, intent);
-                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                     finish();
                  }
 
@@ -217,6 +345,11 @@ public class num10_Main extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 
 }

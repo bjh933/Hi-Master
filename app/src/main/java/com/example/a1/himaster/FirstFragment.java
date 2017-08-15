@@ -1,6 +1,8 @@
 package com.example.a1.himaster;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a1.himaster.Adapter.NoticeAdapter;
@@ -24,14 +27,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class FirstFragment extends Fragment {
     public static FirstFragment newInstance() {
         return new FirstFragment();
     }
-    String url = "http://192.168.0.12:8080/home?userId=abc&date=2017-08-09 20:20:20";
+    String url = "http://192.168.0.12:8080/home?userid=abcdef&date=2017-08-09 20:20:20";
     private static final String TAG_RESULTS="schedules";
     private static final String TAG_TITLE = "title";
     private static final String TAG_DATE = "dueDate";
@@ -41,31 +46,52 @@ public class FirstFragment extends Fragment {
     //UI 관련
     private RecyclerView rv;
     private LinearLayoutManager mLinearLayoutManager;
-    TextView tv1, tv2, tv3;
+    TextView tv1, tv2, tv3, dateTv;
+    ImageView optMenu;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.secondfragment, container, false);
+        View view = inflater.inflate(R.layout.firstfragment, container, false);
 
         scheduleList = new ArrayList<HashMap<String, String>>();
+        dateTv = (TextView)view.findViewById(R.id.dateTv);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv = (RecyclerView) view.findViewById(R.id.scheduleRv);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(mLinearLayoutManager);
+
         tv1 = (TextView)view.findViewById(R.id.tv_title);
         tv2 = (TextView)view.findViewById(R.id.tv_date);
         tv3 = (TextView)view.findViewById(R.id.tv_dest);
 
+        optMenu = (ImageView)view.findViewById(R.id.optMenuBtn);
+        optMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyInfo.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                //finish();
+            }
 
+        });
 
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat toDate = new SimpleDateFormat("MMM . dd / EEE", Locale.ENGLISH);
+        String todayDate = toDate.format(date);
+        dateTv.setText(todayDate);
         getData(url);
 
         return view;
 
 
     }
+
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -156,4 +182,8 @@ public class FirstFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+
+
+
 }

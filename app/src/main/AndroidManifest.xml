@@ -48,6 +48,8 @@
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
+        <activity android:name=".InfoToBottom"/>
+        <activity android:name=".MyInfo"/>
         <activity android:name=".num04_Main"/>
         <activity android:name=".num09_Main"/>
         <activity android:name=".num10_Main"/>
@@ -58,7 +60,8 @@
         <activity android:name=".num19_Main"/>
         <activity android:name=".num20_Main"/>
         <activity android:name=".num21_Main"/>
-        <activity android:name=".popup" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".Popup" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".Popup_emailchk" android:theme="@android:style/Theme.Dialog"/>
     </application>
 
 </manifest>

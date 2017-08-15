@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -28,7 +29,7 @@ public class ThirdFragment extends Fragment {
     private static final String TAG_CAT = "category";
     private static final String TAG_TIME = "fcstTime";
     private static final String TAG_VALUE = "fcstValue";
-
+    ImageView weatherIv;
     JSONArray posts = null;
     TextView dateTv, tempTv, rainTv, skyTv, dustValTv, dustTv, bulTv, bulExTv, ultTv, ultExTv, sickTv, sickExTv;
 
@@ -48,7 +49,7 @@ public class ThirdFragment extends Fragment {
         tempTv = (TextView)view.findViewById(R.id.tempTv);
         skyTv = (TextView)view.findViewById(R.id.skyTv);
         rainTv = (TextView)view.findViewById(R.id.perTv);
-
+        weatherIv = (ImageView)view.findViewById(R.id.weatherIv);
         dustValTv = (TextView)view.findViewById(R.id.dustValTv);
         dustTv = (TextView)view.findViewById(R.id.dustTv);
 
@@ -86,14 +87,17 @@ public class ThirdFragment extends Fragment {
             baseTime = "1700";
         else if(compTime >= 2000 && compTime < 2300)
             baseTime = "2000";
-        else if((compTime >= 2300 && compTime < 2459) || compTime < 200)
+        else if((compTime >= 2300 && compTime < 2459))
+        {
+            baseTime = "2300";
+        }
+        else if(compTime < 200)
         {
             SimpleDateFormat yday = new SimpleDateFormat("yyyyMMdd");
             Calendar cal = new GregorianCalendar();
             cal.add(Calendar.DATE, -1);
             baseDate = yday.format(cal.getTime());
-            baseTime = "2300";
-        }
+            baseTime = "2300";}
 
         String serviceKey = "lstxToevjq2KVH%2F%2Bd1w9iJauN%2BP7ejDclyyy%2Bd3L%2BYYm0G6WoBqpvb5Xeo1K5yqpY1jWebRCwTqnmw%2Fo%2BkyMPA%3D%3D";
         String url = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData?serviceKey="
@@ -185,6 +189,9 @@ public class ThirdFragment extends Fragment {
                 String time = c.getString(TAG_TIME);
                 String value = c.getString(TAG_VALUE);
                 String skyStatus = "";
+                String rain = "";
+                String temp = "";
+                int rainPer = 0;
                 //Log.d("cate", category);
                 //Log.d("time", time);
                 //Log.d("value", value);
@@ -192,12 +199,28 @@ public class ThirdFragment extends Fragment {
                 if(category.equals("POP"))
                 {
                     rainTv.setText(value);
+                    rain = rainTv.getText().toString();
+                    rainPer = Integer.parseInt(rain);
                     rainTv.append(" %");
+
+                    if(rainPer >= 70)
+                    {
+                        weatherIv.setImageResource(R.drawable.rainy);
+                    }
+                    else if(rainPer >= 30 && rainPer < 70)
+                    {
+                        weatherIv.setImageResource(R.drawable.cloudy);
+                    }
+                    else if(rainPer < 30)
+                    {
+                        weatherIv.setImageResource(R.drawable.sunny);
+                    }
                 }
 
                 else if(category.equals("T3H"))
                 {
                     tempTv.setText(value);
+                    temp = tempTv.getText().toString();
                     tempTv.append(" ℃");
                 }
 
@@ -214,7 +237,7 @@ public class ThirdFragment extends Fragment {
 
                     skyTv.setText(skyStatus);
                     // 1:맑음 2:구름조금 3:구름많음 4:흐림
-               }
+                }
 
             }
 
@@ -335,30 +358,30 @@ public class ThirdFragment extends Fragment {
             JSONObject jsonObj = new JSONObject(myJSON);
             c = jsonObj.getJSONObject("Response").getJSONObject("body").getJSONObject("indexModel");
 
-                //JSON에서 각각의 요소를 뽑아옴
+            //JSON에서 각각의 요소를 뽑아옴
 
-                String bulValue = c.getString("h9");
-                int bul = Integer.valueOf(bulValue);
-                //Log.d("hhh9", bulValue);
+            String bulValue = c.getString("h9");
+            int bul = Integer.valueOf(bulValue);
+            //Log.d("hhh9", bulValue);
 
+            bulTv.setText(bulValue);
+
+            if(bul >= 80) {
                 bulTv.setText(bulValue);
-
-                if(bul >= 80) {
-                    bulTv.setText(bulValue);
-                    bulExTv.setText(", 매우 높음");
-                }
-                else if(bul >= 75 && bul < 80){
-                    bulTv.setText(bulValue);
-                    bulExTv.setText(", 높음");
-                }
-                else if(bul >= 68 && bul < 75){
-                    bulTv.setText(bulValue);
-                    bulExTv.setText(", 보통");
-                }
-                else if(bul < 68){
-                    bulTv.setText(bulValue);
-                    bulExTv.setText(", 낮음");
-                }
+                bulExTv.setText(", 매우 높음");
+            }
+            else if(bul >= 75 && bul < 80){
+                bulTv.setText(bulValue);
+                bulExTv.setText(", 높음");
+            }
+            else if(bul >= 68 && bul < 75){
+                bulTv.setText(bulValue);
+                bulExTv.setText(", 보통");
+            }
+            else if(bul < 68){
+                bulTv.setText(bulValue);
+                bulExTv.setText(", 낮음");
+            }
 
 
         }catch(JSONException e) {

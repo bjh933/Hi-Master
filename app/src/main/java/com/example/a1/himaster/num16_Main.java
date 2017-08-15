@@ -14,50 +14,21 @@ import static android.view.LayoutInflater.from;
 
 public class num16_Main extends AppCompatActivity {
 
-    ImageView backBtn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.num16);
 
-        setCustomActionbar();
-        backBtn = (ImageView)findViewById(R.id.menu_back);
 
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(num16_Main.this, num18_Main.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-                finish();
-            }
-
-        });
     }
 
-    private void setCustomActionbar()
-    {
-        ActionBar actionBar = getSupportActionBar();
-
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        View mCustomView = from(this).inflate(R.layout.abs_layout, null);
-        actionBar.setCustomView(mCustomView);
-
-        Toolbar parent = (Toolbar) mCustomView.getParent();
-        parent.setContentInsetsAbsolute(0, 0);
-
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#999999")));
-
-
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT);
-
-        actionBar.setCustomView(mCustomView, params);
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(num16_Main.this, MyInfo.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+        finish();
+        return;
     }
 
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#e6e3d8"
+    android:background="#F3F2EE"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -40,7 +40,7 @@
         android:layout_height="165dp"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
-        android:src="@drawable/a_hama" />
+        android:src="@drawable/hama" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -110,5 +110,3 @@
 
 
 </LinearLayout>
-
-

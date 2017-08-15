@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.ViewGroup;
 
 
 public class IntroActivity extends Activity {
@@ -16,6 +17,7 @@ public class IntroActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro);
+
         pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
         String flag = pref.getString("FLAG", "");
         boolean flagCheck = false;

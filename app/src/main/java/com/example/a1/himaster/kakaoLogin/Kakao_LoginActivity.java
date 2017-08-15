@@ -10,7 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.a1.himaster.BottombarActivity;
 import com.example.a1.himaster.MainActivity;
+import com.example.a1.himaster.MyInfo;
 import com.example.a1.himaster.R;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -23,7 +25,6 @@ import static android.view.LayoutInflater.from;
 public class Kakao_LoginActivity  extends AppCompatActivity {
 
     private SessionCallback callback;      //콜백 선언
-    ImageView backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,19 +32,6 @@ public class Kakao_LoginActivity  extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        setCustomActionbar();
-        backBtn = (ImageView)findViewById(R.id.menu_back);
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Kakao_LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-                finish();
-            }
-
-        });
         callback = new SessionCallback();                  // 이 두개의 함수 중요함
         Session.getCurrentSession().addCallback(callback);
 
@@ -86,26 +74,11 @@ public class Kakao_LoginActivity  extends AppCompatActivity {
         finish();
     }
 
-    private void setCustomActionbar()
-    {
-        ActionBar actionBar = getSupportActionBar();
-
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        View mCustomView = from(this).inflate(R.layout.abs_layout, null);
-        actionBar.setCustomView(mCustomView);
-
-        Toolbar parent = (Toolbar) mCustomView.getParent();
-        parent.setContentInsetsAbsolute(0, 0);
-
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#999999")));
-
-
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT);
-
-        actionBar.setCustomView(mCustomView, params);
-
+    public void onBackPressed() {
+        Intent intent = new Intent(Kakao_LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+        finish();
+        return;
     }
 }
