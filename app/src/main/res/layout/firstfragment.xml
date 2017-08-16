@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F2EE"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F3F2EE">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,8 +27,6 @@
                 android:layout_marginLeft="25dp"
                 />
 
-
-
             <ImageView
                 android:layout_marginLeft="200dp"
                 android:id="@+id/optMenuBtn"
@@ -34,14 +36,110 @@
 
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp">
 
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="25dp"
+            android:src="@drawable/sche"/>
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="일 정"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+
+    </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/scheduleRv"
+            android:layout_marginTop="10dp"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"></android.support.v7.widget.RecyclerView>
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="25dp"
+            android:src="@drawable/event"/>
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="행 사"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+
+    </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/eventRv"
+            android:layout_marginTop="10dp"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/todo"
+            android:layout_marginLeft="25dp"/>
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="할 일"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+
+    </LinearLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/todoRv"
+            android:layout_marginTop="10dp"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+        </android.support.v7.widget.RecyclerView>
 
 
 </LinearLayout>
+</ScrollView>

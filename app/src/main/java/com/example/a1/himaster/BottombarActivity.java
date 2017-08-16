@@ -18,11 +18,11 @@ public class BottombarActivity extends BottomBarHolderActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        NavigationPage page1 = new NavigationPage("홈", ContextCompat.getDrawable(this, R.drawable.ic_home_black_24dp), FirstFragment.newInstance());
-        NavigationPage page2 = new NavigationPage("오늘 할일", ContextCompat.getDrawable(this, R.drawable.ic_mail_black_24dp), SecondFragment.newInstance());
-        NavigationPage page3 = new NavigationPage("날씨", ContextCompat.getDrawable(this, R.drawable.ic_assessment_black_24dp), ThirdFragment.newInstance());
-        NavigationPage page4 = new NavigationPage("달력", ContextCompat.getDrawable(this, R.drawable.ic_person_black_24dp), FourthFragment.newInstance());
-        NavigationPage page5 = new NavigationPage("장소 추천", ContextCompat.getDrawable(this, R.drawable.ic_person_black_24dp), FifthFragment.newInstance());
+        NavigationPage page1 = new NavigationPage("홈", ContextCompat.getDrawable(this, R.drawable.navhomee), FirstFragment.newInstance());
+        NavigationPage page2 = new NavigationPage("오늘 할일", ContextCompat.getDrawable(this, R.drawable.navsche), SecondFragment.newInstance());
+        NavigationPage page3 = new NavigationPage("날씨", ContextCompat.getDrawable(this, R.drawable.navwea), ThirdFragment.newInstance());
+        NavigationPage page4 = new NavigationPage("달력", ContextCompat.getDrawable(this, R.drawable.navcal), FourthFragment.newInstance());
+        NavigationPage page5 = new NavigationPage("장소 추천", ContextCompat.getDrawable(this, R.drawable.navreco), FifthFragment.newInstance());
         List<NavigationPage> navigationPages = new ArrayList<>();
         navigationPages.add(page1);
         navigationPages.add(page2);

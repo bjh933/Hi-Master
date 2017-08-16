@@ -73,7 +73,7 @@
             android:layout_width="350dp"
             android:layout_height="210dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/rainy" />
+            android:src="@drawable/sunny" />
 
         <TextView
             android:id="@+id/tempTv"
@@ -128,7 +128,7 @@
                     android:id="@+id/rainIv"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/rainpercent" />
+                    android:src="@drawable/umbrella" />
 
 
             </LinearLayout>
@@ -175,7 +175,7 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/dustmask" />
+                        android:src="@drawable/mask" />
 
         </LinearLayout>
     </LinearLayout>

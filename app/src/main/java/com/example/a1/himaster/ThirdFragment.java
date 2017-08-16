@@ -1,6 +1,10 @@
 package com.example.a1.himaster;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,7 +33,7 @@ public class ThirdFragment extends Fragment {
     private static final String TAG_CAT = "category";
     private static final String TAG_TIME = "fcstTime";
     private static final String TAG_VALUE = "fcstValue";
-    ImageView weatherIv;
+    ImageView weatherIv, optMenu;
     JSONArray posts = null;
     TextView dateTv, tempTv, rainTv, skyTv, dustValTv, dustTv, bulTv, bulExTv, ultTv, ultExTv, sickTv, sickExTv;
 
@@ -60,6 +64,27 @@ public class ThirdFragment extends Fragment {
         sickTv = (TextView)view.findViewById(R.id.sickTv);
         sickExTv = (TextView)view.findViewById(R.id.sickExTv);
 
+        optMenu = (ImageView)view.findViewById(R.id.optMenuBtn);
+        optMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyInfo.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                //finish();
+            }
+
+        });
+
+        /*
+        Drawable d = weatherIv.getDrawable();
+        if (d instanceof BitmapDrawable) {
+            Bitmap bm = ((BitmapDrawable) d).getBitmap();
+            if (bm != null)
+                bm.recycle();
+        }
+        weatherIv.setImageDrawable(null);
+        */
         long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat toDate = new SimpleDateFormat("yyyy년 M월 d일");
@@ -99,7 +124,7 @@ public class ThirdFragment extends Fragment {
             baseDate = yday.format(cal.getTime());
             baseTime = "2300";}
 
-        String serviceKey = "lstxToevjq2KVH%2F%2Bd1w9iJauN%2BP7ejDclyyy%2Bd3L%2BYYm0G6WoBqpvb5Xeo1K5yqpY1jWebRCwTqnmw%2Fo%2BkyMPA%3D%3D";
+        String serviceKey = "w2Peiypuv63l2J0PeU16BZK65J9xtgAXInB%2BzJZFg5be1B3wRILNU7ZWMgL7kbjeujfFABa7%2BxkxprsBkpMLGg%3D%3D";
         String url = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData?serviceKey="
                 +serviceKey+"&base_date="+baseDate+"&base_time="+baseTime+
                 "&nx=60&ny=127&numOfRows=8&pageSize=11&pageNo=1&startPage=1&_type=json";
@@ -215,6 +240,7 @@ public class ThirdFragment extends Fragment {
                     {
                         weatherIv.setImageResource(R.drawable.sunny);
                     }
+
                 }
 
                 else if(category.equals("T3H"))
