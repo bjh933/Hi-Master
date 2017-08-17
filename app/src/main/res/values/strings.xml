@@ -199,4 +199,9 @@
         <item>학생</item>
     </string-array>
 
+    <string-array name = "transportSpinner">
+        <item>버스</item>
+        <item>지하철</item>
+    </string-array>
+
 </resources>

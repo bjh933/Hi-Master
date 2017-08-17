@@ -128,7 +128,7 @@ public class num20_Main extends AppCompatActivity {
                     editor.commit();
                     Intent intent = new Intent(num20_Main.this, MyInfo.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                     finish();
                 }
             }
@@ -155,8 +155,7 @@ public class num20_Main extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(num20_Main.this, MyInfo.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
         finish();
-        return;
     }
 }

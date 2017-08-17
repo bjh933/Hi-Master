@@ -42,7 +42,7 @@ public class FirstFragment extends Fragment {
     String url = "http://192.168.0.12:8080/home?userid=abcdef&date=2017-08-09 20:20:20";
     private static final String TAG_RESULTS="schedules";
     private static final String TAG_TITLE = "title";
-    private static final String TAG_DATE = "dueDate";
+    private static final String TAG_DATE = "startDate";
     private static final String TAG_DEST = "destination";
     JSONArray posts = null;
     JSONArray ePosts = null;
@@ -152,7 +152,7 @@ public class FirstFragment extends Fragment {
             }
             @Override
             protected void onPostExecute(String myJSON) {
-                //Log.d("my", myJSON);
+                Log.d("my", myJSON);
                 makeList(myJSON); //리스트를 보여줌
             }
         }
@@ -195,7 +195,7 @@ public class FirstFragment extends Fragment {
                 scheduleList.add(posts);
             }
             //카드 리스트뷰 어댑터에 연결
-            NoticeAdapter adapter = new NoticeAdapter(getActivity(), scheduleList);
+            NoticeAdapter adapter = new NoticeAdapter(getActivity(), scheduleList, getActivity());
 
             rv1.setAdapter(adapter);
             adapter.notifyDataSetChanged();

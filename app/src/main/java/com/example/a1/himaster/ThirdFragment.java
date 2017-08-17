@@ -175,11 +175,11 @@ public class ThirdFragment extends Fragment {
                 BufferedReader br = null;
                 try {
                     URL url = new URL(uri);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    HttpURLConnection conn1 = (HttpURLConnection) url.openConnection();
 
                     StringBuilder sb = new StringBuilder();
 
-                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    br = new BufferedReader(new InputStreamReader(conn1.getInputStream()));
 
                     String json;
                     while((json = br.readLine()) != null) {
@@ -281,11 +281,11 @@ public class ThirdFragment extends Fragment {
                 BufferedReader br = null;
                 try {
                     URL url = new URL(uri);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    HttpURLConnection conn1 = (HttpURLConnection) url.openConnection();
 
                     StringBuilder sb = new StringBuilder();
 
-                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    br = new BufferedReader(new InputStreamReader(conn1.getInputStream()));
 
                     String json;
                     while((json = br.readLine()) != null) {
@@ -352,11 +352,11 @@ public class ThirdFragment extends Fragment {
                 BufferedReader br = null;
                 try {
                     URL url = new URL(uri);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    HttpURLConnection conn1 = (HttpURLConnection) url.openConnection();
 
                     StringBuilder sb = new StringBuilder();
 
-                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    br = new BufferedReader(new InputStreamReader(conn1.getInputStream()));
 
                     String json;
                     while((json = br.readLine()) != null) {
@@ -424,11 +424,11 @@ public class ThirdFragment extends Fragment {
                 BufferedReader br = null;
                 try {
                     URL url = new URL(uri);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    HttpURLConnection conn1 = (HttpURLConnection) url.openConnection();
 
                     StringBuilder sb = new StringBuilder();
 
-                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    br = new BufferedReader(new InputStreamReader(conn1.getInputStream()));
 
                     String json;
                     while((json = br.readLine()) != null) {
@@ -495,11 +495,11 @@ public class ThirdFragment extends Fragment {
                 BufferedReader br = null;
                 try {
                     URL url = new URL(uri);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    HttpURLConnection conn1 = (HttpURLConnection) url.openConnection();
 
                     StringBuilder sb = new StringBuilder();
 
-                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    br = new BufferedReader(new InputStreamReader(conn1.getInputStream()));
 
                     String json;
                     while((json = br.readLine()) != null) {

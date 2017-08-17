@@ -39,7 +39,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public void onBindViewHolder(final ViewHolder holder, int position) {
         HashMap<String, String> noticeItem = eventList.get(position);
         holder.tv_title.setText(noticeItem.get("title")); //제목
-        holder.tv_date.setText(noticeItem.get("dueDate")); //작성일
+        holder.tv_date.setText(noticeItem.get("startDate")); //작성일
 
     }
 

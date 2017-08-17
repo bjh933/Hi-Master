@@ -274,7 +274,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
-            android:id="@+id/positionEdit"
+            android:id="@+id/destEdit"
             android:hint="장소"/>
 
         <Button

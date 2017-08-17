@@ -33,7 +33,7 @@ public class MyInfo extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MyInfo.this, num20_Main.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 finish();
             }
 
@@ -44,7 +44,7 @@ public class MyInfo extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MyInfo.this, num15_Main.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 finish();
             }
 
@@ -55,7 +55,7 @@ public class MyInfo extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MyInfo.this, num16_Main.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 finish();
             }
 
@@ -65,10 +65,7 @@ public class MyInfo extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(MyInfo.this, BottombarActivity.class);
-        startActivity(intent);
+        super.onBackPressed();
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-        finish();
-        return;
     }
 }

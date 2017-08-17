@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#e6e3d8"
-    tools:context="com.example.wldnj.p10.MainActivity">
+    android:background="#F3F2EE">
 
     <TextView
         android:id="@+id/todayText"

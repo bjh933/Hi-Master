@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -28,7 +29,10 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 
 import static android.view.LayoutInflater.from;
@@ -42,11 +46,13 @@ public class num10_Main extends AppCompatActivity {
 
     Button cancelBtn;
     Button okBtn;
-    EditText todoTitle;
+    EditText todoTitle, destEdit, scheMemo;
     RadioButton iljung, halil, hangsa;
     LinearLayout giganLay, giganLay2, siganLay, siganLay2, destLay, fixLay, hangsaLay;
     public static final int REQUEST_CODE = 1001;
     int pos1, pos2, pos3, pos, flag;
+    JSONArray posts = null;
+    TextView dText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,10 @@ public class num10_Main extends AppCompatActivity {
         fixLay = (LinearLayout)findViewById(R.id.fixLayout);
         hangsaLay = (LinearLayout)findViewById(R.id.hangsaIconLayout);
         hangsaLay.setVisibility(View.GONE);
+        destEdit = (EditText)findViewById(R.id.destEdit);
+        scheMemo = (EditText)findViewById(R.id.scheMemoText);
+        dText = (TextView)findViewById(R.id.dText);
+
         RadioGroup rg   = (RadioGroup) findViewById(R.id.radioGroup1);
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -83,11 +93,12 @@ public class num10_Main extends AppCompatActivity {
                         flag=0;
                         break;
                     case R.id.radio1:
-                        giganLay.setVisibility(View.GONE);
+                        giganLay2.setVisibility(View.GONE);
                         siganLay.setVisibility(View.GONE);
                         destLay.setVisibility(View.GONE);
                         fixLay.setVisibility(View.VISIBLE);
                         hangsaLay.setVisibility(View.GONE);
+                        dText.setVisibility(View.GONE);
                         flag=1;
                         break;
                     case R.id.radio2:
@@ -172,6 +183,14 @@ public class num10_Main extends AppCompatActivity {
         spinner8.setSelection(pos);
         spinner9.setSelection(pos2);
         spinner10.setSelection(pos3-1);
+
+        //날짜 생성일 구하기
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
+        final String getTime = sdf.format(date);
+        Log.d("today", getTime);
+        //
         final Intent intent = new Intent(num10_Main.this, BottombarActivity.class);
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
@@ -206,9 +225,9 @@ public class num10_Main extends AppCompatActivity {
                 String startDate = yText + "-"+ mText + "-" + dText;
                 String key = yEText + "-" + mEText + "-" + dEText;  //해쉬 Key
                 String endDate = key;
-                String fix = "true";
-                String destination = "Seoul";
-                String memo = "test";
+                String fix = "false";
+                String destination = destEdit.getText().toString();
+                String memo = scheMemo.getText().toString();
 
 
                 intent.putExtra("todo", doTitle);
@@ -221,105 +240,100 @@ public class num10_Main extends AppCompatActivity {
                 intent.putExtra("listItem", item);
                 intent.putExtra("hashKey", key);
 
-                if(flag == 0) {
-                    String Schedule = "[{\"userid\":"+ userId + ", \"title\":" + doTitle + ", \"ampm\":" + ampm + ", \"startHour\":"
-                            + startHour + ", \"startMinute\":" + startMinute + ", \"startDate\":" + startDate + ", " +
-                            "\"endDate\":" + endDate + ", \"fix\":" + fix + ", \"destination\":" + destination +
-                            ", \"memo\":" + memo + "}]";
 
-                    //Log.d("test1", Schedule);
+                if(ampm.equals("오후"))
+                {
+                    int sHour = Integer.parseInt(startHour);
+                    sHour = sHour + 12;
+                    startHour = String.valueOf(sHour);
+                }
+
+
+                startDate = startDate + " " + startHour + ":" + startMinute + ":00";
+                endDate = endDate + " " + "00:00:00";
+                /*
+                Timestamp t = Timestamp.valueOf(startDate);
+                startDate = t.toString();
+                Log.d("tstmp1", startDate);
+                t = Timestamp.valueOf(endDate);
+                endDate = t.toString();
+                Log.d("tstmp2", endDate);
+                //long mills = Long.parseLong(date);
+                //타임스탬프로 바꾸기 위함
+                */
+                String date = getTime;
+                if(flag == 0) {
+                    String Schedule = "{\"userId\":"+ "\"" + userId +"\""+ ", \"date\":" +"\""+ date +"\""+ ", \"title\":"
+                            +"\""+ doTitle +"\""+ ", \"startDate\":"
+                            +"\""+ startDate +"\""+ ", " + "\"endDate\":" +"\""+ endDate +"\""+ ", " +
+                            "\"destination\":" +"\""+ destination +"\""+ ", \"memo\":" +"\""+ memo +"\""+
+                            ", \"fix\":" +"\""+ fix +"\""+ "}";
+
+                    Log.d("sche", Schedule);
 
                     try {
+                        JSONObject jsonO = null;
+                        jsonO = new JSONObject(Schedule);
+                        /*
                         String result = "";
                         JSONArray ja = new JSONArray(Schedule);
                         for (int i = 0; i < ja.length(); i++) {
                             JSONObject order = ja.getJSONObject(i);
-                            result += "userid : "+order.getString("userid") + ", title : " + order.getString("title") + ", ampm : " +
-                                    order.getString("ampm") + ", startHour : " + order.getString("startHour") +
+                            result += "userid : "+order.getString("userid") + ", title : " + order.getString("title") +
+                                    ", startHour : " + order.getString("startHour") +
                                     ", startMinute : " + order.getString("startMinute") + ", startDate : "
                                     + order.getString("startDate") + ", endDate : " + order.getString("endDate")
-                                    + ", fix : " + order.getString("fix") + ", destination : " + order.getString("destination")
-                                    + ", memo : " + order.getString("memo") + "\n";
+                                    + ", destination : " + order.getString("destination")
+                                    + ", memo : " + order.getString("memo") + ", fix : " + order.getString("fix") + "\n";
 
-                            //Log.d("jsontest", result);
-                        }
+                            Log.d("jsonsche", result);
+
 
                         JSONObject obj = new JSONObject();
                         for (int i = 0; i < ja.length(); i++) {
                             obj = ja.getJSONObject(i);
                         }
-
-                        Log.d("jsonob", obj.toString());
+                        */
+                        Log.d("jsonobSche", jsonO.toString());
 
 
                     } catch (JSONException e) {
-                        //Log.d("why", "fail");
+                        Log.d("why", "fail");
 
                     }
                 }
 
                 else if(flag == 1) {
-                    String Todo = "[{\"userid\":"+ userId + ", \"title\":" + doTitle + ", \"endDate\":" + endDate + ", \"fix\":" + fix + ", \"destination\":" + destination +
-                            ", \"memo\":" + memo + "}]";
+                    String Todo = "{\"userId\":"+ "\"" + userId +"\""+ ", \"date\":" +"\""+ date +"\""+ ", \"title\":"
+                            +"\""+ doTitle +"\""+ ", \"startDate\":" +"\""+ startDate +"\""
+                            +"\""+ ", \"memo\":" +"\""+ memo +"\""+ ", \"fix\":" +"\""+ fix +"\""+ "}";
 
                     //Log.d("test1", Todo);
 
                     try {
-                        String result = "";
-                        JSONArray ja = new JSONArray(Todo);
-                        for (int i = 0; i < ja.length(); i++) {
-                            JSONObject order = ja.getJSONObject(i);
-                            result += "userid : "+order.getString("userid") + ", title : " + order.getString("title") + ", endDate : " + order.getString("endDate")
-                                    + ", fix : " + order.getString("fix") + ", destination : " + order.getString("destination")
-                                    + ", memo : " + order.getString("memo") + "\n";
-
-                            //Log.d("jsontest", result);
-                        }
-
-                        JSONObject obj = new JSONObject();
-                        for (int i = 0; i < ja.length(); i++) {
-                            obj = ja.getJSONObject(i);
-                        }
-
-                        //Log.d("jsonob", obj.toString());
-
+                        JSONObject jsonO = null;
+                        jsonO = new JSONObject(Todo);
+                        Log.d("jsonobTodo", jsonO.toString());
 
                     } catch (JSONException e) {
-                        //Log.d("why", "fail");
+                        Log.d("why", "fail");
 
                     }
                 }
 
                 else if(flag == 2) {
-                    String Event = "[{\"userid\":"+ userId + ", \"title\":" + doTitle + ", \"ampm\":" + ampm + ", \"startHour\":"
-                            + startHour + ", \"startMinute\":" + startMinute + ", \"startDate\":" + startDate + ", " +
-                            "\"endDate\":" + endDate + ", \"destination\":" + destination +
-                            ", \"memo\":" + memo + "}]";
+                    String Event = "{\"userId\":"+ "\"" + userId +"\""+ ", \"date\":" +"\""+ date +"\""+ ", \"title\":"
+                            +"\""+ doTitle +"\""+ ", \"startDate\":"
+                            +"\""+ startDate +"\""+ ", " + "\"endDate\":" +"\""+ endDate +"\""+ ", " +
+                            "\"destination\":" +"\""+ destination +"\""+ ", \"memo\":" +"\""+ memo +"\""
+                            + "}";
 
                     //Log.d("test1", Schedule);
 
                     try {
-                        String result = "";
-                        JSONArray ja = new JSONArray(Event);
-                        for (int i = 0; i < ja.length(); i++) {
-                            JSONObject order = ja.getJSONObject(i);
-                            result += "userid : "+order.getString("userid") + ", title : " + order.getString("title") + ", ampm : " +
-                                    order.getString("ampm") + ", startHour : " + order.getString("startHour") +
-                                    ", startMinute : " + order.getString("startMinute") + ", startDate : "
-                                    + order.getString("startDate") + ", endDate : " + order.getString("endDate")
-                                    + ", destination : " + order.getString("destination")
-                                    + ", memo : " + order.getString("memo") + "\n";
-
-                            //Log.d("jsontest", result);
-                        }
-
-                        JSONObject obj = new JSONObject();
-                        for (int i = 0; i < ja.length(); i++) {
-                            obj = ja.getJSONObject(i);
-                        }
-
-                        //Log.d("jsonob", obj.toString());
-
+                        JSONObject jsonO = null;
+                        jsonO = new JSONObject(Event);
+                        Log.d("jsonobEvent", jsonO.toString());
 
                     } catch (JSONException e) {
                         //Log.d("why", "fail");
@@ -349,7 +363,8 @@ public class num10_Main extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        return;
+        super.onBackPressed();
+        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
     }
 
 }

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e6e3d8"
+    android:background="#F3F2EE"
     android:orientation="vertical"
     tools:context="com.example.a1.himaster.num04_Main">
 

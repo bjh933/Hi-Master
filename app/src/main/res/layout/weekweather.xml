@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F2EE">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text = "일주일 날씨"
+            android:textSize="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"/>
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "요일"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "날씨"
+                android:textSize="20dp"
+                android:layout_marginLeft="135dp"
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "최고"
+                android:textSize="20dp"
+                android:layout_marginLeft="60dp"
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "최저"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "요일"
+                android:id="@+id/oneTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:id="@+id/oneIv"
+                android:src="@drawable/sunny"
+                android:layout_marginLeft="90dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/oneHighTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/oneLowTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "요일"
+                android:id="@+id/twoTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:id="@+id/twoIv"
+                android:src="@drawable/sunny"
+                android:layout_marginLeft="90dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/twoHighTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/twoLowTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "요일"
+                android:id="@+id/threeTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:id="@+id/threeIv"
+                android:src="@drawable/sunny"
+                android:layout_marginLeft="90dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/threeHighTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/threeLowTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "요일"
+                android:id="@+id/fourTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:id="@+id/fourIv"
+                android:src="@drawable/sunny"
+                android:layout_marginLeft="90dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/fourHighTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/fourLowTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "요일"
+                android:id="@+id/fiveTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:id="@+id/fiveIv"
+                android:src="@drawable/sunny"
+                android:layout_marginLeft="90dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/fiveHighTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/fiveLowTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "요일"
+                android:id="@+id/sixTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:id="@+id/sixIv"
+                android:src="@drawable/sunny"
+                android:layout_marginLeft="90dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/sixHighTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/sixLowTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "요일"
+                android:id="@+id/sevenTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:id="@+id/sevenIv"
+                android:src="@drawable/sunny"
+                android:layout_marginLeft="90dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/sevenHighTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = ""
+                android:id="@+id/sevenLowTv"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

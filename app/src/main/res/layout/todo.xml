@@ -15,14 +15,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="15dp"
+                android:textSize="17dp"
                 android:text=" -"
                 android:textStyle="bold"
                 />
 
             <TextView
                 android:id="@+id/tv_title"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="10dp"
                 android:paddingLeft="15dp"

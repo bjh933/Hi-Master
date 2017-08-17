@@ -13,6 +13,8 @@ import java.util.List;
 
 
 public class BottombarActivity extends BottomBarHolderActivity {
+    private final long FINISH_INTERVAL_TIME = 2000;
+    private long   backPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,23 @@ public class BottombarActivity extends BottomBarHolderActivity {
         navigationPages.add(page5);
 
         super.setupBottomBarHolderActivity(navigationPages);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        long tempTime        = System.currentTimeMillis();
+        long intervalTime    = tempTime - backPressedTime;
+
+        if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime)
+        {
+            super.onBackPressed();
+        }
+        else
+        {
+            backPressedTime = tempTime;
+        }
+
     }
 
 }
