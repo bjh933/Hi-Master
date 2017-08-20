@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.a1.himaster">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -61,6 +61,8 @@
         <activity android:name=".num19_Main"/>
         <activity android:name=".num20_Main"/>
         <activity android:name=".num21_Main"/>
+        <activity android:name=".Gps.GpsSearch"/>
+        <activity android:name=".WeekWeather"/>
         <activity android:name=".Popup" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".Popup_emailchk" android:theme="@android:style/Theme.Dialog"/>
     </application>

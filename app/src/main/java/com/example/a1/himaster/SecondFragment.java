@@ -7,9 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
+
+import com.example.a1.himaster.Gps.GpsSearch;
 
 
 public class SecondFragment extends Fragment {
@@ -35,7 +35,7 @@ public class SecondFragment extends Fragment {
         rightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), num20_Main.class);
+                Intent intent = new Intent(getActivity(), WeekWeather.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
             }

@@ -24,7 +24,7 @@ public class InfoToBottom extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.num20);
+        setContentView(R.layout.infoinit);
         okBtn = (Button)findViewById(R.id.okButton);
 
         nameEt = (EditText)findViewById(R.id.nameEdit);

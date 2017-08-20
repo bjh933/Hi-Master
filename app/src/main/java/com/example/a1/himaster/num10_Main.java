@@ -23,6 +23,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a1.himaster.Model.Schedule;
+
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -263,6 +266,19 @@ public class num10_Main extends AppCompatActivity {
                 */
                 String date = getTime;
                 if(flag == 0) {
+
+/*
+                    ObjectMapper om = new ObjectMapper();
+                    Schedule sc = new Schedule();
+                    sc.setDestination("seoul");
+                    try {
+                        String st = om.writeValueAsString(sc);
+                        Log.d("om", st);
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+*/
+
                     String Schedule = "{\"userId\":"+ "\"" + userId +"\""+ ", \"date\":" +"\""+ date +"\""+ ", \"title\":"
                             +"\""+ doTitle +"\""+ ", \"startDate\":"
                             +"\""+ startDate +"\""+ ", " + "\"endDate\":" +"\""+ endDate +"\""+ ", " +

@@ -2,6 +2,7 @@ package com.example.a1.himaster;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,12 +35,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class FirstFragment extends Fragment {
     public static FirstFragment newInstance() {
         return new FirstFragment();
     }
-    String url = "http://192.168.0.12:8080/home?userid=abcdef&date=2017-08-09 20:20:20";
+    String url = "";
     private static final String TAG_RESULTS="schedules";
     private static final String TAG_TITLE = "title";
     private static final String TAG_DATE = "startDate";
@@ -58,7 +61,10 @@ public class FirstFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.firstfragment, container, false);
+        SharedPreferences saveInfo = this.getActivity().getSharedPreferences("loginFlag", MODE_PRIVATE);
+        final String userId = saveInfo.getString("USERID", "");   //  userId 가져옴
 
+        url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         scheduleList = new ArrayList<HashMap<String, String>>();
         eventList = new ArrayList<HashMap<String, String>>();
         todoList = new ArrayList<HashMap<String, String>>();

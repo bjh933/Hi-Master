@@ -22,7 +22,7 @@
         <LinearLayout
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
 
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text = "날씨"
                 android:textSize="20dp"
-                android:layout_marginLeft="135dp"
+                android:layout_marginLeft="115dp"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
 
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:text = "최저"
                 android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
 
@@ -104,7 +104,7 @@
                 android:text = ""
                 android:id="@+id/oneLowTv"
                 android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
 
@@ -150,7 +150,7 @@
                 android:text = ""
                 android:id="@+id/twoLowTv"
                 android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
 
@@ -195,7 +195,7 @@
                 android:text = ""
                 android:id="@+id/threeLowTv"
                 android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
 
@@ -240,7 +240,7 @@
                 android:text = ""
                 android:id="@+id/fourLowTv"
                 android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
 
@@ -285,7 +285,7 @@
                 android:text = ""
                 android:id="@+id/fiveLowTv"
                 android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
 
@@ -330,7 +330,7 @@
                 android:text = ""
                 android:id="@+id/sixLowTv"
                 android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
 
@@ -375,7 +375,7 @@
                 android:text = ""
                 android:id="@+id/sevenLowTv"
                 android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
 

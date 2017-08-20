@@ -67,7 +67,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:id="@+id/swapBtn"
-                android:src="@drawable/f_sun"
+                android:src="@drawable/chgbtn"
                 android:layout_gravity="center"/>
 
         </LinearLayout>
@@ -145,7 +145,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/f_mask"
+            android:src="@drawable/trainfobtn"
             android:id="@+id/trafinfo"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"/>
