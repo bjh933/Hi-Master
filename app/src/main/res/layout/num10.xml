@@ -147,7 +147,6 @@
     </LinearLayout>
 
 
-
     <LinearLayout
         android:id="@+id/fixLayout"
         android:layout_width="match_parent"
@@ -160,15 +159,14 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
             android:text="고정 여부 : "
-            android:textSize="25dp"/>
+            android:textSize="25dp" />
 
         <CheckBox
+            android:id="@+id/repeatCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
             android:layout_marginLeft="5dp"
-            android:id="@+id/repeatCheck"
-            ></CheckBox>
+            android:layout_marginTop="7dp"></CheckBox>
 
     </LinearLayout>
 

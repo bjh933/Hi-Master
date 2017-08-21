@@ -31,7 +31,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -46,6 +47,7 @@ public class FirstFragment extends Fragment {
     private static final String TAG_RESULTS="schedules";
     private static final String TAG_TITLE = "title";
     private static final String TAG_DATE = "startDate";
+    private static final String TAG_TIME = "startTime";
     private static final String TAG_DEST = "destination";
     JSONArray posts = null;
     JSONArray ePosts = null;
@@ -113,6 +115,7 @@ public class FirstFragment extends Fragment {
 
         getData(url);
 
+
         return view;
 
 
@@ -176,10 +179,12 @@ public class FirstFragment extends Fragment {
                 JSONObject c = posts.getJSONObject(i);
                 String title = c.getString(TAG_TITLE);
                 String date = c.getString(TAG_DATE);
-                String pattern = "yyyy-MM-dd HH:mm";
-                long mills = Long.parseLong(date);
+                String startTime = c.getString(TAG_TIME);
+                String pattern = "yyyy년 M월 d일";
+
                 SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-                String conDate = (String)formatter.format(new Long(mills));
+                Date cDate = Date.valueOf(date);
+                String conDate = (String)formatter.format(cDate);
 
                 String dest = c.getString(TAG_DEST);
 
@@ -195,6 +200,7 @@ public class FirstFragment extends Fragment {
                 HashMap<String,String> posts = new HashMap<String, String>();
                 posts.put(TAG_TITLE,title);
                 posts.put(TAG_DATE,conDate);
+                posts.put(TAG_TIME,startTime);
                 posts.put(TAG_DEST,dest);
 
                 //ArrayList에 HashMap 붙이기
@@ -214,11 +220,16 @@ public class FirstFragment extends Fragment {
                 JSONObject c = ePosts.getJSONObject(i);
                 String title = c.getString(TAG_TITLE);
                 String date = c.getString(TAG_DATE);
+                /*
                 String pattern = "M월 d일";
                 long mills = Long.parseLong(date);
                 SimpleDateFormat formatter = new SimpleDateFormat(pattern);
                 String conDate = (String)formatter.format(new Long(mills));
-
+                */
+                String pattern = "M월 d일";
+                SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+                Date cDate = Date.valueOf(date);
+                String conDate = (String)formatter.format(cDate);
                 String dest = c.getString(TAG_DEST);
 
                 if(date.length() > 50 ) {

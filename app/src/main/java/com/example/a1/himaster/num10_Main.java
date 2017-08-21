@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,7 +33,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,7 +55,9 @@ public class num10_Main extends AppCompatActivity {
     Spinner spinner1, spinner2, spinner3, spinner4, spinner5, spinner6, spinner7, spinner8,
             spinner9, spinner10;
     ArrayAdapter<CharSequence> adapter;
-
+    String url = "http://192.168.0.12:8080/saveschedule";
+    String str="";
+    String fix = "false";
     Button cancelBtn;
     Button okBtn;
     EditText todoTitle, destEdit, scheMemo;
@@ -56,6 +67,7 @@ public class num10_Main extends AppCompatActivity {
     int pos1, pos2, pos3, pos, flag;
     JSONArray posts = null;
     TextView dText;
+    CheckBox repeatChk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,28 +75,29 @@ public class num10_Main extends AppCompatActivity {
         setContentView(R.layout.num10);
 
         okBtn = (Button) findViewById(R.id.okBtn);
+        repeatChk = (CheckBox) findViewById(R.id.repeatCheck);
         cancelBtn = (Button) findViewById(R.id.cancelBtn);
         todoTitle = (EditText) findViewById(R.id.todoEt);
-        iljung = (RadioButton)findViewById(R.id.radio0);
-        halil = (RadioButton)findViewById(R.id.radio1);
-        hangsa = (RadioButton)findViewById(R.id.radio2);
-        giganLay = (LinearLayout)findViewById(R.id.giganLayout);
-        giganLay2 = (LinearLayout)findViewById(R.id.giganLayout2);
-        siganLay = (LinearLayout)findViewById(R.id.siganLayout);
-        destLay = (LinearLayout)findViewById(R.id.destLayout);
-        fixLay = (LinearLayout)findViewById(R.id.fixLayout);
-        hangsaLay = (LinearLayout)findViewById(R.id.hangsaIconLayout);
+        iljung = (RadioButton) findViewById(R.id.radio0);
+        halil = (RadioButton) findViewById(R.id.radio1);
+        hangsa = (RadioButton) findViewById(R.id.radio2);
+        giganLay = (LinearLayout) findViewById(R.id.giganLayout);
+        giganLay2 = (LinearLayout) findViewById(R.id.giganLayout2);
+        siganLay = (LinearLayout) findViewById(R.id.siganLayout);
+        destLay = (LinearLayout) findViewById(R.id.destLayout);
+        fixLay = (LinearLayout) findViewById(R.id.fixLayout);
+        hangsaLay = (LinearLayout) findViewById(R.id.hangsaIconLayout);
         hangsaLay.setVisibility(View.GONE);
-        destEdit = (EditText)findViewById(R.id.destEdit);
-        scheMemo = (EditText)findViewById(R.id.scheMemoText);
-        dText = (TextView)findViewById(R.id.dText);
+        destEdit = (EditText) findViewById(R.id.destEdit);
+        scheMemo = (EditText) findViewById(R.id.scheMemoText);
+        dText = (TextView) findViewById(R.id.dText);
 
-        RadioGroup rg   = (RadioGroup) findViewById(R.id.radioGroup1);
+        RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup1);
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 //체크된 라디오버튼id가 checkedId에 자동으로 들어가있음
-                switch(checkedId){
+                switch (checkedId) {
                     //선택된 라디오버튼에 해당하는 색상으로 글자색상바꾸기
                     case R.id.radio0:
                         giganLay.setVisibility(View.VISIBLE);
@@ -93,7 +106,7 @@ public class num10_Main extends AppCompatActivity {
                         destLay.setVisibility(View.VISIBLE);
                         fixLay.setVisibility(View.VISIBLE);
                         hangsaLay.setVisibility(View.GONE);
-                        flag=0;
+                        flag = 0;
                         break;
                     case R.id.radio1:
                         giganLay2.setVisibility(View.GONE);
@@ -102,7 +115,7 @@ public class num10_Main extends AppCompatActivity {
                         fixLay.setVisibility(View.VISIBLE);
                         hangsaLay.setVisibility(View.GONE);
                         dText.setVisibility(View.GONE);
-                        flag=1;
+                        flag = 1;
                         break;
                     case R.id.radio2:
                         giganLay.setVisibility(View.VISIBLE);
@@ -111,8 +124,8 @@ public class num10_Main extends AppCompatActivity {
                         destLay.setVisibility(View.VISIBLE);
                         fixLay.setVisibility(View.GONE);
                         hangsaLay.setVisibility(View.VISIBLE);
-                        flag=2;
-                       break;
+                        flag = 2;
+                        break;
                 }
             }
         });
@@ -169,9 +182,9 @@ public class num10_Main extends AppCompatActivity {
 
         Intent data = getIntent();
         pos1 = data.getExtras().getInt("calYear");
-        if(pos1 == 2017)
+        if (pos1 == 2017)
             pos = 0;
-        else if(pos1 == 2018)
+        else if (pos1 == 2018)
             pos = 1;
         else
             pos = 2;
@@ -181,11 +194,11 @@ public class num10_Main extends AppCompatActivity {
 
         spinner5.setSelection(pos);
         spinner6.setSelection(pos2);
-        spinner7.setSelection(pos3-1);
+        spinner7.setSelection(pos3 - 1);
 
         spinner8.setSelection(pos);
         spinner9.setSelection(pos2);
-        spinner10.setSelection(pos3-1);
+        spinner10.setSelection(pos3 - 1);
 
         //날짜 생성일 구하기
         long now = System.currentTimeMillis();
@@ -209,6 +222,10 @@ public class num10_Main extends AppCompatActivity {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                JSONObject jsonOb = null;
+                jsonOb = new JSONObject();
+
                 final String doTitle = todoTitle.getText().toString();
                 String time = spinner1.getSelectedItem().toString() + " " + spinner2.getSelectedItem().toString() +
                         " : " + spinner3.getSelectedItem().toString();
@@ -225,10 +242,15 @@ public class num10_Main extends AppCompatActivity {
                 String mEText = spinner9.getSelectedItem().toString();
                 String dEText = spinner10.getSelectedItem().toString();
 
-                String startDate = yText + "-"+ mText + "-" + dText;
+                String startDate = yText + "-" + mText + "-" + dText;
                 String key = yEText + "-" + mEText + "-" + dEText;  //해쉬 Key
                 String endDate = key;
-                String fix = "false";
+                if(repeatChk.isChecked())
+                {
+                    fix = "true";
+                }
+                else
+                    fix = "false";
                 String destination = destEdit.getText().toString();
                 String memo = scheMemo.getText().toString();
 
@@ -244,16 +266,16 @@ public class num10_Main extends AppCompatActivity {
                 intent.putExtra("hashKey", key);
 
 
-                if(ampm.equals("오후"))
-                {
+                if (ampm.equals("오후")) {
                     int sHour = Integer.parseInt(startHour);
                     sHour = sHour + 12;
                     startHour = String.valueOf(sHour);
                 }
 
+                String startTime = startHour + ":" + startMinute;
+                //startDate = startDate + " " + startHour + ":" + startMinute + ":00";
+                //endDate = endDate + " " + "00:00:00";
 
-                startDate = startDate + " " + startHour + ":" + startMinute + ":00";
-                endDate = endDate + " " + "00:00:00";
                 /*
                 Timestamp t = Timestamp.valueOf(startDate);
                 startDate = t.toString();
@@ -265,7 +287,7 @@ public class num10_Main extends AppCompatActivity {
                 //타임스탬프로 바꾸기 위함
                 */
                 String date = getTime;
-                if(flag == 0) {
+                if (flag == 0) {
 
 /*
                     ObjectMapper om = new ObjectMapper();
@@ -278,18 +300,34 @@ public class num10_Main extends AppCompatActivity {
                         e.printStackTrace();
                     }
 */
+                    try {
+                        jsonOb.put("userId", userId);
+                        jsonOb.put("title", doTitle);
+                        jsonOb.put("startDate", startDate);
+                        jsonOb.put("endDate", endDate);
+                        jsonOb.put("startTime", startTime);
+                        jsonOb.put("destination", destination);
+                        jsonOb.put("memo", memo);
+                        jsonOb.put("fix", fix);
+                        Log.d("jsontest", jsonOb.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                    String Schedule = "{\"userId\":"+ "\"" + userId +"\""+ ", \"date\":" +"\""+ date +"\""+ ", \"title\":"
-                            +"\""+ doTitle +"\""+ ", \"startDate\":"
-                            +"\""+ startDate +"\""+ ", " + "\"endDate\":" +"\""+ endDate +"\""+ ", " +
-                            "\"destination\":" +"\""+ destination +"\""+ ", \"memo\":" +"\""+ memo +"\""+
-                            ", \"fix\":" +"\""+ fix +"\""+ "}";
-
+                    String Schedule = "{\"userId\":" + "\"" + userId + "\"" + ", \"date\":" + "\"" + date + "\"" + ", \"title\":"
+                            + "\"" + doTitle + "\"" + ", \"startDate\":"
+                            + "\"" + startDate + "\"" + ", " + "\"endDate\":" + "\"" + endDate + "\"" + ", " +
+                            "\"destination\":" + "\"" + destination + "\"" + ", \"memo\":" + "\"" + memo + "\"" +
+                            ", \"fix\":" + "\"" + fix + "\"" + "}";
+                    str = jsonOb.toString();
+                    //url = url+str;
+                    //url = url+"title="+doTitle+"&"+"startDate="+startDate+"&"+"endDate="+endDate+"&"+"destination="+destination+"&"+"memo="+memo+"&"+"fix="+fix;
                     Log.d("sche", Schedule);
 
                     try {
                         JSONObject jsonO = null;
                         jsonO = new JSONObject(Schedule);
+
                         /*
                         String result = "";
                         JSONArray ja = new JSONArray(Schedule);
@@ -317,12 +355,10 @@ public class num10_Main extends AppCompatActivity {
                         Log.d("why", "fail");
 
                     }
-                }
-
-                else if(flag == 1) {
-                    String Todo = "{\"userId\":"+ "\"" + userId +"\""+ ", \"date\":" +"\""+ date +"\""+ ", \"title\":"
-                            +"\""+ doTitle +"\""+ ", \"startDate\":" +"\""+ startDate +"\""
-                            +"\""+ ", \"memo\":" +"\""+ memo +"\""+ ", \"fix\":" +"\""+ fix +"\""+ "}";
+                } else if (flag == 1) {
+                    String Todo = "{\"userId\":" + "\"" + userId + "\"" + ", \"date\":" + "\"" + date + "\"" + ", \"title\":"
+                            + "\"" + doTitle + "\"" + ", \"startDate\":" + "\"" + startDate + "\""
+                            + "\"" + ", \"memo\":" + "\"" + memo + "\"" + ", \"fix\":" + "\"" + fix + "\"" + "}";
 
                     //Log.d("test1", Todo);
 
@@ -335,13 +371,11 @@ public class num10_Main extends AppCompatActivity {
                         Log.d("why", "fail");
 
                     }
-                }
-
-                else if(flag == 2) {
-                    String Event = "{\"userId\":"+ "\"" + userId +"\""+ ", \"date\":" +"\""+ date +"\""+ ", \"title\":"
-                            +"\""+ doTitle +"\""+ ", \"startDate\":"
-                            +"\""+ startDate +"\""+ ", " + "\"endDate\":" +"\""+ endDate +"\""+ ", " +
-                            "\"destination\":" +"\""+ destination +"\""+ ", \"memo\":" +"\""+ memo +"\""
+                } else if (flag == 2) {
+                    String Event = "{\"userId\":" + "\"" + userId + "\"" + ", \"date\":" + "\"" + date + "\"" + ", \"title\":"
+                            + "\"" + doTitle + "\"" + ", \"startDate\":"
+                            + "\"" + startDate + "\"" + ", " + "\"endDate\":" + "\"" + endDate + "\"" + ", " +
+                            "\"destination\":" + "\"" + destination + "\"" + ", \"memo\":" + "\"" + memo + "\""
                             + "}";
 
                     //Log.d("test1", Schedule);
@@ -357,22 +391,19 @@ public class num10_Main extends AppCompatActivity {
                     }
                 }
 
-                if(doTitle.length() != 0)
-                {
+                if (doTitle.length() != 0) {
+                    PutDataJSON g = new PutDataJSON();
+                    g.execute(url, str);
                     setResult(RESULT_OK, intent);
                     overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                     finish();
-                 }
-
-            else
-                {
+                } else {
                     setResult(RESULT_CANCELED);
                 }
 
             }
 
         });
-
 
 
     }
@@ -382,5 +413,61 @@ public class num10_Main extends AppCompatActivity {
         super.onBackPressed();
         overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
     }
+
+
+        class PutDataJSON extends AsyncTask<String, Void, String> {
+            @Override
+            protected String doInBackground(String... params) {
+                //JSON 받아온다.
+                String uri = params[0];
+                String str = params[1];
+                Log.d("url", uri);
+
+                BufferedWriter bw = null;
+                try {
+                    JSONObject jsonO = null;
+                    jsonO = new JSONObject(str);
+                    URL url = new URL(uri);
+
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setDoInput(true);
+                    con.setDoOutput(true);
+                    con.setRequestMethod("PUT");
+                    con.setRequestProperty("Content-type", "application/json");
+                    con.setConnectTimeout(5000);
+                    Log.d("strrrrr", str);
+                    byte[] outputInBytes = params[1].getBytes("UTF-8");
+                    OutputStream os = con.getOutputStream();
+                    os.write( outputInBytes );
+                    os.flush();
+                    os.close();
+
+                    //--------------------------
+                    //   서버에서 전송받기
+                    //--------------------------
+                    InputStreamReader tmp = new InputStreamReader(con.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuilder builder = new StringBuilder();
+                    String str1;
+                    while ((str1 = reader.readLine()) != null) {       // 서버에서 라인단위로 보내줄 것이므로 라인단위로 읽는다
+                        builder.append(str1 + "\n");                     // View에 표시하기 위해 라인 구분자 추가
+                    }
+                    String result = builder.toString();                       // 전송결과를 전역 변수에 저장
+                    Log.d("strr3", result);
+
+                    Log.d("strr", "succ");
+                    return null;
+                } catch (Exception e) {
+                    Log.d("strr2", "fail");
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String myJSON) {
+                //Log.d("my", myJSON);
+            }
+
+        }
 
 }

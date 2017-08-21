@@ -42,7 +42,19 @@
                 android:paddingLeft="15dp"
                 android:paddingBottom="15dp"
 
-                android:text="2017년 5월 17일 PM 3:00 강남"
+                android:text="2017년 5월 17일"
+                />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="15dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="15dp"
+                android:paddingBottom="15dp"
+
+                android:text="13:00"
                 />
 
             <TextView

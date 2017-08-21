@@ -28,7 +28,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     Context context;
     Activity mActivity;
     ArrayList<HashMap<String, String>> scheduleList; //일정 정보 담겨있음
-    String dTitle, dDate, dDest;
+    String dTitle, dDate, dDest, dTime;
     //public static final int REQUEST_CODE = 1101;
     public NoticeAdapter(Context context, ArrayList<HashMap<String, String>> scheduleList, Activity mActivity) {
         this.context = context;
@@ -53,6 +53,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         HashMap<String, String> noticeItem = scheduleList.get(position);
         holder.tv_title.setText(noticeItem.get("title")); //제목
         holder.tv_date.setText(noticeItem.get("startDate")); //작성일
+        holder.tv_time.setText(noticeItem.get("startTime"));
         holder.tv_dest.setText(noticeItem.get("destination"));
 
     }
@@ -68,6 +69,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_title;
         TextView tv_date;
+        TextView tv_time;
         TextView tv_dest;
         CardView cv;
 
@@ -75,6 +77,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
             super(v);
             tv_title = (TextView) v.findViewById(R.id.tv_title);
             tv_date = (TextView) v.findViewById(R.id.tv_date);
+            tv_time = (TextView) v.findViewById(R.id.tv_time);
             tv_dest = (TextView) v.findViewById(R.id.tv_dest);
             cv = (CardView) v.findViewById(R.id.cv);
 
@@ -87,9 +90,11 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
             Intent intent = new Intent(v.getContext(), DetailSchedule.class);
             dTitle = tv_title.getText().toString();
             dDate = tv_date.getText().toString();
+            dTime = tv_time.getText().toString();
             dDest = tv_dest.getText().toString();
             intent.putExtra("DTITLE", dTitle);
             intent.putExtra("DDATE", dDate);
+            intent.putExtra("DTIME", dTime);
             intent.putExtra("DDEST", dDest);
             v.getContext().startActivity(intent);
             mActivity.overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);

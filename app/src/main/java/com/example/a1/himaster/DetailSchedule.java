@@ -29,13 +29,15 @@ public class DetailSchedule extends AppCompatActivity {
         Intent data = getIntent();
         dTitle = data.getExtras().getString("DTITLE");
         dDate = data.getExtras().getString("DDATE");
+        dTime = data.getExtras().getString("DTIME");
         dDest = data.getExtras().getString("DDEST");
         String[] dateArr = dDate.split(" ");
 
+        /*
         String[] timeArr = dateArr[1].split(":");
         int time = Integer.parseInt(timeArr[0]);
         checkAmPm(time, timeArr);
-
+           */
 
         dTitleTv.setText(dTitle);
         dDateTv.setText(dateArr[0]);
