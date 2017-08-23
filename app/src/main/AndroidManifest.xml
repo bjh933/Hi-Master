@@ -64,6 +64,7 @@
         <activity android:name=".Gps.GpsSearch"/>
         <activity android:name=".WeekWeather"/>
         <activity android:name=".SKPlanet.Tmap.MapMain"/>
+        <activity android:name=".SKPlanet.Tmap.AddressActivity"/>
         <activity android:name=".Popup" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".Popup_emailchk" android:theme="@android:style/Theme.Dialog"/>
     </application>

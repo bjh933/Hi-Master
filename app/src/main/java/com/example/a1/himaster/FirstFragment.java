@@ -153,7 +153,7 @@ public class FirstFragment extends Fragment {
                     while((json = br.readLine()) != null) {
                         sb.append(json+"\n");
                     }
-                    Log.d("ssss", String.valueOf(sb));
+                    Log.d("ssssss", String.valueOf(sb));
                     return sb.toString().trim();
                 }catch (Exception e) {
                     return null;

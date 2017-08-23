@@ -28,7 +28,7 @@
                 />
 
             <ImageView
-                android:layout_marginLeft="200dp"
+                android:layout_marginLeft="155dp"
                 android:id="@+id/optMenuBtn"
                 android:layout_width="40dp"
                 android:layout_height="30dp"

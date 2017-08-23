@@ -84,13 +84,14 @@ public class MapListItemAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //터치 시 해당 아이템 이름 출력
-                Toast.makeText(context, "리스트 클릭 : " + mItems.get(pos) + " lat : " + mItems.get(pos).getLat().toString() + " lon : " + mItems.get(pos).getLon().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "리스트 클릭 : " + mItems.get(pos) + " lat : " + mItems.get(pos).getLat().toString() + " lon : " + mItems.get(pos).getLon().toString(), Toast.LENGTH_SHORT).show();
                 lat = mItems.get(pos).getLat();
                 lon = mItems.get(pos).getLon();
 
                 Message msg = Message.obtain();
                 Bundle bundle = new Bundle();
-                bundle.putString("Location", mItems.get(pos).getName() + "-"+ lat + "-" + lon);
+                bundle.putString("Location", mItems.get(pos).getName() + "-"+ lat + "-" + lon+ "-" +
+                        mItems.get(pos).getAddress());
                 msg.setData(bundle);
                 handler.sendMessage(msg);
 
@@ -102,7 +103,7 @@ public class MapListItemAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View v) {
                 //롱 터치 시 해당 아이템 이름 출력
-                Toast.makeText(context, "리스트 롱 클릭 : " + mItems.get(pos), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "리스트 롱 클릭 : " + mItems.get(pos), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

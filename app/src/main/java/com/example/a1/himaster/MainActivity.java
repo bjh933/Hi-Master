@@ -1,9 +1,13 @@
 package com.example.a1.himaster;
 
+import android.*;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     Button KakaoBtn;
     Button googleBtn;
 
+    private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    private static final int REQUEST_ACCESS_FINE_LOCATION = 2;
+
     private GoogleApiClient mGoogleApiClient;
 
     private static final int REQUEST_RESOLVE_ERROR = 1001;
@@ -67,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         CustomloginButton = (Button)findViewById(R.id.facebookBtn);
         skip = (Button)findViewById(R.id.skipBtn);
         googleBtn = (Button)findViewById(R.id.googleBtn) ;
-
+        checkPermission1();
 
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,4 +269,54 @@ public class MainActivity extends AppCompatActivity {
 
     /////구글 로그인 관련 함수/////
 
+    public void checkPermission1() {
+
+        int pCheck1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if (pCheck1 == PackageManager.PERMISSION_DENIED) {
+            //권한 추가
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ACCESS_FINE_LOCATION);
+
+        }
+
+        int pCheck2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (pCheck2 == PackageManager.PERMISSION_DENIED) {
+            //권한 추가
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_WRITE_EXTERNAL_STORAGE:
+                for (int i = 0; i < permissions.length; i++) {
+                    String permission = permissions[i];
+                    int grantResult = grantResults[i];
+                    if (permission.equals(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        if(grantResult == PackageManager.PERMISSION_GRANTED) {
+                            Log.d("ssss","success");
+
+                        } else {
+                            Log.d("ssss","fail");
+                        }
+                    }
+                }
+                break;
+
+            case REQUEST_ACCESS_FINE_LOCATION:
+                for (int i = 0; i < permissions.length; i++) {
+                    String permission = permissions[i];
+                    int grantResult = grantResults[i];
+                    if (permission.equals(android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        if(grantResult == PackageManager.PERMISSION_GRANTED) {
+                            Log.d("ssss","success2");
+                        } else {
+                            Log.d("ssss","fail2");
+                        }
+                    }
+                }
+                break;
+        }
+    }
 }

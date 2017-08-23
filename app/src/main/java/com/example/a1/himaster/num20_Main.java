@@ -16,27 +16,35 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.a1.himaster.SKPlanet.Tmap.AddressActivity;
+
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static android.view.LayoutInflater.from;
 
 public class num20_Main extends AppCompatActivity {
-
+    public static final int REQUEST_CODE = 1201;
     ArrayAdapter<CharSequence> adapter;
     EditText addressEt, nameEt, emailEt;
-    Button okBtn;
+    Button okBtn, myAddressBtn;
+    String residence_lat = "";
+    String residence_lon = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.num20);
         okBtn = (Button)findViewById(R.id.okButton);
-
+        myAddressBtn = (Button)findViewById(R.id.myaddress);
+        addressEt = (EditText)findViewById(R.id.addressEdit);
         nameEt = (EditText)findViewById(R.id.nameEdit);
         emailEt = (EditText)findViewById(R.id.emailEdit);
-        addressEt = (EditText)findViewById(R.id.addressEdit);
-
+        addressEt.setFocusable(false);
+        addressEt.setClickable(false);
 
         final SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
         final String loginFlag = pref.getString("FLAG", "4");
@@ -47,7 +55,8 @@ public class num20_Main extends AppCompatActivity {
             SharedPreferences guestInfo = getSharedPreferences("fb_login", MODE_PRIVATE);
             email = guestInfo.getString("EMAIL", "");
             String name = guestInfo.getString("NAME", "");
-
+            String residence = guestInfo.getString("RESIDENCE", "");
+            addressEt.setText(residence);
             nameEt.setText(name);
             emailEt.setText(email);
 
@@ -57,6 +66,8 @@ public class num20_Main extends AppCompatActivity {
             SharedPreferences guestInfo = getSharedPreferences("gg_login", MODE_PRIVATE);
             String name = guestInfo.getString("GNAME", "");
             email = guestInfo.getString("GMAIL", "");
+            String residence = guestInfo.getString("RESIDENCE", "");
+            addressEt.setText(residence);
             nameEt.setText(name);
             emailEt.setText(email);
             emailEt.setFocusable(false);
@@ -67,6 +78,8 @@ public class num20_Main extends AppCompatActivity {
             SharedPreferences guestInfo = getSharedPreferences("ka_login", MODE_PRIVATE);
             String name = guestInfo.getString("KNAME", "");
             email = guestInfo.getString("KEMAIL", "");
+            String residence = guestInfo.getString("RESIDENCE", "");
+            addressEt.setText(residence);
             nameEt.setText(name);
             nameEt.setFocusable(false);
             nameEt.setClickable(false);
@@ -78,21 +91,49 @@ public class num20_Main extends AppCompatActivity {
             nameEt.setClickable(true);
             emailEt.setFocusable(true);
             emailEt.setClickable(true);
+
             SharedPreferences guestInfo = getSharedPreferences("common_login", MODE_PRIVATE);
             String name = guestInfo.getString("CNAME", "");
             email = guestInfo.getString("CEMAIL", "");
+            String residence = guestInfo.getString("RESIDENCE", "");
+            addressEt.setText(residence);
             nameEt.setText(name);
             emailEt.setText(email);
         }
 
+        myAddressBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(num20_Main.this, AddressActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                //finish();
+
+            }
+
+        });
 
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if(loginFlag.equals("2")){
-                    SharedPreferences pref = getSharedPreferences("gg_login", MODE_PRIVATE);
-                    SharedPreferences.Editor edit = pref.edit();
-                    edit.putString("GNAME", nameEt.getText().toString());
+
+            if(loginFlag.equals("1")){
+                SharedPreferences pref = getSharedPreferences("fb_login", MODE_PRIVATE);
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putString("RESIDENCE", addressEt.getText().toString());
+                edit.putString("RESIDENCE_LAT", residence_lat);
+                edit.putString("RESIDENCE_LON", residence_lon);
+                edit.commit();
+            }
+
+            else if(loginFlag.equals("2")){
+                SharedPreferences pref = getSharedPreferences("gg_login", MODE_PRIVATE);
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putString("GNAME", nameEt.getText().toString());
+                edit.putString("RESIDENCE", addressEt.getText().toString());
+                edit.putString("RESIDENCE_LAT", residence_lat);
+                edit.putString("RESIDENCE_LON", residence_lon);
                     edit.commit();
             }
 
@@ -100,6 +141,9 @@ public class num20_Main extends AppCompatActivity {
                 SharedPreferences pref = getSharedPreferences("ka_login", MODE_PRIVATE);
                 SharedPreferences.Editor edit = pref.edit();
                 edit.putString("KEMAIL", emailEt.getText().toString());
+                edit.putString("RESIDENCE", addressEt.getText().toString());
+                edit.putString("RESIDENCE_LAT", residence_lat);
+                edit.putString("RESIDENCE_LON", residence_lon);
                 edit.commit();
             }
 
@@ -108,6 +152,9 @@ public class num20_Main extends AppCompatActivity {
                 SharedPreferences.Editor edit = pref.edit();
                 edit.putString("CNAME", nameEt.getText().toString());
                 edit.putString("CEMAIL", emailEt.getText().toString());
+                edit.putString("RESIDENCE", addressEt.getText().toString());
+                edit.putString("RESIDENCE_LAT", residence_lat);
+                edit.putString("RESIDENCE_LON", residence_lon);
                 edit.commit();
             }
                 if(emailEt.length() == 0 || checkEmail(emailEt.getText().toString()) != true)
@@ -123,8 +170,10 @@ public class num20_Main extends AppCompatActivity {
                     editor.putString("FLAG", loginFlag);
                     editor.putString("USERID", emailEt.getText().toString());
                     editor.putString("NAME", nameEt.getText().toString());
+                    editor.putString("RESIDENCE", addressEt.getText().toString());
+                    editor.putString("RESIDENCE_LAT", residence_lat);
+                    editor.putString("RESIDENCE_LON", residence_lon);
 
-                    //Log.d("dfdf", loginFlag);
                     editor.commit();
                     Intent intent = new Intent(num20_Main.this, MyInfo.class);
                     startActivity(intent);
@@ -134,6 +183,25 @@ public class num20_Main extends AppCompatActivity {
             }
 
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_CODE ) {
+            String residence = data.getExtras().getString("RESIDENCE");
+            addressEt.setText(residence);
+            residence_lat  = data.getExtras().getString("RESIDENCE_LAT");
+            residence_lon  = data.getExtras().getString("RESIDENCE_LON");
+
+        } else {
+            Toast.makeText(num20_Main.this, "REQUEST_CODE가 아님", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
