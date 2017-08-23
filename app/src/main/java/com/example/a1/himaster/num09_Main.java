@@ -278,7 +278,7 @@ public class num09_Main extends AppCompatActivity {
             boolpos[schePos+firstPos-1] = 1;
 
             String key = data.getExtras().getString("hashKey");
-            listItem item = (listItem)data.getSerializableExtra("listItem");
+            listItem item = (listItem)data.getSerializableExtra("MapListItem");
 
             if (ht.containsKey(key)) {  //키가 있으면 있는 ArrayList에 추가
                 ArrayList<listItem> al = ht.get(key);

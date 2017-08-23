@@ -121,94 +121,104 @@ public class FourthFragment extends Fragment {
         });
 
 
-    calendarView.setOneCalendarClickListener(new OneCalendarView.OneCalendarClickListener() {
+        calendarView.setOneCalendarClickListener(new OneCalendarView.OneCalendarClickListener() {
 
 
-        @Override
-        public void dateOnClick(Day day, int position) {
-            Calendar cal = Calendar.getInstance();
+            @Override
+            public void dateOnClick(Day day, int position) {
+                Calendar cal = Calendar.getInstance();
 
-            addBtn.setVisibility(View.VISIBLE);
-            Date date = day.getDate();
-            final int year = date.getYear();
-            final int month = date.getMonth();
-            cal.setTime(date);
-            final int numDay = cal.get(Calendar.DAY_OF_MONTH);
-            String key = Integer.toString(year) + "-" + Integer.toString(month+1) + "-"
-                    + Integer.toString(numDay);
+                addBtn.setVisibility(View.VISIBLE);
+                Date date = day.getDate();
+                final int year = date.getYear();
+                final int month = date.getMonth();
+                cal.setTime(date);
+                final int numDay = cal.get(Calendar.DAY_OF_MONTH);
+                String strMonth = Integer.toString(month+1);
+                String strDay = Integer.toString(numDay);
 
-
-            if(boolpos[position] != 1)
-                exPos = position;
-
-            if(boolpos[position] == 1)
-            {
-                if(exPos != position)
-                     calendarView.removeDaySeleted(exPos);
-
-                listAdapter = new listItemAdapter();
-
-                ArrayList<listItem> al = ht.get(key);
-
-                for (int i = 0; i < al.size(); i++) {  //아이템 추가
-                    listAdapter.add(al.get(i));
+                if(month+1 < 10) {
+                    strMonth = "0"+String.valueOf(month+1);
+                }
+                if(numDay < 10){
+                    strDay = "0"+String.valueOf(numDay);
                 }
 
-                listView.setAdapter(listAdapter);  //연결
-
-            }
-            else{
-                listAdapter = null;
-                listView.setAdapter(listAdapter);
-            }
-
-            if(dateCheck == -1)
-            {
-                datePos = position;
-                dateCheck  = 0;
-                calendarView.addDaySelected(datePos);
-            }
-            else if(dateCheck == 0 && boolpos[position] != 1) {
-                calendarView.removeDaySeleted(datePos);
-                dateCheck = 1;
-                datePos = position;
-                calendarView.addDaySelected(datePos);
-            }
-            else if(dateCheck == 1 && boolpos[position] != 1)
-            {
-                calendarView.removeDaySeleted(datePos);
-                dateCheck = 0;
-                datePos = position;
-                calendarView.addDaySelected(datePos);
-            }
+                String key = Integer.toString(year) + "-" + strMonth + "-"
+                        + strDay;
 
 
-            cYear = year;
-            cMonth = calendarView.getStringMonth(month);
-            cDay = numDay;
+                if(boolpos[position] != 1)
+                    exPos = position;
 
-            addBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), num10_Main.class);
-                    intent.putExtra("calDay", numDay);
-                    intent.putExtra("calMonth", month);
-                    intent.putExtra("calYear", year);
-                    startActivityForResult(intent, REQUEST_CODE);
+                if(boolpos[position] == 1)
+                {
+                    if(exPos != position)
+                        calendarView.removeDaySeleted(exPos);
 
-                    getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-                    //finish();
+                    listAdapter = new listItemAdapter();
+
+                    ArrayList<listItem> itemList = ht.get(key);
+                    Log.d("whykey", key);
+                    for (int i = 0; i < itemList.size(); i++) {  //아이템 추가
+                        listAdapter.add(itemList.get(i));
+                    }
+
+                    listView.setAdapter(listAdapter);  //연결
+
+                }
+                else{
+                    listAdapter = null;
+                    listView.setAdapter(listAdapter);
                 }
 
-            });
+                if(dateCheck == -1)
+                {
+                    datePos = position;
+                    dateCheck  = 0;
+                    calendarView.addDaySelected(datePos);
+                }
+                else if(dateCheck == 0 && boolpos[position] != 1) {
+                    calendarView.removeDaySeleted(datePos);
+                    dateCheck = 1;
+                    datePos = position;
+                    calendarView.addDaySelected(datePos);
+                }
+                else if(dateCheck == 1 && boolpos[position] != 1)
+                {
+                    calendarView.removeDaySeleted(datePos);
+                    dateCheck = 0;
+                    datePos = position;
+                    calendarView.addDaySelected(datePos);
+                }
 
-        }
 
-        @Override
-        public void dateOnLongClick(Day day, int position) {
-        }
-    });
-}
+                cYear = year;
+                cMonth = calendarView.getStringMonth(month);
+                cDay = numDay;
+
+                addBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), num10_Main.class);
+                        intent.putExtra("calDay", numDay);
+                        intent.putExtra("calMonth", month);
+                        intent.putExtra("calYear", year);
+                        startActivityForResult(intent, REQUEST_CODE);
+
+                        getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                        //finish();
+                    }
+
+                });
+
+            }
+
+            @Override
+            public void dateOnLongClick(Day day, int position) {
+            }
+        });
+    }
 
     public void recalculate() {
         mCalendar.set(Calendar.DAY_OF_MONTH, 1);  //날짜를 현재달의 1일로 설정
@@ -255,6 +265,7 @@ public class FourthFragment extends Fragment {
             boolpos[schePos + firstPos - 1] = 1;
 
             String key = data.getExtras().getString("hashKey");
+            Log.d("whyyreceive", key);
             listItem item = (listItem)data.getSerializableExtra("listItem");
 
             if (ht.containsKey(key)) {  //키가 있으면 있는 ArrayList에 추가
@@ -262,10 +273,12 @@ public class FourthFragment extends Fragment {
                 ht.remove(key);
                 al.add(item);
                 ht.put(key, al);
+
             } else {  //없으면 새로운 ArrayList를 만들어서 추가
                 ArrayList<listItem> al = new ArrayList<>();
                 al.add(item);
                 ht.put(key, al);
+
             }
 
         }

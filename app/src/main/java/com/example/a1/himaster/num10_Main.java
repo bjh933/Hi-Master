@@ -230,7 +230,7 @@ public class num10_Main extends AppCompatActivity {
                 String time = spinner1.getSelectedItem().toString() + " " + spinner2.getSelectedItem().toString() +
                         " : " + spinner3.getSelectedItem().toString();
                 listItem item = new listItem(time, doTitle);
-
+                Log.d("whyy", time + ";;;" + doTitle);
                 String ampm = spinner1.getSelectedItem().toString();
                 String startHour = spinner2.getSelectedItem().toString();
                 String startMinute = spinner3.getSelectedItem().toString();
@@ -244,6 +244,7 @@ public class num10_Main extends AppCompatActivity {
 
                 String startDate = yText + "-" + mText + "-" + dText;
                 String key = yEText + "-" + mEText + "-" + dEText;  //해쉬 Key
+                Log.d("whyy", key);
                 String endDate = key;
                 if(repeatChk.isChecked())
                 {
@@ -273,19 +274,7 @@ public class num10_Main extends AppCompatActivity {
                 }
 
                 String startTime = startHour + ":" + startMinute;
-                //startDate = startDate + " " + startHour + ":" + startMinute + ":00";
-                //endDate = endDate + " " + "00:00:00";
 
-                /*
-                Timestamp t = Timestamp.valueOf(startDate);
-                startDate = t.toString();
-                Log.d("tstmp1", startDate);
-                t = Timestamp.valueOf(endDate);
-                endDate = t.toString();
-                Log.d("tstmp2", endDate);
-                //long mills = Long.parseLong(date);
-                //타임스탬프로 바꾸기 위함
-                */
                 String date = getTime;
                 if (flag == 0) {
 
@@ -314,47 +303,9 @@ public class num10_Main extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    String Schedule = "{\"userId\":" + "\"" + userId + "\"" + ", \"date\":" + "\"" + date + "\"" + ", \"title\":"
-                            + "\"" + doTitle + "\"" + ", \"startDate\":"
-                            + "\"" + startDate + "\"" + ", " + "\"endDate\":" + "\"" + endDate + "\"" + ", " +
-                            "\"destination\":" + "\"" + destination + "\"" + ", \"memo\":" + "\"" + memo + "\"" +
-                            ", \"fix\":" + "\"" + fix + "\"" + "}";
+
                     str = jsonOb.toString();
-                    //url = url+str;
-                    //url = url+"title="+doTitle+"&"+"startDate="+startDate+"&"+"endDate="+endDate+"&"+"destination="+destination+"&"+"memo="+memo+"&"+"fix="+fix;
-                    Log.d("sche", Schedule);
 
-                    try {
-                        JSONObject jsonO = null;
-                        jsonO = new JSONObject(Schedule);
-
-                        /*
-                        String result = "";
-                        JSONArray ja = new JSONArray(Schedule);
-                        for (int i = 0; i < ja.length(); i++) {
-                            JSONObject order = ja.getJSONObject(i);
-                            result += "userid : "+order.getString("userid") + ", title : " + order.getString("title") +
-                                    ", startHour : " + order.getString("startHour") +
-                                    ", startMinute : " + order.getString("startMinute") + ", startDate : "
-                                    + order.getString("startDate") + ", endDate : " + order.getString("endDate")
-                                    + ", destination : " + order.getString("destination")
-                                    + ", memo : " + order.getString("memo") + ", fix : " + order.getString("fix") + "\n";
-
-                            Log.d("jsonsche", result);
-
-
-                        JSONObject obj = new JSONObject();
-                        for (int i = 0; i < ja.length(); i++) {
-                            obj = ja.getJSONObject(i);
-                        }
-                        */
-                        Log.d("jsonobSche", jsonO.toString());
-
-
-                    } catch (JSONException e) {
-                        Log.d("why", "fail");
-
-                    }
                 } else if (flag == 1) {
                     String Todo = "{\"userId\":" + "\"" + userId + "\"" + ", \"date\":" + "\"" + date + "\"" + ", \"title\":"
                             + "\"" + doTitle + "\"" + ", \"startDate\":" + "\"" + startDate + "\""

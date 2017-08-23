@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+        <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bt_findadd"
+                    android:text="주소로 찾기"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bt_findfac"
+                    android:text="주변 편의시설"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+                <EditText
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/searchEt"
+                    android:layout_gravity="center"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/searchBtn"
+                    android:text="검색"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/mapview"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
+
+        </LinearLayout>
+
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="horizontal" android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                        <ListView
+                            android:id="@+id/addressview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:divider="#fb000000"
+                            android:dividerHeight="1dp"
+                            android:background="#FFFFFF">
+                        </ListView>
+
+                </LinearLayout>
+</LinearLayout>
