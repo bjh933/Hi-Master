@@ -94,8 +94,6 @@ public class FourthFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);
 
-
-
     }
 
     private void initCalendar() {

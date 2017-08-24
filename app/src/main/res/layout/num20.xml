@@ -89,7 +89,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:id="@+id/addressEdit"
-            android:hint="우측 버튼을 클릭하세요"/>
+            android:hint="우측 버튼을 클릭하세요"
+            android:focusableInTouchMode="false" />
 
         <Button
             android:id="@+id/myaddress"

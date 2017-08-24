@@ -8,9 +8,14 @@ import retrofit2.http.Query;
 public interface WeatherApiInterface {
     @Headers({"Accept: application/json","appKey:b42a1814-4abc-36c2-a743-43c5f81cd73d"})
 
+
     @GET("weather/forecast/3days")
     Call<WeatherRepo> get_Weather_3day(@Query("version") int version, @Query("lat") String lat, @Query("lon") String lon);
 
     @GET("weather/current/hourly")
-    Call<WeatherRepo> get_Weather_1day(@Query("version") int version, @Query("lat") String lat, @Query("lon") String lon);
+    Call<WeatherRepo2> get_Weather_1day(@Query("version") int version, @Query("lat") String lat, @Query("lon") String lon);
+
+    @GET("weather/forecast/6days")
+    Call<WeatherWeekRepo> get_Weather_6day(@Query("version") int version, @Query("lat") String lat, @Query("lon") String lon);
+
 }

@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginRight="60dp"
                 android:text="일정" />
 
@@ -57,7 +57,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:src="@drawable/b_cake"
-            android:layout_marginLeft="40dp"/>
+            android:layout_marginLeft="10dp"/>
 
         <ImageView
             android:layout_width="35dp"
@@ -90,10 +90,10 @@
             android:id="@+id/scheduleText"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:text="제목 : "
-            android:textSize="25dp"/>
+            android:textSize="20dp"/>
 
         <EditText
             android:layout_width="180dp"
@@ -115,10 +115,10 @@
             android:id="@+id/scheduleMinText"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:text="시간 : "
-            android:textSize="25dp"/>
+            android:textSize="20dp"/>
 
         <Spinner
             android:layout_width="wrap_content"
@@ -156,10 +156,10 @@
             android:id="@+id/scheduleCountText"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:text="고정 여부 : "
-            android:textSize="25dp" />
+            android:textSize="20dp" />
 
         <CheckBox
             android:id="@+id/repeatCheck"
@@ -179,16 +179,15 @@
             android:id="@+id/schedulePeriodText"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:text="기간 : "
-            android:textSize="25dp"/>
+            android:textSize="20dp"/>
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
             android:id="@+id/yearStartSpinner"
             android:entries="@array/yearStartSpinner"
             ></Spinner>
@@ -209,28 +208,28 @@
             android:entries="@array/dateStartSpinner"
             ></Spinner>
 
-        <TextView
-            android:id="@+id/dText"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="10dp"
-            android:text=" ~ "
-            android:textSize="20dp"/>
-
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/giganLayout2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="105dp">
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:id="@+id/dText"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text=" ~ "
+            android:textSize="20dp"/>
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="26dp"
             android:id="@+id/yearEndSpinner"
             android:entries="@array/yearEndSpinner"
             ></Spinner>
@@ -254,6 +253,44 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/departLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="출발지 : "
+            android:textSize="20dp"/>
+
+        <EditText
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/departEdit"
+            android:focusableInTouchMode="false"
+            android:hint="우측 버튼을 클릭하세요"/>
+
+        <Button
+            android:id="@+id/departBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/j_maps"/>
+
+        <CheckBox
+            android:layout_marginLeft="10dp"
+            android:id="@+id/residencechk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/destLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -262,26 +299,22 @@
             android:id="@+id/scheduleDesText"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:text="목적지 : "
-            android:textSize="25dp"/>
+            android:textSize="20dp"/>
 
         <EditText
             android:layout_width="180dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:id="@+id/destEdit"
-            android:hint="장소"/>
+            android:focusableInTouchMode="false"
+            android:hint="우측 버튼을 클릭하세요"/>
 
         <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/j_searching"/>
-
-        <Button
+            android:id="@+id/destBtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
@@ -297,10 +330,10 @@
             android:id="@+id/scheduleMemoText"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:text="메모 : "
-            android:textSize="25dp" />
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/scheMemoText"

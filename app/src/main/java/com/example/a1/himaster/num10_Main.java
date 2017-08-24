@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a1.himaster.Model.Schedule;
+import com.example.a1.himaster.SKPlanet.Tmap.DestinationActivity;
 
 
 import org.json.JSONArray;
@@ -34,14 +35,10 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,16 +55,28 @@ public class num10_Main extends AppCompatActivity {
     String url = "http://192.168.0.12:8080/saveschedule";
     String str="";
     String fix = "false";
+    String iDestination = "";
+    String iDestinationLat = "";
+    String iDestinationLon = "";
+    String iDeparture = "";
+    String iDepartLat = "";
+    String iDepartLon = "";
+    String iSubwayLat = "";
+    String iSubwayLon = "";
+    String iSubwayName = "";
     Button cancelBtn;
-    Button okBtn;
-    EditText todoTitle, destEdit, scheMemo;
+    Button okBtn, destBtn, departBtn;
+    CheckBox resiChk;
+    EditText todoTitle, destEdit, scheMemo, departEdit;
     RadioButton iljung, halil, hangsa;
-    LinearLayout giganLay, giganLay2, siganLay, siganLay2, destLay, fixLay, hangsaLay;
-    public static final int REQUEST_CODE = 1001;
+    LinearLayout giganLay, giganLay2, siganLay, departLay, destLay, fixLay, hangsaLay;
+    public static final int REQUEST_CODE1 = 1000;
+    public static final int REQUEST_CODE2 = 1001;
     int pos1, pos2, pos3, pos, flag;
     JSONArray posts = null;
     TextView dText;
     CheckBox repeatChk;
+    int chkFlag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,12 +94,17 @@ public class num10_Main extends AppCompatActivity {
         giganLay2 = (LinearLayout) findViewById(R.id.giganLayout2);
         siganLay = (LinearLayout) findViewById(R.id.siganLayout);
         destLay = (LinearLayout) findViewById(R.id.destLayout);
+        departLay = (LinearLayout) findViewById(R.id.departLayout);
         fixLay = (LinearLayout) findViewById(R.id.fixLayout);
         hangsaLay = (LinearLayout) findViewById(R.id.hangsaIconLayout);
         hangsaLay.setVisibility(View.GONE);
         destEdit = (EditText) findViewById(R.id.destEdit);
         scheMemo = (EditText) findViewById(R.id.scheMemoText);
         dText = (TextView) findViewById(R.id.dText);
+        destBtn = (Button) findViewById(R.id.destBtn);
+        departBtn = (Button) findViewById(R.id.departBtn);
+        departEdit = (EditText) findViewById(R.id.departEdit);
+        resiChk = (CheckBox) findViewById(R.id.residencechk);
 
         RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup1);
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -120,8 +134,9 @@ public class num10_Main extends AppCompatActivity {
                     case R.id.radio2:
                         giganLay.setVisibility(View.VISIBLE);
                         giganLay2.setVisibility(View.VISIBLE);
-                        siganLay.setVisibility(View.VISIBLE);
-                        destLay.setVisibility(View.VISIBLE);
+                        siganLay.setVisibility(View.GONE);
+                        destLay.setVisibility(View.GONE);
+                        departLay.setVisibility(View.GONE);
                         fixLay.setVisibility(View.GONE);
                         hangsaLay.setVisibility(View.VISIBLE);
                         flag = 2;
@@ -209,6 +224,52 @@ public class num10_Main extends AppCompatActivity {
         //
         final Intent intent = new Intent(num10_Main.this, BottombarActivity.class);
 
+        final SharedPreferences resiInfo = getSharedPreferences("loginFlag", MODE_PRIVATE);
+
+        resiChk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(chkFlag == 0){
+                    departEdit.setText(resiInfo.getString("RESIDENCE", ""));
+                    iDepartLat = resiInfo.getString("RESIDENCE_LAT", "");
+                    iDepartLon = resiInfo.getString("RESIDENCE_LON", "");
+                    chkFlag = 1;
+                    departBtn.setEnabled(false);
+                }
+                else
+                {
+                    departEdit.setText("");
+                    iDepartLat = "";
+                    iDepartLon = "";
+                    chkFlag = 0;
+                    departBtn.setEnabled(true);
+                }
+            }
+        });
+
+        departBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num10_Main.this, DestinationActivity.class);
+                intent.putExtra("MAPFLAG", 1);
+                startActivityForResult(intent, REQUEST_CODE1);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+            }
+
+        });
+
+        destBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(num10_Main.this, DestinationActivity.class);
+                intent.putExtra("MAPFLAG", 2);
+                startActivityForResult(intent, REQUEST_CODE2);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+            }
+
+        });
+
+
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,141 +284,171 @@ public class num10_Main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                JSONObject jsonOb = null;
-                jsonOb = new JSONObject();
-
-                final String doTitle = todoTitle.getText().toString();
-                String time = spinner1.getSelectedItem().toString() + " " + spinner2.getSelectedItem().toString() +
-                        " : " + spinner3.getSelectedItem().toString();
-                listItem item = new listItem(time, doTitle);
-                Log.d("whyy", time + ";;;" + doTitle);
-                String ampm = spinner1.getSelectedItem().toString();
-                String startHour = spinner2.getSelectedItem().toString();
-                String startMinute = spinner3.getSelectedItem().toString();
-
-                String yText = spinner5.getSelectedItem().toString();
-                String mText = spinner6.getSelectedItem().toString();
-                String dText = spinner7.getSelectedItem().toString();
-                String yEText = spinner8.getSelectedItem().toString();
-                String mEText = spinner9.getSelectedItem().toString();
-                String dEText = spinner10.getSelectedItem().toString();
-
-                String startDate = yText + "-" + mText + "-" + dText;
-                String key = yEText + "-" + mEText + "-" + dEText;  //해쉬 Key
-                Log.d("whyy", key);
-                String endDate = key;
-                if(repeatChk.isChecked())
-                {
-                    fix = "true";
-                }
-                else
-                    fix = "false";
-                String destination = destEdit.getText().toString();
-                String memo = scheMemo.getText().toString();
-
-
-                intent.putExtra("todo", doTitle);
-                intent.putExtra("dayFrom", dText);
-                intent.putExtra("monthFrom", mText);
-                intent.putExtra("yearFrom", yText);
-                intent.putExtra("dayTo", dEText);
-                intent.putExtra("monthTo", mEText);
-                intent.putExtra("yearTo", yEText);
-                intent.putExtra("listItem", item);
-                intent.putExtra("hashKey", key);
-
-
-                if (ampm.equals("오후")) {
-                    int sHour = Integer.parseInt(startHour);
-                    sHour = sHour + 12;
-                    startHour = String.valueOf(sHour);
+                if (todoTitle.getText().toString().equals("")) {
+                    Intent intent = new Intent(num10_Main.this, Popup_emailchk.class);
+                    startActivity(intent);
+                    Log.d("emailchk", "wrong email format");
                 }
 
-                String startTime = startHour + ":" + startMinute;
+                else if (!todoTitle.getText().toString().equals("")) {
 
-                String date = getTime;
-                if (flag == 0) {
+                    JSONObject jsonOb = null;
+                    jsonOb = new JSONObject();
 
-/*
-                    ObjectMapper om = new ObjectMapper();
-                    Schedule sc = new Schedule();
-                    sc.setDestination("seoul");
-                    try {
-                        String st = om.writeValueAsString(sc);
-                        Log.d("om", st);
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
+                    final String doTitle = todoTitle.getText().toString();
+                    String time = spinner1.getSelectedItem().toString() + " " + spinner2.getSelectedItem().toString() +
+                            " : " + spinner3.getSelectedItem().toString();
+                    listItem item = new listItem(time, doTitle);
+                    String ampm = spinner1.getSelectedItem().toString();
+                    String startHour = spinner2.getSelectedItem().toString();
+                    String startMinute = spinner3.getSelectedItem().toString();
+
+                    String yText = spinner5.getSelectedItem().toString();
+                    String mText = spinner6.getSelectedItem().toString();
+                    String dText = spinner7.getSelectedItem().toString();
+                    String yEText = spinner8.getSelectedItem().toString();
+                    String mEText = spinner9.getSelectedItem().toString();
+                    String dEText = spinner10.getSelectedItem().toString();
+
+                    String startDate = yText + "-" + mText + "-" + dText;
+                    String dueDate = startDate;
+                    String key = yEText + "-" + mEText + "-" + dEText;  //해쉬 Key
+                    Log.d("KeyValue", key);
+                    String endDate = key;
+                    if (repeatChk.isChecked()) {
+                        fix = "true";
+                    } else
+                        fix = "false";
+                    String destination = destEdit.getText().toString();
+                    String memo = scheMemo.getText().toString();
+
+
+                    intent.putExtra("todo", doTitle);
+                    intent.putExtra("dayFrom", dText);
+                    intent.putExtra("monthFrom", mText);
+                    intent.putExtra("yearFrom", yText);
+                    intent.putExtra("dayTo", dEText);
+                    intent.putExtra("monthTo", mEText);
+                    intent.putExtra("yearTo", yEText);
+                    intent.putExtra("listItem", item);
+                    intent.putExtra("hashKey", key);
+
+
+                    if (ampm.equals("오후")) {
+                        int sHour = Integer.parseInt(startHour);
+                        sHour = sHour + 12;
+                        startHour = String.valueOf(sHour);
                     }
-*/
-                    try {
-                        jsonOb.put("userId", userId);
-                        jsonOb.put("title", doTitle);
-                        jsonOb.put("startDate", startDate);
-                        jsonOb.put("endDate", endDate);
-                        jsonOb.put("startTime", startTime);
-                        jsonOb.put("destination", destination);
-                        jsonOb.put("memo", memo);
-                        jsonOb.put("fix", fix);
-                        Log.d("jsontest", jsonOb.toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
+                    String startTime = startHour + ":" + startMinute;
+
+                    if (flag == 0) {
+
+                        try {
+                            jsonOb.put("userId", userId);
+                            jsonOb.put("title", doTitle);
+                            jsonOb.put("startDate", startDate);
+                            jsonOb.put("endDate", endDate);
+                            jsonOb.put("startTime", startTime);
+                            jsonOb.put("departure", iDeparture);
+                            jsonOb.put("depart_lat", iDepartLat);
+                            jsonOb.put("depart_lon", iDepartLon);
+                            jsonOb.put("destination", iDestination);
+                            jsonOb.put("destination_lat", iDestinationLat);
+                            jsonOb.put("destination_lon", iDestinationLon);
+                            jsonOb.put("subway_name", iSubwayName);
+                            jsonOb.put("subway_lat", iSubwayLat);
+                            jsonOb.put("subway_lon", iSubwayLon);
+                            jsonOb.put("memo", memo);
+                            jsonOb.put("fix", fix);
+
+                            Log.d("jsonSchedule", jsonOb.toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        str = jsonOb.toString();
+
+                    } else if (flag == 1) {
+
+                        try {
+                            jsonOb.put("userId", userId);
+                            jsonOb.put("title", doTitle);
+                            jsonOb.put("dueDate", dueDate);
+                            jsonOb.put("memo", memo);
+                            jsonOb.put("fix", fix);
+                            destEdit.setText("");
+
+                            Log.d("jsonTodo", jsonOb.toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        str = jsonOb.toString();
+
+
+                    } else if (flag == 2) {
+
+                        try {
+                            jsonOb.put("userId", userId);
+                            jsonOb.put("title", doTitle);
+                            jsonOb.put("startDate", startDate);
+                            jsonOb.put("endDate", endDate);
+                            jsonOb.put("memo", memo);
+
+                            Log.d("jsonEvent", jsonOb.toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        str = jsonOb.toString();
+
                     }
 
-
-                    str = jsonOb.toString();
-
-                } else if (flag == 1) {
-                    String Todo = "{\"userId\":" + "\"" + userId + "\"" + ", \"date\":" + "\"" + date + "\"" + ", \"title\":"
-                            + "\"" + doTitle + "\"" + ", \"startDate\":" + "\"" + startDate + "\""
-                            + "\"" + ", \"memo\":" + "\"" + memo + "\"" + ", \"fix\":" + "\"" + fix + "\"" + "}";
-
-                    //Log.d("test1", Todo);
-
-                    try {
-                        JSONObject jsonO = null;
-                        jsonO = new JSONObject(Todo);
-                        Log.d("jsonobTodo", jsonO.toString());
-
-                    } catch (JSONException e) {
-                        Log.d("why", "fail");
-
+                    if (doTitle.length() != 0) {
+                        PutDataJSON g = new PutDataJSON();
+                        g.execute(url, str);
+                        setResult(RESULT_OK, intent);
+                        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                        finish();
+                    } else {
+                        setResult(RESULT_CANCELED, intent);
+                        finish();
                     }
-                } else if (flag == 2) {
-                    String Event = "{\"userId\":" + "\"" + userId + "\"" + ", \"date\":" + "\"" + date + "\"" + ", \"title\":"
-                            + "\"" + doTitle + "\"" + ", \"startDate\":"
-                            + "\"" + startDate + "\"" + ", " + "\"endDate\":" + "\"" + endDate + "\"" + ", " +
-                            "\"destination\":" + "\"" + destination + "\"" + ", \"memo\":" + "\"" + memo + "\""
-                            + "}";
 
-                    //Log.d("test1", Schedule);
-
-                    try {
-                        JSONObject jsonO = null;
-                        jsonO = new JSONObject(Event);
-                        Log.d("jsonobEvent", jsonO.toString());
-
-                    } catch (JSONException e) {
-                        //Log.d("why", "fail");
-
-                    }
                 }
-
-                if (doTitle.length() != 0) {
-                    PutDataJSON g = new PutDataJSON();
-                    g.execute(url, str);
-                    setResult(RESULT_OK, intent);
-                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
-                    finish();
-                } else {
-                    setResult(RESULT_CANCELED);
-                }
-
             }
-
         });
 
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        else if (requestCode == REQUEST_CODE1) {
+            iDeparture = data.getExtras().getString("DEPARTURE");
+            iDepartLat = data.getExtras().getString("DEPART_LAT");
+            iDepartLon = data.getExtras().getString("DEPART_LON");
+            iSubwayName = data.getExtras().getString("SUBWAY_NAME");
+            iSubwayLat = data.getExtras().getString("SUBWAY_LAT");
+            iSubwayLon = data.getExtras().getString("SUBWAY_LON");
+            departEdit.setText(iDeparture);
+            Log.d("dfdf1", iDepartLat+", "+ iDepartLon);
+        }
+
+        else if (requestCode == REQUEST_CODE2) {
+                iDestination = data.getExtras().getString("DESTINATION");
+                iDestinationLat = data.getExtras().getString("DESTINATION_LAT");
+                iDestinationLon = data.getExtras().getString("DESTINATION_LON");
+                destEdit.setText(iDestination);
+            Log.d("dfdf2", iDestinationLat+", "+ iDestinationLon);
+
+            } else {
+                Toast.makeText(num10_Main.this, "REQUEST_CODE가 아님", Toast.LENGTH_SHORT).show();
+            }
+        }
 
     @Override
     public void onBackPressed() {
@@ -386,7 +477,7 @@ public class num10_Main extends AppCompatActivity {
                     con.setRequestMethod("PUT");
                     con.setRequestProperty("Content-type", "application/json");
                     con.setConnectTimeout(5000);
-                    Log.d("strrrrr", str);
+                    Log.d("sendContents", str);
                     byte[] outputInBytes = params[1].getBytes("UTF-8");
                     OutputStream os = con.getOutputStream();
                     os.write( outputInBytes );
@@ -404,12 +495,12 @@ public class num10_Main extends AppCompatActivity {
                         builder.append(str1 + "\n");                     // View에 표시하기 위해 라인 구분자 추가
                     }
                     String result = builder.toString();                       // 전송결과를 전역 변수에 저장
-                    Log.d("strr3", result);
+                    Log.d("receiveString", result);
 
-                    Log.d("strr", "succ");
+                    Log.d("sendResult", "success");
                     return null;
                 } catch (Exception e) {
-                    Log.d("strr2", "fail");
+                    Log.d("sendResult", "fail");
                     return null;
                 }
             }

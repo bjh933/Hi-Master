@@ -51,6 +51,7 @@
         <activity android:name=".InfoToBottom"/>
         <activity android:name=".MyInfo"/>
         <activity android:name=".DetailSchedule"/>
+        <activity android:name=".DetailScheduleTest"/>
         <activity android:name=".num04_Main"/>
         <activity android:name=".num09_Main"/>
         <activity android:name=".num10_Main"/>
@@ -65,6 +66,7 @@
         <activity android:name=".WeekWeather"/>
         <activity android:name=".SKPlanet.Tmap.MapMain"/>
         <activity android:name=".SKPlanet.Tmap.AddressActivity"/>
+        <activity android:name=".SKPlanet.Tmap.DestinationActivity"/>
         <activity android:name=".Popup" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".Popup_emailchk" android:theme="@android:style/Theme.Dialog"/>
     </application>

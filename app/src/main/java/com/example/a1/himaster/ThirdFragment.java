@@ -124,7 +124,7 @@ public class ThirdFragment extends Fragment {
             baseDate = yday.format(cal.getTime());
             baseTime = "2300";}
 
-        String serviceKey = "w2Peiypuv63l2J0PeU16BZK65J9xtgAXInB%2BzJZFg5be1B3wRILNU7ZWMgL7kbjeujfFABa7%2BxkxprsBkpMLGg%3D%3D";
+        String serviceKey = "Zfm%2Fjv9CdbeGPRRkBK3wjUOpqFhc5gONSyZbz0P4p13fH1s0CHO25CzN8Sf8VNPrjjfhIhdAh1SQagI6bQeTkw%3D%3D";
         String url = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData?serviceKey="
                 +serviceKey+"&base_date="+baseDate+"&base_time="+baseTime+
                 "&nx=60&ny=127&numOfRows=8&pageSize=11&pageNo=1&startPage=1&_type=json";

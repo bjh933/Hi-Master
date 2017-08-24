@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.a1.himaster.DetailSchedule;
+import com.example.a1.himaster.DetailScheduleTest;
 import com.example.a1.himaster.R;
 
 import java.util.ArrayList;
@@ -87,7 +88,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         @Override
         public void onClick(View v) {
 
-            Intent intent = new Intent(v.getContext(), DetailSchedule.class);
+            Intent intent = new Intent(v.getContext(), DetailScheduleTest.class);
             dTitle = tv_title.getText().toString();
             dDate = tv_date.getText().toString();
             dTime = tv_time.getText().toString();

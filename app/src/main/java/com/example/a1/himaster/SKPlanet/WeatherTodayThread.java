@@ -55,13 +55,13 @@ public class WeatherTodayThread extends Thread {
                         String todayTmin = Weather.getInstance().getTodayTmin();
                         Message msg = Message.obtain();
                         Bundle bundle = new Bundle();
-                        bundle.putString("weatherToday", todayStatus + " " + todayTmax+ " " + todayTmin);
-                        Log.d("weatherrr", todayStatus + " " + todayTmax+ " " + todayTmin);
+                        bundle.putString("weatherToday", todayStatus + "-" + todayTmax+ "-" + todayTmin);
+                        Log.d("weatherrr", todayStatus + "-" + todayTmax+ "-" + todayTmin);
                         msg.setData(bundle);
                         handler.sendMessage(msg);
                     }else{
-                        Log.e(TAG,"요청 실패 :"+weatherRepo.getResult().getCode());
-                        Log.e(TAG,"메시지 :"+weatherRepo.getResult().getMessage());
+                        Log.e(TAG,"요청 실패 :"+weatherRepo2.getResult().getCode());
+                        Log.e(TAG,"메시지 :"+weatherRepo2.getResult().getMessage());
                     }
                 }
             }

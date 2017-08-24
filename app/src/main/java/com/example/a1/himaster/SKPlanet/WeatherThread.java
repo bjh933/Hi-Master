@@ -20,7 +20,6 @@ public class WeatherThread extends Thread {
     final static String TAG = "WeatherThread";
     Context mContext;
     WeatherRepo weatherRepo;
-    WeatherRepo2 weatherRepo2;
     Handler handler;
     int version = 1;
     String lat;
@@ -38,7 +37,6 @@ public class WeatherThread extends Thread {
         super.run();
         Retrofit client = new Retrofit.Builder().baseUrl("http://apis.skplanetx.com/").addConverterFactory(GsonConverterFactory.create()).build();
         WeatherRepo.WeatherApiInterface service = client.create(WeatherRepo.WeatherApiInterface.class);
-        WeatherRepo2.WeatherApiInterface service2 = client.create(WeatherRepo2.WeatherApiInterface.class);
 
         Call<WeatherRepo> call = service.get_Weather_3day(version, lat, lon);
         call.enqueue(new Callback<WeatherRepo>() {
@@ -69,8 +67,8 @@ public class WeatherThread extends Thread {
 
                         Message msg = Message.obtain();
                         Bundle bundle = new Bundle();
-                        bundle.putString("weather", dayTomorrowStatus + " " + dayTomorrowTmax + " " + dayTomorrowTmin
-                                + " " + dayAfterStatus + " " + dayAfterTmax + " " + dayAfterTmin);
+                        bundle.putString("weather", dayTomorrowStatus + "-" + dayTomorrowTmax + "-" + dayTomorrowTmin
+                                + "-" + dayAfterStatus + "-" + dayAfterTmax + "-" + dayAfterTmin);
                         Log.d("weather23", dayTomorrowStatus + " " + dayTomorrowTmax + " " + dayTomorrowTmin
                                 + " " + dayAfterStatus + " " + dayAfterTmax + " " + dayAfterTmin);
                         msg.setData(bundle);

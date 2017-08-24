@@ -20,51 +20,49 @@
             android:layout_marginLeft="15dp"/>
 
         <LinearLayout
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "요일"
-                android:textSize="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="center"
-                android:textStyle="bold"/>
+                android:text = "월요일"
+                android:id="@+id/oneTv"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
+                android:layout_gravity="center"/>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text = "날씨"
-                android:textSize="20dp"
-                android:layout_marginLeft="115dp"
-                android:layout_gravity="center"
-                android:textStyle="bold"/>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/oneIv"
+                android:src="@drawable/sunny"
+                android:layout_marginLeft="80dp"
+                android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "최고"
-                android:textSize="20dp"
+                android:text = "25.00"
+                android:id="@+id/oneHighTv"
+                android:textSize="12dp"
                 android:layout_marginLeft="60dp"
-                android:layout_gravity="center"
-                android:textStyle="bold"/>
+                android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "최저"
-                android:textSize="20dp"
-                android:layout_marginLeft="60dp"
-                android:layout_gravity="center"
-                android:textStyle="bold"/>
+                android:text = "18.00"
+                android:id="@+id/oneLowTv"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
+                android:layout_gravity="center"/>
+
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_marginTop="40dp"
             android:layout_width="match_parent"
@@ -75,89 +73,42 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "요일"
-                android:id="@+id/oneTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="center"/>
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:id="@+id/oneIv"
-                android:src="@drawable/sunny"
-                android:layout_marginLeft="90dp"
-                android:layout_gravity="center"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text = ""
-                android:id="@+id/oneHighTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="50dp"
-                android:layout_gravity="center"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text = ""
-                android:id="@+id/oneLowTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="60dp"
-                android:layout_gravity="center"/>
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text = "요일"
+                android:text = "화요일"
                 android:id="@+id/twoTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"/>
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/twoIv"
                 android:src="@drawable/sunny"
-                android:layout_marginLeft="90dp"
+                android:layout_marginLeft="80dp"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = ""
+                android:text = "25.00"
                 android:id="@+id/twoHighTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="50dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = ""
+                android:text = "18.00"
                 android:id="@+id/twoLowTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="60dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"/>
 
 
         </LinearLayout>
-
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
@@ -166,43 +117,42 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "요일"
+                android:text = "수요일"
                 android:id="@+id/threeTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"/>
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/threeIv"
                 android:src="@drawable/sunny"
-                android:layout_marginLeft="90dp"
+                android:layout_marginLeft="80dp"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = ""
+                android:text = "25.00"
                 android:id="@+id/threeHighTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="50dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = ""
+                android:text = "18.00"
                 android:id="@+id/threeLowTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="60dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"/>
 
 
         </LinearLayout>
-
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
@@ -211,43 +161,42 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "요일"
+                android:text = "목요일"
                 android:id="@+id/fourTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"/>
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/fourIv"
                 android:src="@drawable/sunny"
-                android:layout_marginLeft="90dp"
+                android:layout_marginLeft="80dp"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = ""
+                android:text = "25.00"
                 android:id="@+id/fourHighTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="50dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = ""
+                android:text = "18.00"
                 android:id="@+id/fourLowTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="60dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"/>
 
 
         </LinearLayout>
-
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
@@ -256,43 +205,42 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "요일"
+                android:text = "금요일"
                 android:id="@+id/fiveTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"/>
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/fiveIv"
                 android:src="@drawable/sunny"
-                android:layout_marginLeft="90dp"
+                android:layout_marginLeft="80dp"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = ""
+                android:text = "25.00"
                 android:id="@+id/fiveHighTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="50dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = ""
+                android:text = "18.00"
                 android:id="@+id/fiveLowTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="60dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"/>
 
 
         </LinearLayout>
-
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
@@ -301,43 +249,42 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "요일"
+                android:text = "토요일"
                 android:id="@+id/sixTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"/>
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/sixIv"
                 android:src="@drawable/sunny"
-                android:layout_marginLeft="90dp"
+                android:layout_marginLeft="80dp"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = ""
+                android:text = "25.00"
                 android:id="@+id/sixHighTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="50dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = ""
+                android:text = "18.00"
                 android:id="@+id/sixLowTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="60dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"/>
 
 
         </LinearLayout>
-
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
@@ -346,40 +293,41 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "요일"
+                android:text = "일요일"
                 android:id="@+id/sevenTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="20dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"/>
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/sevenIv"
                 android:src="@drawable/sunny"
-                android:layout_marginLeft="90dp"
+                android:layout_marginLeft="80dp"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = ""
+                android:text = "25.00"
                 android:id="@+id/sevenHighTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="50dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = ""
+                android:text = "18.00"
                 android:id="@+id/sevenLowTv"
-                android:textSize="20dp"
-                android:layout_marginLeft="60dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"/>
 
 
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

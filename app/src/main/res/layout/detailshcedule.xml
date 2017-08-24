@@ -151,9 +151,9 @@
             android:layout_gravity="center"/>
 
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="170dp"
+            android:layout_marginLeft="120dp"
             android:id="@+id/transportSpinner"
             android:entries="@array/transportSpinner"
             ></Spinner>
@@ -175,7 +175,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/tranportImg"
+                android:id="@+id/transportImg"
                 android:src="@drawable/bus"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"/>
@@ -186,7 +186,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp">
 
             <LinearLayout
@@ -245,7 +244,7 @@
                     android:layout_marginLeft="30dp"/>
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/transportDepartTv2"
                     android:text="세종대학교"
@@ -284,7 +283,7 @@
 
 
         <LinearLayout
-            android:layout_width="120dp"
+            android:layout_width="110dp"
             android:layout_height="120dp"
             android:gravity="center"
             android:orientation="vertical">
@@ -320,9 +319,9 @@
 
 
         <LinearLayout
-            android:layout_width="120dp"
+            android:layout_width="110dp"
             android:layout_height="120dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -338,11 +337,6 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="강수확률 : " />
 
                 <TextView
                     android:id="@+id/dPer"
@@ -361,15 +355,15 @@
 
 
         <LinearLayout
-            android:layout_width="120dp"
+            android:layout_width="110dp"
             android:layout_height="120dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="60dp"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:src="@drawable/mask" />
 
@@ -379,11 +373,6 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="미세먼지 : " />
 
                 <TextView
                     android:id="@+id/dDustGrade"
@@ -398,7 +387,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="65dp"
         android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
