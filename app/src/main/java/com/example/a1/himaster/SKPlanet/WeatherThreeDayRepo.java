@@ -14,7 +14,7 @@ import retrofit2.http.Query;
  * Created by a1 on 2017. 8. 20..
  */
 
-public class WeatherRepo {
+public class WeatherThreeDayRepo {
 
     @SerializedName("result")
     Result result;
@@ -121,6 +121,6 @@ public class WeatherRepo {
     public interface WeatherApiInterface {
         @Headers({"Accept: application/json", "appKey:b42a1814-4abc-36c2-a743-43c5f81cd73d"})
         @GET("weather/forecast/3days")
-        Call<WeatherRepo> get_Weather_3day(@Query("version") int version, @Query("lat") String lat, @Query("lon") String lon);
+        Call<WeatherThreeDayRepo> get_Weather_3day(@Query("version") int version, @Query("lat") String lat, @Query("lon") String lon);
     }
 }

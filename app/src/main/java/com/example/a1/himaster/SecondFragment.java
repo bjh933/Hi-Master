@@ -9,8 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.a1.himaster.Gps.GpsSearch;
-import com.example.a1.himaster.SKPlanet.Tmap.MapMain;
+import com.example.a1.himaster.SKPlanet.Tmap.RecommendPlaceMap;
 
 
 public class SecondFragment extends Fragment {
@@ -36,7 +35,7 @@ public class SecondFragment extends Fragment {
         rightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MapMain.class);
+                Intent intent = new Intent(getActivity(), RecommendPlaceMap.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
             }

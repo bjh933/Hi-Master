@@ -6,7 +6,7 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="230dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
@@ -29,9 +29,17 @@
                 android:paddingBottom="15dp"
                 android:text="친구 만나기"
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 />
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/todoDelBtn"
+                android:src="@drawable/delete"/>
 
     </LinearLayout>
 </LinearLayout>

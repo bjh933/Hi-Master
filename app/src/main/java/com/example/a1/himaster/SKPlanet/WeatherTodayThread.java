@@ -17,10 +17,9 @@ import retrofit2.Retrofit;
  */
 
 public class WeatherTodayThread extends Thread {
-    final static String TAG = "WeatherThread";
+    final static String TAG = "WeatherThreeDayThread";
     Context mContext;
-    WeatherRepo weatherRepo;
-    WeatherRepo2 weatherRepo2;
+    WeatherTodayRepo weatherTodayRepo;
     Handler handler;
     int version = 1;
     String lat;
@@ -37,19 +36,19 @@ public class WeatherTodayThread extends Thread {
     public void run() {
         super.run();
         Retrofit client = new Retrofit.Builder().baseUrl("http://apis.skplanetx.com/").addConverterFactory(GsonConverterFactory.create()).build();
-        WeatherRepo2.WeatherApiInterface service2 = client.create(WeatherRepo2.WeatherApiInterface.class);
+        WeatherTodayRepo.WeatherApiInterface service2 = client.create(WeatherTodayRepo.WeatherApiInterface.class);
 
-        Call<WeatherRepo2> call2 = service2.get_Weather_1day(version, lat, lon);
-        call2.enqueue(new Callback<WeatherRepo2>() {
+        Call<WeatherTodayRepo> call2 = service2.get_Weather_1day(version, lat, lon);
+        call2.enqueue(new Callback<WeatherTodayRepo>() {
             @Override
-            public void onResponse(Response<WeatherRepo2> response) {
+            public void onResponse(Response<WeatherTodayRepo> response) {
                 if(response.isSuccess()){
-                    weatherRepo2 = response.body();
+                    weatherTodayRepo = response.body();
                     Log.d(TAG,"response.raw :"+response.raw());
-                    if(weatherRepo2.getResult().getCode().equals("9200")){ // 9200 = 성공
-                        Weather.getInstance().setTodayTmax(weatherRepo2.getWeather().getHourly().get(0).getTemperature().getTmax());
-                        Weather.getInstance().setTodayTmin(weatherRepo2.getWeather().getHourly().get(0).getTemperature().getTmin());
-                        Weather.getInstance().setDayStatus(weatherRepo2.getWeather().getHourly().get(0).getSky().getName());
+                    if(weatherTodayRepo.getResult().getCode().equals("9200")){ // 9200 = 성공
+                        Weather.getInstance().setTodayTmax(weatherTodayRepo.getWeather().getHourly().get(0).getTemperature().getTmax());
+                        Weather.getInstance().setTodayTmin(weatherTodayRepo.getWeather().getHourly().get(0).getTemperature().getTmin());
+                        Weather.getInstance().setDayStatus(weatherTodayRepo.getWeather().getHourly().get(0).getSky().getName());
                         String todayStatus = Weather.getInstance().getDayStatus();
                         String todayTmax = Weather.getInstance().getTodayTmax();
                         String todayTmin = Weather.getInstance().getTodayTmin();
@@ -60,8 +59,8 @@ public class WeatherTodayThread extends Thread {
                         msg.setData(bundle);
                         handler.sendMessage(msg);
                     }else{
-                        Log.e(TAG,"요청 실패 :"+weatherRepo2.getResult().getCode());
-                        Log.e(TAG,"메시지 :"+weatherRepo2.getResult().getMessage());
+                        Log.e(TAG,"요청 실패 :"+weatherTodayRepo.getResult().getCode());
+                        Log.e(TAG,"메시지 :"+weatherTodayRepo.getResult().getMessage());
                     }
                 }
             }

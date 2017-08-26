@@ -3,21 +3,15 @@ package com.example.a1.himaster;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -25,8 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.a1.himaster.Model.Schedule;
-import com.example.a1.himaster.SKPlanet.Tmap.DestinationActivity;
+import com.example.a1.himaster.SKPlanet.Tmap.MapActivity;
 
 
 import org.json.JSONArray;
@@ -40,12 +33,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Hashtable;
-
-import static android.view.LayoutInflater.from;
-import static android.view.View.GONE;
 
 public class num10_Main extends AppCompatActivity {
 
@@ -58,12 +46,19 @@ public class num10_Main extends AppCompatActivity {
     String iDestination = "";
     String iDestinationLat = "";
     String iDestinationLon = "";
+
+    String destSubwayLat = "";
+    String destSubwayLon = "";
+    String destSubwayName = "";
+
     String iDeparture = "";
     String iDepartLat = "";
     String iDepartLon = "";
-    String iSubwayLat = "";
-    String iSubwayLon = "";
-    String iSubwayName = "";
+
+    String departSubwayLat = "";
+    String departSubwayLon = "";
+    String departSubwayName = "";
+
     Button cancelBtn;
     Button okBtn, destBtn, departBtn;
     CheckBox resiChk;
@@ -233,6 +228,10 @@ public class num10_Main extends AppCompatActivity {
                     departEdit.setText(resiInfo.getString("RESIDENCE", ""));
                     iDepartLat = resiInfo.getString("RESIDENCE_LAT", "");
                     iDepartLon = resiInfo.getString("RESIDENCE_LON", "");
+                    iDeparture = resiInfo.getString("RESIDENCE", "");
+                    departSubwayName = resiInfo.getString("DEPART_SUBWAY_NAME", "");
+                    departSubwayLat = resiInfo.getString("DEPART_SUBWAY_LAT", "");
+                    departSubwayLon = resiInfo.getString("DEPART_SUBWAY_LON", "");
                     chkFlag = 1;
                     departBtn.setEnabled(false);
                 }
@@ -241,6 +240,10 @@ public class num10_Main extends AppCompatActivity {
                     departEdit.setText("");
                     iDepartLat = "";
                     iDepartLon = "";
+                    iDeparture = "";
+                    departSubwayName = "";
+                    departSubwayLat = "";
+                    departSubwayLon = "";
                     chkFlag = 0;
                     departBtn.setEnabled(true);
                 }
@@ -250,7 +253,7 @@ public class num10_Main extends AppCompatActivity {
         departBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num10_Main.this, DestinationActivity.class);
+                Intent intent = new Intent(num10_Main.this, MapActivity.class);
                 intent.putExtra("MAPFLAG", 1);
                 startActivityForResult(intent, REQUEST_CODE1);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
@@ -261,7 +264,7 @@ public class num10_Main extends AppCompatActivity {
         destBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num10_Main.this, DestinationActivity.class);
+                Intent intent = new Intent(num10_Main.this, MapActivity.class);
                 intent.putExtra("MAPFLAG", 2);
                 startActivityForResult(intent, REQUEST_CODE2);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
@@ -350,15 +353,21 @@ public class num10_Main extends AppCompatActivity {
                             jsonOb.put("startDate", startDate);
                             jsonOb.put("endDate", endDate);
                             jsonOb.put("startTime", startTime);
+
                             jsonOb.put("departure", iDeparture);
                             jsonOb.put("depart_lat", iDepartLat);
                             jsonOb.put("depart_lon", iDepartLon);
+                            jsonOb.put("depart_subway_name", departSubwayName);
+                            jsonOb.put("depart_subway_lat", departSubwayLat);
+                            jsonOb.put("depart_subway_lon", departSubwayLon);
+
                             jsonOb.put("destination", iDestination);
                             jsonOb.put("destination_lat", iDestinationLat);
                             jsonOb.put("destination_lon", iDestinationLon);
-                            jsonOb.put("subway_name", iSubwayName);
-                            jsonOb.put("subway_lat", iSubwayLat);
-                            jsonOb.put("subway_lon", iSubwayLon);
+                            jsonOb.put("dest_subway_name", destSubwayName);
+                            jsonOb.put("dest_subway_lat", destSubwayLat);
+                            jsonOb.put("dest_subway_lon", destSubwayLon);
+
                             jsonOb.put("memo", memo);
                             jsonOb.put("fix", fix);
 
@@ -431,19 +440,20 @@ public class num10_Main extends AppCompatActivity {
             iDeparture = data.getExtras().getString("DEPARTURE");
             iDepartLat = data.getExtras().getString("DEPART_LAT");
             iDepartLon = data.getExtras().getString("DEPART_LON");
-            iSubwayName = data.getExtras().getString("SUBWAY_NAME");
-            iSubwayLat = data.getExtras().getString("SUBWAY_LAT");
-            iSubwayLon = data.getExtras().getString("SUBWAY_LON");
+            departSubwayName = data.getExtras().getString("DEPART_SUBWAY_NAME");
+            departSubwayLat = data.getExtras().getString("DEPART_SUBWAY_LAT");
+            departSubwayLon = data.getExtras().getString("DEPART_SUBWAY_LON");
             departEdit.setText(iDeparture);
-            Log.d("dfdf1", iDepartLat+", "+ iDepartLon);
         }
 
         else if (requestCode == REQUEST_CODE2) {
-                iDestination = data.getExtras().getString("DESTINATION");
-                iDestinationLat = data.getExtras().getString("DESTINATION_LAT");
-                iDestinationLon = data.getExtras().getString("DESTINATION_LON");
-                destEdit.setText(iDestination);
-            Log.d("dfdf2", iDestinationLat+", "+ iDestinationLon);
+            iDestination = data.getExtras().getString("DESTINATION");
+            iDestinationLat = data.getExtras().getString("DESTINATION_LAT");
+            iDestinationLon = data.getExtras().getString("DESTINATION_LON");
+            destSubwayName = data.getExtras().getString("DEST_SUBWAY_NAME");
+            destSubwayLat = data.getExtras().getString("DEST_SUBWAY_LAT");
+            destSubwayLon = data.getExtras().getString("DEST_SUBWAY_LON");
+            destEdit.setText(iDestination);
 
             } else {
                 Toast.makeText(num10_Main.this, "REQUEST_CODE가 아님", Toast.LENGTH_SHORT).show();

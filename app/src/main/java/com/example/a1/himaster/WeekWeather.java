@@ -1,17 +1,15 @@
 package com.example.a1.himaster;
 
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.a1.himaster.SKPlanet.WeatherThread;
+import com.example.a1.himaster.SKPlanet.WeatherThreeDayThread;
 import com.example.a1.himaster.SKPlanet.WeatherTodayThread;
 import com.example.a1.himaster.SKPlanet.WeatherWeekThread;
 
@@ -109,7 +107,7 @@ public class WeekWeather extends AppCompatActivity {
         }};
 
 
-        WeatherThread wt = new WeatherThread(handler, mContext, 37.5714000000, 126.9658000000);
+        WeatherThreeDayThread wt = new WeatherThreeDayThread(handler, mContext, 37.5714000000, 126.9658000000);
         wt.run();   //  3일치 날씨
 
         handler = new Handler(){

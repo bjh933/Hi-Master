@@ -10,7 +10,7 @@
     tools:context="com.example.a1.himaster.num04_Main">
 
     <Button
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/weekWeatherBtn"
         android:text="Week Weather"/>

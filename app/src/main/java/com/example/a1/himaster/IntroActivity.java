@@ -17,13 +17,13 @@ import android.view.ViewGroup;
 public class IntroActivity extends Activity {
     Boolean loginChecked;
     SharedPreferences pref;
-
+    private static final int REQUEST_ACCESS_COARSE_LOCATION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro);
-
+        checkPermission1();
         pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
         String flag = pref.getString("FLAG", "");
         boolean flagCheck = false;
@@ -64,5 +64,32 @@ public class IntroActivity extends Activity {
 
 
     }
+    public void checkPermission1() {
 
+        int pCheck1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (pCheck1 == PackageManager.PERMISSION_DENIED) {
+            //권한 추가
+            ActivityCompat.requestPermissions(IntroActivity.this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_ACCESS_COARSE_LOCATION);
+
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_ACCESS_COARSE_LOCATION:
+                for (int i = 0; i < permissions.length; i++) {
+                    String permission = permissions[i];
+                    int grantResult = grantResults[i];
+                    if (permission.equals(android.Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                        if(grantResult == PackageManager.PERMISSION_GRANTED) {
+
+                        } else {
+                        }
+                    }
+                }
+                break;
+        }
+    }
 }

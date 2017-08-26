@@ -27,6 +27,10 @@ public class MapListItemAdapter extends BaseAdapter {
         mItems = new ArrayList<MapListItem>();
     }
 
+    public MapListItemAdapter() {  //생성자
+        mItems = new ArrayList<MapListItem>();
+    }
+
     @Override
     public int getCount() {  //현재 아이템의 수를 리턴
         return mItems.size();

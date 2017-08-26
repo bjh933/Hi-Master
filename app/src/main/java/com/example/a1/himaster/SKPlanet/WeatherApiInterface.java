@@ -10,10 +10,10 @@ public interface WeatherApiInterface {
 
 
     @GET("weather/forecast/3days")
-    Call<WeatherRepo> get_Weather_3day(@Query("version") int version, @Query("lat") String lat, @Query("lon") String lon);
+    Call<WeatherThreeDayRepo> get_Weather_3day(@Query("version") int version, @Query("lat") String lat, @Query("lon") String lon);
 
     @GET("weather/current/hourly")
-    Call<WeatherRepo2> get_Weather_1day(@Query("version") int version, @Query("lat") String lat, @Query("lon") String lon);
+    Call<WeatherTodayRepo> get_Weather_1day(@Query("version") int version, @Query("lat") String lat, @Query("lon") String lon);
 
     @GET("weather/forecast/6days")
     Call<WeatherWeekRepo> get_Weather_6day(@Query("version") int version, @Query("lat") String lat, @Query("lon") String lon);
