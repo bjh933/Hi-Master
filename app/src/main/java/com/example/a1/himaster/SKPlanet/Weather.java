@@ -7,6 +7,7 @@ package com.example.a1.himaster.SKPlanet;
 public class Weather {
 
     private String temp = "0";
+    private String todayTemp = "0";
     private String tomorrowTmax = "0";
     private String tomorrowTmin = "0";
     private String dayAfterTmax = "0";
@@ -35,6 +36,9 @@ public class Weather {
     private String day7Status = "";
 
 
+    public String getTodayTemp() {return todayTemp;}
+
+    public void setTodayTemp(String todayTemp) {this.todayTemp = todayTemp;}
 
     public String getTemperature() {
         return temp;

@@ -1,31 +1,26 @@
 package com.example.a1.himaster.SKPlanet.Tmap;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.a1.himaster.R;
-import com.example.a1.himaster.num20_Main;
-import com.google.android.gms.vision.text.Line;
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapGpsManager;
 import com.skp.Tmap.TMapMarkerItem;
@@ -35,7 +30,7 @@ import com.skp.Tmap.TMapView;
 
 import java.util.ArrayList;
 
-public class MapActivity extends AppCompatActivity implements TMapGpsManager.onLocationChangedCallback, View.OnClickListener {
+public class MapFragment extends Fragment implements TMapGpsManager.onLocationChangedCallback, View.OnClickListener {
 
     private Context mContext = null;
     private boolean m_bTrackingMode = true;
@@ -80,21 +75,21 @@ public class MapActivity extends AppCompatActivity implements TMapGpsManager.onL
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.destact);
+        View view = inflater.inflate(R.layout.destact, container, false);
 
-        mapView = (LinearLayout)findViewById(R.id.mapview);
-        horizontalScrollView = (HorizontalScrollView)findViewById(R.id.horizontalScrollView);
+        mapView = (LinearLayout) view.findViewById(R.id.mapview);
+        horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.horizontalScrollView);
         horizontalScrollView.setVisibility(View.GONE);
-        recoLayout = (LinearLayout)findViewById(R.id.recoLayout);
+        recoLayout = (LinearLayout) view.findViewById(R.id.recoLayout);
         recoLayout.setVisibility(View.GONE);
-        rTv1 = (TextView)findViewById(R.id.rTv1);
-        rTv2 = (TextView)findViewById(R.id.rTv2);
-        rTv3 = (TextView)findViewById(R.id.rTv3);
-        rTv4 = (TextView)findViewById(R.id.rTv4);
-        rTv5 = (TextView)findViewById(R.id.rTv5);
-        rTv6 = (TextView)findViewById(R.id.rTv6);
+        rTv1 = (TextView) view.findViewById(R.id.rTv1);
+        rTv2 = (TextView) view.findViewById(R.id.rTv2);
+        rTv3 = (TextView) view.findViewById(R.id.rTv3);
+        rTv4 = (TextView) view.findViewById(R.id.rTv4);
+        rTv5 = (TextView) view.findViewById(R.id.rTv5);
+        rTv6 = (TextView) view.findViewById(R.id.rTv6);
         rTv1.setOnClickListener(this);
         rTv2.setOnClickListener(this);
         rTv3.setOnClickListener(this);
@@ -102,34 +97,18 @@ public class MapActivity extends AppCompatActivity implements TMapGpsManager.onL
         rTv5.setOnClickListener(this);
         rTv6.setOnClickListener(this);
 
-        titleTv = (TextView)findViewById(R.id.titleTv);
-        searchTv = (TextView)findViewById(R.id.searchTv);
-        okTv = (TextView)findViewById(R.id.okTv);
-        searchEt = (EditText)findViewById(R.id.searchEt);
-        addressView = (ListView)findViewById(R.id.addressview);
-        mContext = this;
+        titleTv = (TextView) view.findViewById(R.id.titleTv);
+        searchTv = (TextView) view.findViewById(R.id.searchTv);
+        okTv = (TextView) view.findViewById(R.id.okTv);
+        searchEt = (EditText) view.findViewById(R.id.searchEt);
+        addressView = (ListView) view.findViewById(R.id.addressview);
+        mContext = getContext();
         okTv.setEnabled(false);
         okTv.setTextColor(Color.parseColor("#DDDDDD"));
 
-        Intent getIntent = getIntent();
-        final int mapFlag = getIntent.getExtras().getInt("MAPFLAG", 0);
-
-        if(mapFlag == 1)
-        {
-            titleTv.setText("                            출발지 설정");
-        }
-        else if(mapFlag == 2)
-        {
-            titleTv.setText("                            목적지 설정");
-        }
-        else if(mapFlag == 3)
-        {
-            titleTv.setText("                            거주지 설정");
-        }
-
         tMapData = new TMapData();
-        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.mapview);
-        tmapView = new TMapView(this);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.mapview);
+        tmapView = new TMapView(mContext);
 
         linearLayout.addView(tmapView);
         tmapView.setSKPMapApiKey(mApiKey);
@@ -137,10 +116,11 @@ public class MapActivity extends AppCompatActivity implements TMapGpsManager.onL
         tmapView.setIconVisibility(true);   //  현 위치 아이콘 표시
 
         tmapView.setZoomLevel(15);  //  줌 레벨
-        tmapView.setMapType(TMapView.MAPTYPE_STANDARD);;
+        tmapView.setMapType(TMapView.MAPTYPE_STANDARD);
+        ;
         tmapView.setLanguage(TMapView.LANGUAGE_KOREAN);
 
-        tmapGps = new TMapGpsManager(MapActivity.this);
+        tmapGps = new TMapGpsManager(mContext);
         tmapGps.setMinTime(1000);
         tmapGps.setMinDistance(5);
         tmapGps.setProvider(tmapGps.NETWORK_PROVIDER);  //  연결된 인터넷으로 현 위치를 받음, 실내에 유용
@@ -152,111 +132,44 @@ public class MapActivity extends AppCompatActivity implements TMapGpsManager.onL
         tmapView.setTrackingMode(true);
         //tmapView.setSightVisible(true);
 
-        if(mapFlag == 1 || mapFlag == 3) {
-            searchTv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT, 800);
-                    mapView.setLayoutParams(params);
-
-                    Handler handler = new Handler() {
-                        public void handleMessage(Message msg) {
-                            String[] location = msg.getData().getString("Location").split("-");    /// 번들에 들어있는 값 꺼냄
-                            locaName = location[0];
-                            locaLat = location[1];
-                            locaLon = location[2];
-                            locaAddr = location[3];
-                            selectLat = Double.parseDouble(locaLat);
-                            selectLon = Double.parseDouble(locaLon);
-                            myHome = new MapPoint(locaName, selectLat, selectLon);
-                            showMarkerPoint(myHome);
-                            tmapView.setCenterPoint(selectLon, selectLat);
-                            residenceName = locaAddr + locaName;
-                            getAroundPlace(1);
-                            okTv.setEnabled(true);
-                            okTv.setTextColor(Color.parseColor("#000000"));
-                        }
-                    };
-                    convertToAddress(handler);
-
-                }
-            });
-        }
-
-        else if(mapFlag == 2) {
-            searchTv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT, 800);
-                    mapView.setLayoutParams(params);
-                    horizontalScrollView.setVisibility(View.GONE);
-                    recoLayout.setVisibility(View.GONE);
-
-
-                    Handler handler = new Handler() {
-                        public void handleMessage(Message msg) {
-                            String[] location = msg.getData().getString("Location").split("-");    /// 번들에 들어있는 값 꺼냄
-                            locaName = location[0];
-                            locaLat = location[1];
-                            locaLon = location[2];
-                            locaAddr = location[3];
-                            selectLat = Double.parseDouble(locaLat);
-                            selectLon = Double.parseDouble(locaLon);
-                            myHome = new MapPoint(locaName, selectLat, selectLon);
-                            showMarkerPoint(myHome);
-                            tmapView.setCenterPoint(selectLon, selectLat);
-                            destinationName = locaAddr + locaName;
-                            getAroundPlace(1);
-                            okTv.setEnabled(true);
-                            okTv.setTextColor(Color.parseColor("#000000"));
-                            horizontalScrollView.setVisibility(View.VISIBLE);
-                            recoLayout.setVisibility(View.VISIBLE);
-
-                        }
-                    };
-                    recoTvReset();
-                    horizontalScrollView.scrollTo(0 ,0);
-                    convertToAddress(handler);
-
-                }
-            });
-
-        }
-        okTv.setOnClickListener(new View.OnClickListener() {
+        searchTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Handler handler = new Handler() {
+                    public void handleMessage(Message msg) {
+                        String[] location = msg.getData().getString("Location").split("-");    /// 번들에 들어있는 값 꺼냄
+                        locaName = location[0];
+                        locaLat = location[1];
+                        locaLon = location[2];
+                        locaAddr = location[3];
+                        selectLat = Double.parseDouble(locaLat);
+                        selectLon = Double.parseDouble(locaLon);
+                        myHome = new MapPoint(locaName, selectLat, selectLon);
+                        showMarkerPoint(myHome);
+                        tmapView.setCenterPoint(selectLon, selectLat);
+                        destinationName = locaAddr + locaName;
+                        getAroundPlace(1);
+                        okTv.setEnabled(true);
+                        okTv.setTextColor(Color.parseColor("#000000"));
 
-                Intent intent = new Intent(MapActivity.this, num20_Main.class);
 
-                if(mapFlag == 1 || mapFlag == 3)
-                {
-                    intent.putExtra("DEPARTURE", residenceName);
-                    intent.putExtra("DEPART_LAT", String.valueOf(selectLat));
-                    intent.putExtra("DEPART_LON", String.valueOf(selectLon));
-                    intent.putExtra("DEPART_SUBWAY_NAME", subwayName);
-                    intent.putExtra("DEPART_SUBWAY_LAT", String.valueOf(subwayLat));
-                    intent.putExtra("DEPART_SUBWAY_LON", String.valueOf(subwayLon));
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT, 800);
+                        mapView.setLayoutParams(params);
+                        horizontalScrollView.setVisibility(View.VISIBLE);
+                        recoLayout.setVisibility(View.VISIBLE);
 
-                }
-                else if(mapFlag == 2)
-                {
-                    intent.putExtra("DESTINATION", destinationName);
-                    intent.putExtra("DESTINATION_LAT", String.valueOf(selectLat));
-                    intent.putExtra("DESTINATION_LON", String.valueOf(selectLon));
-                    intent.putExtra("DEST_SUBWAY_NAME", subwayName);
-                    intent.putExtra("DEST_SUBWAY_LAT", String.valueOf(subwayLat));
-                    intent.putExtra("DEST_SUBWAY_LON", String.valueOf(subwayLon));
-                }
 
-                setResult(RESULT_OK, intent);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-                finish();
+                    }
+                };
+                recoTvReset();
+                horizontalScrollView.scrollTo(0, 0);
+                convertToAddress(handler);
 
             }
         });
 
+        return view;
     }
 
     public void showMarkerPoint(MapPoint myHome) {
@@ -336,7 +249,7 @@ public class MapActivity extends AppCompatActivity implements TMapGpsManager.onL
         });
         searchEt.setText(null);
         InputMethodManager mInputMethodManager = (InputMethodManager)
-                getSystemService(Context.INPUT_METHOD_SERVICE);
+                getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         mInputMethodManager.hideSoftInputFromWindow(searchEt.getWindowToken(), 0);  //  입력 후 키보드 내리기
 
         new Handler().postDelayed(new Runnable()
@@ -520,15 +433,4 @@ public class MapActivity extends AppCompatActivity implements TMapGpsManager.onL
 
         }
     }
-
-
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(MapActivity.this, num20_Main.class);
-        setResult(RESULT_CANCELED, intent);
-        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-        finish();
-    }
-
 }

@@ -21,9 +21,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     Context context;
     ArrayList<HashMap<String, String>> eventList; //일정 정보 담겨있음
 
-    public EventAdapter(Context context, ArrayList<HashMap<String, String>> scheduleList) {
+    public EventAdapter(Context context, ArrayList<HashMap<String, String>> eventList) {
         this.context = context;
-        this.eventList = scheduleList;
+        this.eventList = eventList;
     }
 
     @Override

@@ -95,7 +95,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/s_maps"/>
+            android:background="@drawable/j_maps"/>
     </LinearLayout>
 
 

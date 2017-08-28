@@ -21,9 +21,9 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     Context context;
     ArrayList<HashMap<String, String>> todoList; //일정 정보 담겨있음
 
-    public TodoAdapter(Context context, ArrayList<HashMap<String, String>> scheduleList) {
+    public TodoAdapter(Context context, ArrayList<HashMap<String, String>> todoList) {
         this.context = context;
-        this.todoList = scheduleList;
+        this.todoList = todoList;
     }
 
     @Override

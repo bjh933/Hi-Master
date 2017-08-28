@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.a1.himaster.SKPlanet.WeatherTodayThread;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 
 public class ThirdFragment extends Fragment {
@@ -35,11 +41,6 @@ public class ThirdFragment extends Fragment {
 
     public static ThirdFragment newInstance() {
         return new ThirdFragment();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -60,6 +61,7 @@ public class ThirdFragment extends Fragment {
         sickTv = (TextView) view.findViewById(R.id.sickTv);
         sickExTv = (TextView) view.findViewById(R.id.sickExTv);
 
+        Context mContext = getContext();
 
         optMenu = (ImageView) view.findViewById(R.id.optMenuBtn);
         optMenu.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +86,8 @@ public class ThirdFragment extends Fragment {
         */
 
         long now = System.currentTimeMillis();
-        Date date = new Date(now);
-        SimpleDateFormat toDate = new SimpleDateFormat("yyyy년 M월 d일");
+        java.sql.Date date = new java.sql.Date(now);
+        SimpleDateFormat toDate = new SimpleDateFormat("MMM . dd / EEE", Locale.ENGLISH);
         String todayDate = toDate.format(date);
         dateTv.setText(todayDate);
 
@@ -124,7 +126,7 @@ public class ThirdFragment extends Fragment {
         String url = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData?serviceKey="
                 + serviceKey + "&base_date=" + baseDate + "&base_time=" + baseTime +
                 "&nx=60&ny=127&numOfRows=8&pageSize=11&pageNo=1&startPage=1&_type=json";
-        // 기온 02 05 08 11 14 17 20 23시 예보
+        // 강수확 02 05 08 11 14 17 20 23시 예보
 
         String url2 = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?stationName=%EA%B0%95%EB%82%A8%EA%B5%AC&dataTerm=month&pageNo=1&numOfRows=1&ServiceKey=" + serviceKey + "&ver=1.3&_returnType=json";
         //  미세먼지 예보
@@ -144,11 +146,30 @@ public class ThirdFragment extends Fragment {
         String jisuUrl3 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getFsnLifeList?serviceKey=" +
                 serviceKey + "&areaNo=1100000000&time=" + yesterday + "&type=json";   // 식중독지수
 
-        getData(url);
-        getDustData(url2);
-        getBulData(jisuUrl1);
-        getUltData(jisuUrl2);
-        getSickData(jisuUrl3);
+        Handler handler = new Handler(){
+            public void handleMessage(Message msg)
+            {
+                String str = msg.getData().getString("weatherToday");    /// 번들에 들어있는 값 꺼냄
+                Log.d("weathertoday", str);
+                String[] weatherStr = str.split("-");
+                skyTv.setText(weatherStr[0]);
+                setSky(weatherStr[0], weatherIv);
+
+                String temp = weatherStr[3];
+                int index = temp.indexOf('.');
+                String tempNow = temp.substring(0, index);
+                tempTv.setText(tempNow);
+                tempTv.append(" ℃");
+            }};
+
+        WeatherTodayThread wtt = new WeatherTodayThread(handler, mContext, 37.5714000000, 126.9658000000);
+        wtt.run();  //  오늘 날씨
+
+        getData(url);   //  강수 확률 얻기
+        getDustData(url2);  //  미세먼지 얻기
+        getBulData(jisuUrl1);   //  불쾌지수 얻기
+        getUltData(jisuUrl2);   //  자외선지수 얻기
+        getSickData(jisuUrl3);  //  식중독지수 얻기
         return view;
     }
 
@@ -198,6 +219,15 @@ public class ThirdFragment extends Fragment {
         g.execute(url);
     }
 
+    public void setSky(String skyStatus, ImageView iv) {
+
+        if(skyStatus.equals("맑음"))
+            iv.setImageResource(R.drawable.sunny);
+        else if(skyStatus.equals("구름조금") || skyStatus.equals("구름많음") || skyStatus.equals("흐림"))
+            iv.setImageResource(R.drawable.cloudy);
+        else
+            iv.setImageResource(R.drawable.rainy);
+    }
 
     public void makeList(String myJSON) {
         try {
@@ -232,24 +262,7 @@ public class ThirdFragment extends Fragment {
                         weatherIv.setImageResource(R.drawable.sunny);
                     }
 
-                } else if (category.equals("T3H")) {
-                    tempTv.setText(value);
-                    temp = tempTv.getText().toString();
-                    tempTv.append(" ℃");
-                } else if (category.equals("SKY")) {
-                    if (value.equals("1"))
-                        skyStatus = "맑음";
-                    else if (value.equals("2"))
-                        skyStatus = "구름 조금";
-                    else if (value.equals("3"))
-                        skyStatus = "구름 많음";
-                    else if (value.equals("4"))
-                        skyStatus = "매우 흐림";
-
-                    skyTv.setText(skyStatus);
-                    // 1:맑음 2:구름조금 3:구름많음 4:흐림
                 }
-
             }
 
         } catch (JSONException e) {

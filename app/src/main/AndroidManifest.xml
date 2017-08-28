@@ -52,16 +52,11 @@
         <activity android:name=".MyInfo"/>
         <activity android:name=".DetailSchedule"/>
         <activity android:name=".DetailScheduleTest"/>
-        <activity android:name=".num04_Main"/>
-        <activity android:name=".num09_Main"/>
+        <activity android:name=".DesignTest"/>
         <activity android:name=".num10_Main"/>
-        <activity android:name=".num14_Main"/>
         <activity android:name=".num15_Main"/>
         <activity android:name=".num16_Main"/>
-        <activity android:name=".num18_Main"/>
-        <activity android:name=".num19_Main"/>
         <activity android:name=".num20_Main"/>
-        <activity android:name=".num21_Main"/>
         <activity android:name=".Gps.GpsSearch"/>
         <activity android:name=".WeekWeather"/>
         <activity android:name=".SKPlanet.Tmap.RecommendPlaceMap"/>

@@ -38,7 +38,7 @@ public class Popup extends Activity {
         popupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Popup.this, num18_Main.class);
+                Intent intent = new Intent(Popup.this, BottombarActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();

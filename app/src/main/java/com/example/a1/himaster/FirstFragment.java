@@ -253,7 +253,7 @@ public class FirstFragment extends Fragment {
             EventAdapter adapter2 = new EventAdapter(getActivity(), eventList);
 
             rv2.setAdapter(adapter2);
-            adapter.notifyDataSetChanged();
+            adapter2.notifyDataSetChanged();
 
             ///
 
@@ -278,14 +278,10 @@ public class FirstFragment extends Fragment {
             TodoAdapter adapter3 = new TodoAdapter(getActivity(), todoList);
 
             rv3.setAdapter(adapter3);
-            adapter.notifyDataSetChanged();
+            adapter3.notifyDataSetChanged();
 
         }catch(JSONException e) {
             e.printStackTrace();
         }
     }
-
-
-
-
 }

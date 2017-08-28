@@ -8,105 +8,159 @@
     android:background="#F3F2EE"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="130dp"
-        android:layout_gravity="center">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="98dp"
-            android:layout_gravity="center"
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="190dp"
+            android:layout_marginTop="-20dp"
+            android:src="@drawable/bal" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="245dp"
+            android:src="@drawable/bal" />
+
+        <ImageView
+            android:layout_width="170dp"
+            android:layout_height="116dp"
             android:layout_marginTop="20dp"
-            android:text="HI! \nMASTER"
-            android:textColor="#000000"
-            android:textSize="35dp"
-            android:textStyle="bold" />
+            android:layout_gravity="center"
+            android:src="@drawable/title" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="220dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/bal" />
 
         <ImageView
             android:id="@+id/bal"
-            android:layout_width="41dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="32dp"
-            android:layout_gravity="center"
-            android:src="@drawable/a_bal" />
-    </LinearLayout>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="270dp"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/bal2" />
 
-    <ImageView
-        android:id="@+id/hama"
-        android:layout_width="165dp"
-        android:layout_height="165dp"
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/hama" />
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:id="@+id/hama"
+            android:layout_width="678px"
+            android:layout_height="678px"
+            android:layout_gravity="center"
+            android:src="@drawable/hama" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="265dp"
+            android:src="@drawable/bal" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="315dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/bal" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="295dp"
+            android:layout_marginTop="85dp"
+            android:src="@drawable/bal" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="130dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="103px"
         android:layout_gravity="center">
 
         <Button
             android:id="@+id/facebookBtn"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="145px"
+            android:layout_height="145px"
             android:background="@drawable/a_facebook"
-            android:layout_gravity="center"
-            android:layout_margin="10dp" />
+            android:layout_gravity="center"/>
 
         <Button
             android:id="@+id/googleBtn"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="145px"
+            android:layout_height="145px"
             android:layout_gravity="center"
             android:background="@drawable/a_google"
-            android:layout_margin="10dp" />
+            android:layout_marginLeft="92px"/>
 
         <Button
             android:id="@+id/kakaoBtn"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="145px"
+            android:layout_height="145px"
             android:background="@drawable/a_kakao"
             android:layout_gravity="center"
-            android:layout_margin="10dp"/>
+            android:layout_marginLeft="92px"/>
 
 
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/skipBtn"
-        android:layout_marginLeft="120dp"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:background="@drawable/a_skip" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="58px">
+
+        <Button
+            android:id="@+id/skipBtn"
+            android:layout_width="540px"
+            android:layout_height="241px"
+            android:layout_gravity="center"
+            android:background="@drawable/skipbtn" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:orientation="horizontal">
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:layout_marginTop="80px">
 
         <TextView
-            android:layout_marginBottom="5dp"
-            android:text="  COPYRIGHT @ 1남3녀"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000000"/>
+            android:layout_gravity="center"
+            android:layout_marginLeft="24px"
+            android:text="COPYRIGHT @ 1남4녀"
+            android:textColor="#000000" />
 
         <TextView
-            android:layout_marginBottom="5dp"
-            android:text="v 2.4.0  "
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="180dp"
-            android:textColor="#000000"/>
+            android:layout_gravity="center"
+            android:layout_marginLeft="500px"
+            android:text="v 2.4.0"
+            android:textColor="#000000" />
     </LinearLayout>
 
 

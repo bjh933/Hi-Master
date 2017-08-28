@@ -15,22 +15,23 @@
 
                 <TextView
                     android:id="@+id/titleTv"
-                    android:layout_width="260dp"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:text="                            출발지 설정"
+                    android:text="                경로 탐색"
                     android:gravity="center"
                     android:textSize="15dp"
                     android:textColor="#000000"/>
 
-               <TextView
-                   android:layout_marginRight="10dp"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/okTv"
-                    android:text="완료"
+                    android:id="@+id/myLocaTv"
+                    android:text="내 위치"
                     android:gravity="right"
                     android:textSize="15dp"
                     android:textColor="#000000"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -97,7 +98,7 @@
                             android:layout_width="50dp"
                             android:gravity="center"
                             android:layout_height="wrap_content"
-                            android:text="음식점"
+                            android:text="카페"
                             android:layout_gravity="center"
                             android:layout_marginLeft="40dp"
                             android:textColor="#BABABA"/>
@@ -107,7 +108,7 @@
                             android:layout_width="50dp"
                             android:gravity="center"
                             android:layout_height="wrap_content"
-                            android:text="문화"
+                            android:text="음식점"
                             android:layout_gravity="center"
                             android:layout_marginLeft="30dp"
                             android:textColor="#BABABA"/>
@@ -117,7 +118,7 @@
                             android:layout_width="50dp"
                             android:gravity="center"
                             android:layout_height="wrap_content"
-                            android:text="쇼핑"
+                            android:text="영화"
                             android:layout_gravity="center"
                             android:layout_marginLeft="30dp"
                             android:textColor="#BABABA"/>
@@ -127,7 +128,7 @@
                             android:layout_width="50dp"
                             android:gravity="center"
                             android:layout_height="wrap_content"
-                            android:text="숙박"
+                            android:text="쇼핑"
                             android:layout_gravity="center"
                             android:layout_marginLeft="30dp"
                             android:textColor="#BABABA"/>
@@ -137,7 +138,7 @@
                             android:layout_width="50dp"
                             android:gravity="center"
                             android:layout_height="wrap_content"
-                            android:text="주차장"
+                            android:text="숙박"
                             android:layout_gravity="center"
                             android:layout_marginLeft="30dp"
                             android:textColor="#BABABA"/>
@@ -152,11 +153,22 @@
                             android:layout_marginLeft="30dp"
                             android:textColor="#BABABA"/>
 
+                        <TextView
+                            android:id="@+id/rTv7"
+                            android:layout_width="50dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:text="병원"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#BABABA"/>
+
                 </LinearLayout>
         </HorizontalScrollView>
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:orientation="horizontal" android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:id="@+id/listlayout">
 
                         <ListView
                             android:id="@+id/addressview"

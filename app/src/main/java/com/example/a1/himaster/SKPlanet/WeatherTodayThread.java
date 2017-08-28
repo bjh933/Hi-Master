@@ -49,12 +49,14 @@ public class WeatherTodayThread extends Thread {
                         Weather.getInstance().setTodayTmax(weatherTodayRepo.getWeather().getHourly().get(0).getTemperature().getTmax());
                         Weather.getInstance().setTodayTmin(weatherTodayRepo.getWeather().getHourly().get(0).getTemperature().getTmin());
                         Weather.getInstance().setDayStatus(weatherTodayRepo.getWeather().getHourly().get(0).getSky().getName());
+                        Weather.getInstance().setTodayTemp(weatherTodayRepo.getWeather().getHourly().get(0).getTemperature().getTc());
                         String todayStatus = Weather.getInstance().getDayStatus();
                         String todayTmax = Weather.getInstance().getTodayTmax();
                         String todayTmin = Weather.getInstance().getTodayTmin();
+                        String tempNow = Weather.getInstance().getTodayTemp();
                         Message msg = Message.obtain();
                         Bundle bundle = new Bundle();
-                        bundle.putString("weatherToday", todayStatus + "-" + todayTmax+ "-" + todayTmin);
+                        bundle.putString("weatherToday", todayStatus + "-" + todayTmax+ "-" + todayTmin + "-" + tempNow);
                         Log.d("weatherrr", todayStatus + "-" + todayTmax+ "-" + todayTmin);
                         msg.setData(bundle);
                         handler.sendMessage(msg);
