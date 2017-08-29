@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F3F2EE">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:background="#F3F2EE">
+
+                <TextView
+                    android:id="@+id/titleTv"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:text="                경로 탐색"
+                    android:gravity="center"
+                    android:textSize="15dp"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/myLocaTv"
+                    android:text="내 위치"
+                    android:gravity="right"
+                    android:textSize="15dp"
+                    android:textColor="#000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:background="#EEEEEE">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출발지 : "
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"/>
+
+                <EditText
+                    android:layout_width="265dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/departEt"
+                    android:layout_gravity="center"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/searchDepartTv"
+                    android:text="  검색"
+                    android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:background="#EEEEEE">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="도착지 : "
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"/>
+
+                <EditText
+                    android:layout_width="265dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/destEt"
+                    android:layout_gravity="center"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/searchDestTv"
+                    android:text="  검색"
+                    android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/mapview"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </LinearLayout>
+
+        <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/horizontalScrollView">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:background="#EEEEEE"
+                    android:id="@+id/recoLayout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="장소 추천 "
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"/>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ddabong"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginBottom="2dp"/>
+
+                        <TextView
+                            android:id="@+id/rTv1"
+                            android:layout_width="50dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:text="카페"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="40dp"
+                            android:textColor="#BABABA"/>
+
+                        <TextView
+                            android:id="@+id/rTv2"
+                            android:layout_width="50dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:text="음식점"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#BABABA"/>
+
+                        <TextView
+                            android:id="@+id/rTv3"
+                            android:layout_width="50dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:text="영화"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#BABABA"/>
+
+                        <TextView
+                            android:id="@+id/rTv4"
+                            android:layout_width="50dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:text="쇼핑"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#BABABA"/>
+
+                        <TextView
+                            android:id="@+id/rTv5"
+                            android:layout_width="50dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:text="숙박"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#BABABA"/>
+
+                        <TextView
+                            android:id="@+id/rTv6"
+                            android:layout_width="50dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:text="공원"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#BABABA"/>
+
+                        <TextView
+                            android:id="@+id/rTv7"
+                            android:layout_width="50dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:text="병원"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#BABABA"/>
+
+                </LinearLayout>
+        </HorizontalScrollView>
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="horizontal" android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/listlayout">
+
+                        <ListView
+                            android:id="@+id/addressview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#F3F2EE"
+                            android:divider="#fb000000"
+                            android:dividerHeight="1dp"></ListView>
+                </LinearLayout>
+
+</LinearLayout>

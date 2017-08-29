@@ -67,6 +67,7 @@ public class FirstFragment extends Fragment {
         final String userId = saveInfo.getString("USERID", "");   //  userId 가져옴
 
         url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://223.195.22.107:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         scheduleList = new ArrayList<HashMap<String, String>>();
         eventList = new ArrayList<HashMap<String, String>>();
         todoList = new ArrayList<HashMap<String, String>>();
@@ -173,7 +174,9 @@ public class FirstFragment extends Fragment {
     public void makeList(String myJSON) {
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
+            String userId = jsonObj.getString("userId");
             posts = jsonObj.getJSONArray("schedules");
+
             for(int i=0; i<posts.length(); i++) {
                 //JSON에서 각각의 요소를 뽑아옴
                 JSONObject c = posts.getJSONObject(i);
@@ -198,6 +201,7 @@ public class FirstFragment extends Fragment {
                 Log.d("destination", dest);
                 //HashMap에 붙이기
                 HashMap<String,String> posts = new HashMap<String, String>();
+                posts.put("userId", userId);
                 posts.put(TAG_TITLE,title);
                 posts.put(TAG_DATE,conDate);
                 posts.put(TAG_TIME,startTime);
@@ -230,7 +234,6 @@ public class FirstFragment extends Fragment {
                 SimpleDateFormat formatter = new SimpleDateFormat(pattern);
                 Date cDate = Date.valueOf(date);
                 String conDate = (String)formatter.format(cDate);
-                String dest = c.getString(TAG_DEST);
 
                 if(date.length() > 50 ) {
                     date = date.substring(0,50) + "..."; //50자 자르고 ... 붙이기
@@ -239,12 +242,10 @@ public class FirstFragment extends Fragment {
                     title = title.substring(0,16) + "..."; //18자 자르고 ... 붙이기
                 }
                 Log.d("title", title);
-                Log.d("destination", dest);
                 //HashMap에 붙이기
                 HashMap<String,String> ePosts = new HashMap<String, String>();
                 ePosts.put(TAG_TITLE,title);
                 ePosts.put(TAG_DATE,conDate);
-                ePosts.put(TAG_DEST,dest);
 
                 //ArrayList에 HashMap 붙이기
                 eventList.add(ePosts);

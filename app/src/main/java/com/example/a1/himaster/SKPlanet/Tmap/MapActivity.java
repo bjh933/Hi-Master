@@ -334,7 +334,6 @@ public class MapActivity extends AppCompatActivity implements TMapGpsManager.onL
                 }
             }
         });
-        searchEt.setText(null);
         InputMethodManager mInputMethodManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
         mInputMethodManager.hideSoftInputFromWindow(searchEt.getWindowToken(), 0);  //  입력 후 키보드 내리기
@@ -360,7 +359,7 @@ public class MapActivity extends AppCompatActivity implements TMapGpsManager.onL
         {
             if(locaAddr.contains("서울") || locaAddr.contains("경기"))
             {
-                tMapData.findAroundNamePOI(point, "지하철", 5, 99,
+                tMapData.findAroundNamePOI(point, "지하철", 5, 50,
                     new TMapData.FindAroundNamePOIListenerCallback() {
 
                         @Override
@@ -400,7 +399,7 @@ public class MapActivity extends AppCompatActivity implements TMapGpsManager.onL
 
                 recoListAdapter = new MapListItemAdapter(recoHandler);
                 final ArrayList<MapListItem> recoList = new ArrayList<MapListItem>();
-                tMapData.findAroundNamePOI(point, recoCategory, 1, 50,
+                tMapData.findAroundNamePOI(point, recoCategory, 2, 40,
                         new TMapData.FindAroundNamePOIListenerCallback() {
 
                             @Override

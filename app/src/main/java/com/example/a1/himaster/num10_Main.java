@@ -467,7 +467,7 @@ public class num10_Main extends AppCompatActivity {
     }
 
 
-        class PutDataJSON extends AsyncTask<String, Void, String> {
+    class PutDataJSON extends AsyncTask<String, Void, String> {
             @Override
             protected String doInBackground(String... params) {
                 //JSON 받아온다.

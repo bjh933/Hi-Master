@@ -54,6 +54,7 @@ public class SecondFragment extends Fragment {
     JSONArray tPosts = null;
     String url = "";
     private static final String TAG_TITLE = "title";
+    Handler handler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -226,8 +227,9 @@ public class SecondFragment extends Fragment {
                 //ArrayList에 HashMap 붙이기
                 todoList.add(tPosts);
             }
+
             //카드 리스트뷰 어댑터에 연결
-            TodoDelayAdapter adapter = new TodoDelayAdapter(getActivity(), todoList);
+            TodoDelayAdapter adapter = new TodoDelayAdapter(getActivity(), todoList, handler);
 
             rv1.setAdapter(adapter);
             adapter.notifyDataSetChanged();

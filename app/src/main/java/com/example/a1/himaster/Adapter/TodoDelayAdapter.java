@@ -1,19 +1,16 @@
 package com.example.a1.himaster.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.a1.himaster.DetailScheduleTest;
 import com.example.a1.himaster.R;
 
 import java.util.ArrayList;
@@ -27,10 +24,11 @@ public class TodoDelayAdapter extends RecyclerView.Adapter<TodoDelayAdapter.View
     Context context;
     ArrayList<HashMap<String, String>> todoList; //일정 정보 담겨있음
     String dUser, dTitle, dDate, dMemo, dRepeat;
-
-    public TodoDelayAdapter(Context context, ArrayList<HashMap<String, String>> todoList) {
+    Handler handler;
+    public TodoDelayAdapter(Context context, ArrayList<HashMap<String, String>> todoList, Handler handler) {
         this.context = context;
         this.todoList = todoList;
+        this.handler = handler;
     }
 
     @Override
@@ -55,9 +53,11 @@ public class TodoDelayAdapter extends RecyclerView.Adapter<TodoDelayAdapter.View
                 if(holder.chkFlag == 0)
                 {
                     holder.chkFlag = 1;
-                    Log.d("delayList", noticeItem.get("userId") + ", "
-                        + noticeItem.get("title") +", " + noticeItem.get("dueDate") +
-                        ", " + noticeItem.get("memo") + ", " + ", " + noticeItem.get("fix"));
+
+
+                    Log.d("delayList", noticeItem.get("userId") + "-"
+                        + noticeItem.get("title") +"-" + noticeItem.get("dueDate") +
+                        "-" + noticeItem.get("memo") + "-" + noticeItem.get("fix"));
                 }
                 else if(holder.chkFlag == 1)
                 {

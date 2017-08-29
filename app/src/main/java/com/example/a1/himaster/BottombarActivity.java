@@ -3,14 +3,10 @@ package com.example.a1.himaster;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-
 import com.example.a1.himaster.bottomtab.BottomBarHolderActivity;
 import com.example.a1.himaster.bottomtab.NavigationPage;
-
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 public class BottombarActivity extends BottomBarHolderActivity {
     private final long FINISH_INTERVAL_TIME = 2000;

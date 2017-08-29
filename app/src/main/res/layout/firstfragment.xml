@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="일 정"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textStyle="bold"/>
 
 
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="행 사"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textStyle="bold"/>
 
 
@@ -124,7 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="할 일"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textStyle="bold"/>
 
 

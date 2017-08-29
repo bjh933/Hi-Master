@@ -50,8 +50,8 @@
             android:label="@string/app_name" />
         <activity android:name=".InfoToBottom"/>
         <activity android:name=".MyInfo"/>
+        <activity android:name=".DetailScheduleBackup"/>
         <activity android:name=".DetailSchedule"/>
-        <activity android:name=".DetailScheduleTest"/>
         <activity android:name=".DesignTest"/>
         <activity android:name=".num10_Main"/>
         <activity android:name=".num15_Main"/>
