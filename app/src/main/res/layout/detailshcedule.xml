@@ -182,22 +182,18 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_gravity="center"
                 android:layout_marginLeft="10dp">
                 <TextView
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:text="212"
-                    android:id="@+id/trasportNum"
+                    android:id="@+id/transportNum"
                     android:textSize="15dp"
                     android:layout_gravity="center"/>
 
@@ -220,39 +216,6 @@
                     android:layout_marginLeft="30dp"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp">
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:text="2066"
-                    android:id="@+id/trasportNum2"
-                    android:textSize="15dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/leftTimeTv2"
-                    android:text="15분 후"
-                    android:textSize="15dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/transportDepartTv2"
-                    android:text="세종대학교"
-                    android:textSize="15dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"/>
-            </LinearLayout>
-        </LinearLayout>
 
     </LinearLayout>
 

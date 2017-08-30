@@ -1,13 +1,17 @@
 package com.example.a1.himaster;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,7 +67,7 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
     HorizontalScrollView horizontalScrollView;
     LinearLayout recoLayout;
     LinearLayout mapView;
-    TextView rTv1, rTv2, rTv3, rTv4, rTv5, rTv6, rTv7, myLocaTv;
+    TextView rTv1, rTv2, rTv3, rTv4, rTv5, rTv6, rTv7, rTv8, myLocaTv;
     String recoCategory = "";
     MapListItem recoFood;
     ListView addressView;
@@ -102,6 +106,7 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
         rTv5 = (TextView) view.findViewById(R.id.rTv5);
         rTv6 = (TextView) view.findViewById(R.id.rTv6);
         rTv7 = (TextView) view.findViewById(R.id.rTv7);
+        rTv8 = (TextView) view.findViewById(R.id.rTv8);
         rTv1.setOnClickListener(this);
         rTv2.setOnClickListener(this);
         rTv3.setOnClickListener(this);
@@ -109,6 +114,7 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
         rTv5.setOnClickListener(this);
         rTv6.setOnClickListener(this);
         rTv7.setOnClickListener(this);
+        rTv8.setOnClickListener(this);
         myLocaTv.setOnClickListener(this);
 
         titleTv = (TextView) view.findViewById(R.id.titleTv);
@@ -479,6 +485,43 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
                 // 0.8초 정도 딜레이를 준 후 시작
             }
 
+            else if(recoCategory.equals("교통"))
+            {
+
+                final ArrayList<MapListItem> recoList = new ArrayList<MapListItem>();
+                tMapData.findAroundNamePOI(point, "버스;지하철", 2, 30,
+                        new TMapData.FindAroundNamePOIListenerCallback() {
+
+                            @Override
+                            public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
+                                for (int i = 0; i < poiItem.size(); i++) {
+                                    TMapPOIItem item = poiItem.get(i);
+
+                                    Double recoLat = item.getPOIPoint().getLatitude();
+                                    Double recoLon = item.getPOIPoint().getLongitude();
+
+                                    MapListItem recoItem = new MapListItem(item.getPOIName(),
+                                            item.getPOIAddress().replace("null", ""), recoLat, recoLon);
+
+                                    recoList.add(recoItem);
+                                    recoListAdapter.add(recoList.get(i));
+
+                                    Log.d("recoPlace", recoCategory + " : " + item.getPOIName() + ", " + "Address : " +
+                                            item.getPOIAddress().replace("null", ""));
+                                }
+                            }
+
+                        });
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        addressView.setAdapter(recoListAdapter);
+                    }
+                }, 800);
+                // 0.8초 정도 딜레이를 준 후 시작
+            }
+
             else if(!recoCategory.equals("")){
 
                 final ArrayList<MapListItem> recoList = new ArrayList<MapListItem>();
@@ -526,6 +569,8 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
         rTv4.setTextColor(Color.parseColor("#BABABA"));
         rTv5.setTextColor(Color.parseColor("#BABABA"));
         rTv6.setTextColor(Color.parseColor("#BABABA"));
+        rTv7.setTextColor(Color.parseColor("#BABABA"));
+        rTv8.setTextColor(Color.parseColor("#BABABA"));
     }
 
     @Override
@@ -541,6 +586,7 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
                 rTv5.setTextColor(Color.parseColor("#BABABA"));
                 rTv6.setTextColor(Color.parseColor("#BABABA"));
                 rTv7.setTextColor(Color.parseColor("#BABABA"));
+                rTv8.setTextColor(Color.parseColor("#BABABA"));
                 getAroundPlace();
                 break;
 
@@ -553,6 +599,7 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
                 rTv5.setTextColor(Color.parseColor("#BABABA"));
                 rTv6.setTextColor(Color.parseColor("#BABABA"));
                 rTv7.setTextColor(Color.parseColor("#BABABA"));
+                rTv8.setTextColor(Color.parseColor("#BABABA"));
                 getAroundPlace();
                 break;
 
@@ -565,6 +612,7 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
                 rTv5.setTextColor(Color.parseColor("#BABABA"));
                 rTv6.setTextColor(Color.parseColor("#BABABA"));
                 rTv7.setTextColor(Color.parseColor("#BABABA"));
+                rTv8.setTextColor(Color.parseColor("#BABABA"));
                 getAroundPlace();
                 break ;
 
@@ -577,10 +625,24 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
                 rTv5.setTextColor(Color.parseColor("#BABABA"));
                 rTv6.setTextColor(Color.parseColor("#BABABA"));
                 rTv7.setTextColor(Color.parseColor("#BABABA"));
+                rTv8.setTextColor(Color.parseColor("#BABABA"));
                 getAroundPlace();
                 break ;
 
             case R.id.rTv5 :
+                recoCategory = "교통";
+                rTv5.setTextColor(Color.parseColor("#BC0003"));
+                rTv2.setTextColor(Color.parseColor("#BABABA"));
+                rTv1.setTextColor(Color.parseColor("#BABABA"));
+                rTv4.setTextColor(Color.parseColor("#BABABA"));
+                rTv3.setTextColor(Color.parseColor("#BABABA"));
+                rTv6.setTextColor(Color.parseColor("#BABABA"));
+                rTv7.setTextColor(Color.parseColor("#BABABA"));
+                rTv8.setTextColor(Color.parseColor("#BABABA"));
+                getAroundPlace();
+                break ;
+
+            case R.id.rTv6 :
                 recoCategory = "숙박";
                 rTv5.setTextColor(Color.parseColor("#BC0003"));
                 rTv2.setTextColor(Color.parseColor("#BABABA"));
@@ -589,10 +651,11 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
                 rTv3.setTextColor(Color.parseColor("#BABABA"));
                 rTv6.setTextColor(Color.parseColor("#BABABA"));
                 rTv7.setTextColor(Color.parseColor("#BABABA"));
+                rTv8.setTextColor(Color.parseColor("#BABABA"));
                 getAroundPlace();
                 break ;
 
-            case R.id.rTv6 :
+            case R.id.rTv7 :
                 recoCategory = "공원";
                 rTv6.setTextColor(Color.parseColor("#BC0003"));
                 rTv2.setTextColor(Color.parseColor("#BABABA"));
@@ -601,37 +664,73 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
                 rTv5.setTextColor(Color.parseColor("#BABABA"));
                 rTv4.setTextColor(Color.parseColor("#BABABA"));
                 rTv7.setTextColor(Color.parseColor("#BABABA"));
+                rTv8.setTextColor(Color.parseColor("#BABABA"));
                 getAroundPlace();
                 break ;
 
-            case R.id.rTv7 :
+            case R.id.rTv8 :
                 recoCategory = "병원";
-                rTv7.setTextColor(Color.parseColor("#BC0003"));
+                rTv8.setTextColor(Color.parseColor("#BC0003"));
                 rTv2.setTextColor(Color.parseColor("#BABABA"));
                 rTv3.setTextColor(Color.parseColor("#BABABA"));
                 rTv1.setTextColor(Color.parseColor("#BABABA"));
                 rTv5.setTextColor(Color.parseColor("#BABABA"));
                 rTv4.setTextColor(Color.parseColor("#BABABA"));
                 rTv6.setTextColor(Color.parseColor("#BABABA"));
+                rTv7.setTextColor(Color.parseColor("#BABABA"));
                 getAroundPlace();
                 break ;
 
             case R.id.myLocaTv :
 
+                /*
                 tmapGps = new TMapGpsManager(mContext);
                 tmapGps.setMinTime(1000);
                 tmapGps.setMinDistance(5);
                 tmapGps.setProvider(tmapGps.NETWORK_PROVIDER);  //  연결된 인터넷으로 현 위치를 받음, 실내에 유용
                 // tmapGps.setProvider(tmapGps.GPS_PROVIDER);
                 tmapGps.OpenGps();
+                */
+
+                setGps();
 
                 tmapView.setCompassMode(true);
                 tmapView.setIconVisibility(true);   //  현 위치 아이콘 표시
                 tmapView.setTrackingMode(true);
                 tmapView.setSightVisible(true);
-                Log.d("gps", String.valueOf(tmapGps.setLocationCallback()));
+                //Log.d("gps", String.valueOf(tmapGps.setLocationCallback()));
                 break ;
 
         }
     }
+
+    public void setGps() {
+        final LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("gpsss", "fail");
+            return;
+        }
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
+                1000, // 통지사이의 최소 시간간격 (miliSecond)
+                1, // 통지사이의 최소 변경거리 (m)
+                mLocationListener);
+    }
+
+    private final LocationListener mLocationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+
+            double longitude = location.getLongitude(); //경도
+            double latitude = location.getLatitude();   //위도
+
+            tmapView.setCenterPoint(longitude, latitude);
+        }
+        public void onProviderDisabled(String provider) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    };
 }

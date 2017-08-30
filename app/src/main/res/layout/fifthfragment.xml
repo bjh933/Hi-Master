@@ -176,7 +176,7 @@
                             android:layout_width="50dp"
                             android:gravity="center"
                             android:layout_height="wrap_content"
-                            android:text="숙박"
+                            android:text="교통"
                             android:layout_gravity="center"
                             android:layout_marginLeft="30dp"
                             android:textColor="#BABABA"/>
@@ -186,13 +186,23 @@
                             android:layout_width="50dp"
                             android:gravity="center"
                             android:layout_height="wrap_content"
-                            android:text="공원"
+                            android:text="숙박"
                             android:layout_gravity="center"
                             android:layout_marginLeft="30dp"
                             android:textColor="#BABABA"/>
 
                         <TextView
                             android:id="@+id/rTv7"
+                            android:layout_width="50dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:text="공원"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#BABABA"/>
+
+                        <TextView
+                            android:id="@+id/rTv8"
                             android:layout_width="50dp"
                             android:gravity="center"
                             android:layout_height="wrap_content"

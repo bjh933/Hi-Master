@@ -13,11 +13,16 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.a1.himaster.Model.Destination;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -29,29 +34,49 @@ import java.net.URL;
 public class DetailSchedule extends AppCompatActivity implements View.OnClickListener{
 
     JSONArray posts = null;
-    TextView dDateTv, dTimeTv, dTitleTv, dDepartTv, dArriveTv;
+    TextView dDateTv, dTimeTv, dTitleTv, dDepartTv, dArriveTv, transportNum, timeTerm, transportdTv;
     Spinner trptSpin;
     String dTitle, dDate, dTime, dDest = "";
     ImageView trptImg, swapBtn;
     String serviceKey = "Zfm%2Fjv9CdbeGPRRkBK3wjUOpqFhc5gONSyZbz0P4p13fH1s0CHO25CzN8Sf8VNPrjjfhIhdAh1SQagI6bQeTkw%3D%3D";
     String subwayKey = "4e4b704a51646a673733724c474d6e";
-    String departLat = "37.54931915";
-    String departLon = "127.08117882";  //  어린이대공원
-    String destLat = "37.49799082";
-    String destLon = "127.02779625";    //  강남
-    String subDepartLat = "37.54901353";
-    String subDepartLon = "127.07542936";   //  어린이대공원역
-    String subDestLat = "37.49810194";
-    String subDestLon = "127.02876838"; //  강남역 2호선
+    String walkingUrl = "";
+    String carUrl = "";
+
+    String firstDepartureLat = "37.643974";
+    String firstDepartureLon = "127.0357636";
+    String finalDestLat = "37.5505411";
+    String finalDestLon = "127.07384612";
+
+    String departLat = "37.643974";
+    String departLon = "127.0357636";  //  강원학사
+    String destLat = "37.55054112";
+    String destLon = "127.07384612";    //  세종대
+    String departSubLat = "37.64805684";
+    String departSubLon = "127.03456915";   //  쌍문역
+    String destSubLat = "37.54801363";
+    String destSubLon = "127.07467945"; //  어린이대공원역
     String temp = "";
     int spinFlag = 0;
     String subwayUrl = "";
+
     String busUrl = "";
+    String busStUrl = "";
+    String busStLat = "";
+    String busStLon = "";
+
+    String busStationNm = "";
+    String busTerm = "";
+    String busStNm = "";        //  arsId, gps정보 가져옴
+    String getBusNumUrl = "";   //  arsId를 통해 버스번호(BusRouteNm) 제공
+    String arsId = "";
+
     String walkTotalTime = "";
     String carTotalTime = "";
 
-    String departureSt = "강변";  //  출발역 명
+    String departureSt = "쌍문";  //  출발역 명
     String destinationSt = "어린이대공원";    // 도착역 명명
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +88,13 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
         busUrl = "http://openapi.tago.go.kr/openapi/service/BusSttnInfoInqireService/getCrdntPrxmtSttnList?serviceKey="
                 + serviceKey + "&gpsLati="+ departLat + "&gpsLong=" + departLon + "&_type=json";
 
+
+        busStUrl = "http://ws.bus.go.kr/api/rest/stationinfo/getStationByPos?serviceKey=" +
+                serviceKey + "&tmX=" + departLon + "&tmY=" + departLat + "&radius=" + "400";
+
+        transportdTv = (TextView)findViewById(R.id.transportDepartTv);
+        transportNum = (TextView)findViewById(R.id.transportNum);
+        timeTerm = (TextView)findViewById(R.id.leftTimeTv);
         trptImg = (ImageView)findViewById(R.id.transportImg);
         trptSpin = (Spinner)findViewById(R.id.transportSpinner);
 
@@ -71,12 +103,24 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0) {
                     trptImg.setImageResource(R.drawable.bus);
-                    getBusStopData(busUrl);    //  출발지 근처 버스정류장을 가져옴
+
+                    departLat = firstDepartureLat;
+                    departLon = firstDepartureLon;
+                    getBusStopXMLData(busStUrl);    //  출발지 근처 버스정류장을 가져옴(정류장명, arsId, gps)
+
                     spinFlag = 0;
                 }
                 else{
                     trptImg.setImageResource(R.drawable.train);
-                    getSubwayStData(subwayUrl);
+
+                    // 지하철이 몇분 뒤 도착하는지?
+
+                    getSubwayStData(subwayUrl); //  출발역부터 도착역까지 걸리는 시간
+
+                    departLat = destSubLat;
+                    departLon = destSubLon;
+                    destLat = finalDestLat;
+                    destLon = finalDestLon;
                     spinFlag = 1;
                 }
             }
@@ -107,26 +151,8 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
         dTimeTv.setText(dTime);
         dArriveTv.setText(dDest);
 
-        String startX = "127.08117882";
-        String startY = "37.54931915";
-        String endX = "127.02779625";
-        String endY = "37.49799082";
-        String startName = "어린이대공원";
-        String endName = "강남역";
-
-        String walkingUrl = "https://apis.skplanetx.com/tmap/routes/pedestrian?version=1" +
-                "&appKey=b42a1814-4abc-36c2-a743-43c5f81cd73d&" +
-                "startX="+startX+"&startY="+startY+"&endX="+endX+"&endY="+endY+"&startName="
-                +startName+"&endName="+endName+"&reqCoordType=WGS84GEO&resCoordType=WGS84GEO";
-
-        String carUrl = "https://apis.skplanetx.com/tmap/routes?version=1" +
-                "&appKey=b42a1814-4abc-36c2-a743-43c5f81cd73d&" +
-                "startX="+startX+"&startY="+startY+"&endX="+endX+"&endY="+endY+"&startName="
-                +startName+"&endName="+endName+"&reqCoordType=WGS84GEO&resCoordType=WGS84GEO";
-
-
-        getWalkTotalTimeData(walkingUrl);   //  초단위 보행자 소요 시간
-        getCarTotalTimeData(carUrl);   //  초단위 자동차 소요 시간
+        //getWalkTotalTimeData(walkingUrl);   //  초단위 보행자 소요 시간
+        //getCarTotalTimeData(carUrl);   //  초단위 자동차 소요 시간
 
     }
 
@@ -145,62 +171,177 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    public void getBusStopData(String url) {
-        class GetDataJSON extends AsyncTask<String,Void,String> {
+    public void getBusStopXMLData(String url) {
+        class GetDataXML extends AsyncTask<String, Void, String> {
             @Override
             protected String doInBackground(String... params) {
-                //JSON 받아온다.
-                String uri = params[0];
-                BufferedReader br = null;
+                StringBuffer buffer = new StringBuffer();
                 try {
-                    URL url = new URL(uri);
-                    HttpURLConnection conn1 = (HttpURLConnection) url.openConnection();
+                    String uri = params[0];
+                    URL url = new URL(uri); //문자열로 된 요청 url을 URL 객체로 생성.
+                    InputStream is = url.openStream();  //url위치로 입력스트림 연결
+                    XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                    XmlPullParser xpp = factory.newPullParser();
+                    xpp.setInput(new InputStreamReader(is, "UTF-8"));  //inputstream 으로부터 xml 입력받기
+                    String tag = null;
+                    xpp.next();
 
-                    StringBuilder sb = new StringBuilder();
+                    int eventType = xpp.getEventType();
+                    boolean isItemTag = false; // <item> .영역에 인지 여부 체크
 
-                    br = new BufferedReader(new InputStreamReader(conn1.getInputStream()));
+                    while(eventType != XmlPullParser.END_DOCUMENT){
 
-                    String json;
-                    while((json = br.readLine()) != null) {
-                        sb.append(json+"\n");
+
+                        if(eventType == XmlPullParser.START_TAG){ //시작 태그를 만났을때.
+                            //태그명을 저장
+                            tag = xpp.getName();
+                            if(tag.equals("itemList"))
+                                isItemTag = true;
+
+                        }else if(eventType == XmlPullParser.TEXT){ //내용
+
+                            if(isItemTag && tag.equals("arsId")) {
+                                arsId = xpp.getText();
+                                Log.d("arsId", arsId);
+                                buffer.append(xpp.getText());
+                                buffer.append("\n");
+                            }
+
+                            if(isItemTag && tag.equals("stationNm")) {
+                                busStationNm = xpp.getText();
+                                Log.d("busstationNm", busStationNm);
+                                buffer.append(xpp.getText());
+                                buffer.append("\n");
+                            }
+
+                            if(isItemTag && tag.equals("gpsX")) {
+                                busStLon = xpp.getText();
+                                destLon = busStLon;
+                                Log.d("destlon", destLon);
+                                buffer.append(xpp.getText());
+                                buffer.append("\n");
+                            }
+                            if(isItemTag && tag.equals("gpsY")) {
+                                busStLat = xpp.getText();
+                                destLat = busStLat;
+                                Log.d("destlat", destLat);
+                                buffer.append(xpp.getText());
+                                buffer.append("\n");
+                            }
+
+                        }else if(eventType == XmlPullParser.END_TAG){ //닫는 태그를 만났을때
+                            //태그명을 저장
+                            tag=xpp.getName();
+
+                            if(tag.equals("itemList")){
+
+                                break;
+
+                            }
+                        }
+
+                        eventType = xpp.next(); //다음 이벤트 타입
                     }
-                    Log.d("receiveJsonBusInfo", String.valueOf(sb));
-                    return sb.toString().trim();
-                }catch (Exception e) {
-                    return null;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                Log.d("receiveresult", buffer.toString());
+                return buffer.toString();
             }
+
             @Override
-            protected void onPostExecute(String myJSON) {
-                //Log.d("my", myJSON);
-                makeBusStopList(myJSON); //리스트를 보여줌
+            protected void onPostExecute(String buffer) {
+                //Log.d("my", buffer);
+
+                getBusNumUrl = "http://ws.bus.go.kr/api/rest/stationinfo/getRouteByStation?ServiceKey="+serviceKey
+                        +"&arsId="+arsId;
+                getBusNumXMLData(getBusNumUrl);
+
+                walkingUrl = "https://apis.skplanetx.com/tmap/routes/pedestrian?version=1" +
+                        "&appKey=b42a1814-4abc-36c2-a743-43c5f81cd73d&" +
+                        "startX="+departLon+"&startY="+departLat+"&endX="+destLon+"&endY="+destLat+"&startName="
+                        +"start"+"&endName="+"end"+"&reqCoordType=WGS84GEO&resCoordType=WGS84GEO";
+                getWalkTotalTimeData(walkingUrl);   //  걸어서 정류장까지 걸리는 시간
             }
         }
-        GetDataJSON g = new GetDataJSON();
+
+        GetDataXML g = new GetDataXML();
         g.execute(url);
     }
 
-    public void makeBusStopList(String myJSON) {
-        try {
-            JSONObject jsonObj = new JSONObject(myJSON);
+    public void getBusNumXMLData(String url) {
+        class GetDataXML extends AsyncTask<String, Void, String> {
+            @Override
+            protected String doInBackground(String... params) {
+                StringBuffer buffer = new StringBuffer();
+                try {
+                    String uri = params[0];
+                    URL url = new URL(uri); //문자열로 된 요청 url을 URL 객체로 생성.
+                    InputStream is = url.openStream();  //url위치로 입력스트림 연결
+                    XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                    XmlPullParser xpp = factory.newPullParser();
+                    xpp.setInput(new InputStreamReader(is, "UTF-8"));  //inputstream 으로부터 xml 입력받기
+                    String tag = null;
+                    xpp.next();
 
-            posts = jsonObj.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
-            for(int i=0; i<posts.length(); i++) {
-                //JSON에서 각각의 요소를 뽑아옴
-                JSONObject c = posts.getJSONObject(i);
-                String gpsLati = c.getString("gpslati");    //  정류소 X 좌표
-                String gpsLong = c.getString("gpslong");    //  정류소 Y 좌표
-                String nodeNm = c.getString("nodenm");    //  정류소 이름
-                //String nodeNo = c.getString("nodeno");    //  정류소 번호
-                String nodeId = c.getString("nodeid");    //  정류소 ID
+                    int eventType = xpp.getEventType();
+                    boolean isItemTag = false; // <item> .영역에 인지 여부 체크
 
-                Log.d("BusInfo", gpsLati + ", " + gpsLong + ", " + nodeNm + ", " + nodeId);
+                    while(eventType != XmlPullParser.END_DOCUMENT){
 
+
+                        if(eventType == XmlPullParser.START_TAG){ //시작 태그를 만났을때.
+                            //태그명을 저장
+                            tag = xpp.getName();
+                            if(tag.equals("itemList"))
+                                isItemTag = true;
+
+                        }else if(eventType == XmlPullParser.TEXT){ //내용
+
+                            if(isItemTag && tag.equals("busRouteNm")) {
+                                busStNm = xpp.getText();
+                                buffer.append(xpp.getText());
+                                buffer.append("\n");
+                            }
+
+                            if(isItemTag && tag.equals("term")) {
+                                busTerm = xpp.getText();
+                                buffer.append(xpp.getText());
+                                buffer.append("\n");
+                            }
+
+                        }else if(eventType == XmlPullParser.END_TAG){ //닫는 태그를 만났을때
+                            //태그명을 저장
+                            tag=xpp.getName();
+
+                            if(tag.equals("itemList")){
+
+                                break;
+
+                            }
+                        }
+
+                        eventType = xpp.next(); //다음 이벤트 타입
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Log.d("BusNumresult", busStNm +", " + busTerm);
+                return buffer.toString();
             }
 
-        }catch(JSONException e) {
-            e.printStackTrace();
+            @Override
+            protected void onPostExecute(String buffer) {
+                transportNum.setText(busStNm);
+                timeTerm.setText(busTerm+"분 간격");
+                transportdTv.setText(busStationNm);
+            }
         }
+
+        GetDataXML g = new GetDataXML();
+        g.execute(url);
     }
 
     public void getSubwayStData(String url) {
@@ -231,6 +372,16 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
             @Override
             protected void onPostExecute(String myJSON) {
                 //Log.d("my", myJSON);
+                departLat = firstDepartureLat;
+                departLon = firstDepartureLon;
+                destLat = departSubLat;
+                destLon = departSubLon;
+                walkingUrl = "https://apis.skplanetx.com/tmap/routes/pedestrian?version=1" +
+                        "&appKey=b42a1814-4abc-36c2-a743-43c5f81cd73d&" +
+                        "startX="+departLon+"&startY="+departLat+"&endX="+destLon+"&endY="+destLat+"&startName="
+                        +"start"+"&endName="+"end"+"&reqCoordType=WGS84GEO&resCoordType=WGS84GEO";
+
+                getWalkTotalTimeData(walkingUrl);   //  출발지부터 근처 역까지 걸어서 가는 시간
                 makeSubwayStList(myJSON); //리스트를 보여줌
             }
         }
@@ -258,6 +409,17 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
 
             }
 
+            departLat = destSubLat;
+            departLon = destSubLon;
+            destLat = finalDestLat;
+            destLon = finalDestLon;
+            walkingUrl = "https://apis.skplanetx.com/tmap/routes/pedestrian?version=1" +
+                    "&appKey=b42a1814-4abc-36c2-a743-43c5f81cd73d&" +
+                    "startX="+departLon+"&startY="+departLat+"&endX="+destLon+"&endY="+destLat+"&startName="
+                    +"start"+"&endName="+"end"+"&reqCoordType=WGS84GEO&resCoordType=WGS84GEO";
+
+            getWalkTotalTimeData(walkingUrl);   //  도착역부터 목적지까지 걸어서 가는 시간
+
         }catch(JSONException e) {
             e.printStackTrace();
         }
@@ -282,7 +444,7 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
                     while((json = br.readLine()) != null) {
                         sb.append(json+"\n");
                     }
-                    Log.d("receiveTotalTime", String.valueOf(sb));
+                    Log.d("receiveWalkTotalTime", String.valueOf(sb));
                     return sb.toString().trim();
                 }catch (Exception e) {
                     return null;
@@ -292,6 +454,18 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
             protected void onPostExecute(String myJSON) {
                 //Log.d("my", myJSON);
                 makeWalkTotalList(myJSON); //리스트를 보여줌
+            if(spinFlag == 0)
+                {
+                    departLat = busStLat;
+                    departLon = busStLon;
+                    destLat = finalDestLat;
+                    destLon = finalDestLon;
+                    carUrl = "https://apis.skplanetx.com/tmap/routes?version=1" +
+                            "&appKey=b42a1814-4abc-36c2-a743-43c5f81cd73d&" +
+                            "startX="+departLon+"&startY="+departLat+"&endX="+destLon+"&endY="+destLat+"&startName="
+                            +"start"+"&endName="+"end"+"&reqCoordType=WGS84GEO&resCoordType=WGS84GEO";
+                    getCarTotalTimeData(carUrl);
+                }
             }
         }
         GetDataJSON g = new GetDataJSON();
@@ -334,7 +508,7 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
                     while((json = br.readLine()) != null) {
                         sb.append(json+"\n");
                     }
-                    Log.d("receiveTotalTime", String.valueOf(sb));
+                    Log.d("receiveCarTotalTime", String.valueOf(sb));
                     return sb.toString().trim();
                 }catch (Exception e) {
                     return null;
@@ -388,12 +562,12 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
 
         subwayUrl = "http://swopenapi.seoul.go.kr/api/subway/" + subwayKey + "/json/shortestRoute/0/5/"+ departureSt + "/" + destinationSt;
 
-        busUrl = "http://openapi.tago.go.kr/openapi/service/BusSttnInfoInqireService/getCrdntPrxmtSttnList?serviceKey="
-                + serviceKey + "&gpsLati="+ departLat + "&gpsLong=" + departLon + "&_type=json";
+        busStUrl = "http://ws.bus.go.kr/api/rest/stationinfo/getStationByPos?serviceKey=" +
+                serviceKey + "&tmX=" + departLon + "&tmY=" + departLat + "&radius=" + "400";
 
         if(spinFlag == 0)
         {
-            getBusStopData(busUrl);
+            getBusStopXMLData(busStUrl);
         }
         else if(spinFlag == 1)
         {
