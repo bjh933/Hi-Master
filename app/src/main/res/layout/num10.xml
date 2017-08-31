@@ -46,41 +46,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/hangsaIconLayout"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        >
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/b_cake"
-            android:layout_marginLeft="10dp"/>
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/e_music"
-            android:layout_marginLeft="40dp"/>
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/c_hospital"
-            android:layout_marginLeft="40dp"/>
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/j_confetti"
-            android:layout_marginLeft="40dp"/>
-
-
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
@@ -144,30 +109,6 @@
             android:id="@+id/minStartSpinner"
             android:entries="@array/minSpinner"
             ></Spinner>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/fixLayout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:id="@+id/scheduleCountText"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="고정 여부 : "
-            android:textSize="20dp" />
-
-        <CheckBox
-            android:id="@+id/repeatCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="7dp"></CheckBox>
-
     </LinearLayout>
 
     <LinearLayout
@@ -249,6 +190,29 @@
             android:id="@+id/dateEndSpinner"
             android:entries="@array/dateEndSpinner"
             ></Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fixLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/scheduleCountText"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="고정 여부 : "
+            android:textSize="20dp" />
+
+        <CheckBox
+            android:id="@+id/repeatCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="7dp"></CheckBox>
 
     </LinearLayout>
 

@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.a1.himaster.SKPlanet.WeatherThreeDayThread;
 import com.example.a1.himaster.SKPlanet.WeatherTodayThread;
+import com.example.a1.himaster.SKPlanet.WeatherWeekThread;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +39,15 @@ public class ThirdFragment extends Fragment {
     private static final String TAG_VALUE = "fcstValue";
     ImageView weatherIv, optMenu;
     JSONArray posts = null;
-    TextView dateTv, tempTv, rainTv, skyTv, dustValTv, dustTv, bulTv, bulExTv, ultTv, ultExTv, sickTv, sickExTv;
+    TextView dateTv, tempTv, rainTv, skyTv, dustTv, bulTv, bulExTv, ultTv, ultExTv, sickTv, sickExTv;
+    String str="none";
+
+    TextView oneTv, twoTv, threeTv, fourTv, fiveTv, sixTv, sevenTv, oneHighTv, oneLowTv, twoHighTv, twoLowTv, threeHighTv, threeLowTv, fourHighTv, fourLowTv,
+            fiveHighTv, fiveLowTv, sixHighTv, sixLowTv, sevenHighTv, sevenLowTv;
+
+    ImageView oneIv, twoIv, threeIv, fourIv, fiveIv, sixIv, sevenIv;
+    String[] weatherStr = new String[15];
+
 
     public static ThirdFragment newInstance() {
         return new ThirdFragment();
@@ -51,17 +61,52 @@ public class ThirdFragment extends Fragment {
         skyTv = (TextView) view.findViewById(R.id.skyTv);
         rainTv = (TextView) view.findViewById(R.id.perTv);
         weatherIv = (ImageView) view.findViewById(R.id.weatherIv);
-        dustValTv = (TextView) view.findViewById(R.id.dustValTv);
         dustTv = (TextView) view.findViewById(R.id.dustTv);
-
-        bulTv = (TextView) view.findViewById(R.id.bulTv);
         bulExTv = (TextView) view.findViewById(R.id.bulExTv);
-        ultTv = (TextView) view.findViewById(R.id.ultTv);
         ultExTv = (TextView) view.findViewById(R.id.ultExTv);
-        sickTv = (TextView) view.findViewById(R.id.sickTv);
         sickExTv = (TextView) view.findViewById(R.id.sickExTv);
 
         Context mContext = getContext();
+
+        oneTv = (TextView)view.findViewById(R.id.oneTv);
+        twoTv = (TextView)view.findViewById(R.id.twoTv);
+        threeTv = (TextView)view.findViewById(R.id.threeTv);
+        fourTv = (TextView)view.findViewById(R.id.fourTv);
+        fiveTv = (TextView)view.findViewById(R.id.fiveTv);
+        sixTv = (TextView)view.findViewById(R.id.sixTv);
+        sevenTv = (TextView)view.findViewById(R.id.sevenTv);
+        oneHighTv = (TextView)view.findViewById(R.id.oneHighTv);
+        oneLowTv = (TextView)view.findViewById(R.id.oneLowTv);
+        twoHighTv = (TextView)view.findViewById(R.id.twoHighTv);
+        twoLowTv = (TextView)view.findViewById(R.id.twoLowTv);
+        threeHighTv = (TextView)view.findViewById(R.id.threeHighTv);
+        threeLowTv = (TextView)view.findViewById(R.id.threeLowTv);
+        fourHighTv = (TextView)view.findViewById(R.id.fourHighTv);
+        fourLowTv = (TextView)view.findViewById(R.id.fourLowTv);
+        fiveHighTv = (TextView)view.findViewById(R.id.fiveHighTv);
+        fiveLowTv = (TextView)view.findViewById(R.id.fiveLowTv);
+        sixHighTv = (TextView)view.findViewById(R.id.sixHighTv);
+        sixLowTv = (TextView)view.findViewById(R.id.sixLowTv);
+        sevenHighTv = (TextView)view.findViewById(R.id.sevenHighTv);
+        sevenLowTv = (TextView)view.findViewById(R.id.sevenLowTv);
+        oneIv = (ImageView) view.findViewById(R.id.oneIv);
+        twoIv = (ImageView) view.findViewById(R.id.twoIv);
+        threeIv = (ImageView) view.findViewById(R.id.threeIv);
+        fourIv = (ImageView) view.findViewById(R.id.fourIv);
+        fiveIv = (ImageView) view.findViewById(R.id.fiveIv);
+        sixIv = (ImageView) view.findViewById(R.id.sixIv);
+        sevenIv = (ImageView) view.findViewById(R.id.sevenIv);
+        Calendar cal = Calendar.getInstance();
+        int dayFlag = cal.get(Calendar.DAY_OF_WEEK);
+
+
+        oneTv.setText(getToday(dayFlag));
+        twoTv.setText(getToday(dayFlag+1));
+        threeTv.setText(getToday(dayFlag+2));
+        fourTv.setText(getToday(dayFlag+3));
+        fiveTv.setText(getToday(dayFlag+4));
+        sixTv.setText(getToday(dayFlag+5));
+        sevenTv.setText(getToday(dayFlag+6));
 
         optMenu = (ImageView) view.findViewById(R.id.optMenuBtn);
         optMenu.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +161,7 @@ public class ThirdFragment extends Fragment {
             baseTime = "2300";
         } else if (compTime < 200) {
             SimpleDateFormat yday = new SimpleDateFormat("yyyyMMdd");
-            Calendar cal = new GregorianCalendar();
+            cal = new GregorianCalendar();
             cal.add(Calendar.DATE, -1);
             baseDate = yday.format(cal.getTime());
             baseTime = "2300";
@@ -134,7 +179,7 @@ public class ThirdFragment extends Fragment {
         SimpleDateFormat dday = new SimpleDateFormat("yyyyMMdd06");
         String today = dday.format(date);
 
-        Calendar cal = new GregorianCalendar();
+        cal = new GregorianCalendar();
         cal.add(Calendar.DATE, -1);
 
         String jisuUrl1 = "http://newsky2.kma.go.kr/iros/RetrieveLifeIndexService2/getDsplsLifeList?serviceKey=" +
@@ -154,7 +199,10 @@ public class ThirdFragment extends Fragment {
                 String[] weatherStr = str.split("-");
                 skyTv.setText(weatherStr[0]);
                 setSky(weatherStr[0], weatherIv);
-
+                String tMax = weatherStr[1].replace(".00", "");
+                String tMin = weatherStr[2].replace(".00", "");
+                oneHighTv.setText(tMax);
+                oneLowTv.setText(tMin);
                 String temp = weatherStr[3];
                 int index = temp.indexOf('.');
                 String tempNow = temp.substring(0, index);
@@ -164,6 +212,51 @@ public class ThirdFragment extends Fragment {
 
         WeatherTodayThread wtt = new WeatherTodayThread(handler, mContext, 37.5714000000, 126.9658000000);
         wtt.run();  //  오늘 날씨
+
+        handler = new Handler(){
+            public void handleMessage(Message msg)
+            {
+                str = msg.getData().getString("weather");    /// 번들에 들어있는 값 꺼냄
+                Log.d("weather3days", str);
+                weatherStr = str.split("-");
+                setSky(weatherStr[0], twoIv);
+                String tMax = weatherStr[1].replace(".00", "");
+                String tMin = weatherStr[2].replace(".00", "");
+                twoHighTv.setText(tMax);
+                twoLowTv.setText(tMin);
+            }};
+
+
+        WeatherThreeDayThread wt = new WeatherThreeDayThread(handler, mContext, 37.5714000000, 126.9658000000);
+        wt.run();   //  3일치 날씨
+
+        handler = new Handler(){
+            public void handleMessage(Message msg)
+            {
+                str = msg.getData().getString("WeekWeather");    /// 번들에 들어있는 값 꺼냄
+                Log.d("weather7days", str);
+                weatherStr = str.split("-");
+                setSky(weatherStr[0], threeIv);
+                threeHighTv.setText(weatherStr[1]);
+                threeLowTv.setText(weatherStr[2]);
+                setSky(weatherStr[3], fourIv);
+                fourHighTv.setText(weatherStr[4]);
+                fourLowTv.setText(weatherStr[5]);
+                setSky(weatherStr[6], fiveIv);
+                fiveHighTv.setText(weatherStr[7]);
+                fiveLowTv.setText(weatherStr[8]);
+                setSky(weatherStr[9], sixIv);
+                sixHighTv.setText(weatherStr[10]);
+                sixLowTv.setText(weatherStr[11]);
+                setSky(weatherStr[12], sevenIv);
+                sevenHighTv.setText(weatherStr[13]);
+                sevenLowTv.setText(weatherStr[14]);
+
+
+            }};
+
+        WeatherWeekThread wwt = new WeatherWeekThread(handler, mContext, 37.5714000000, 126.9658000000);
+        wwt.run();   //  7일치 날씨
 
         getData(url);   //  강수 확률 얻기
         getDustData(url2);  //  미세먼지 얻기
@@ -323,17 +416,14 @@ public class ThirdFragment extends Fragment {
                 // Log.d("dustval", dustVal);
                 // Log.d("dustt", dust);
 
-                dustValTv.setText(dustVal);
-                dustValTv.append("  ㎍/㎥");
-
                 if (dust.equals("1"))
-                    dustTv.setText(", 좋음");
+                    dustTv.setText("좋음");
                 else if (dust.equals("2"))
-                    dustTv.setText(", 보통");
+                    dustTv.setText("보통");
                 else if (dust.equals("3"))
-                    dustTv.setText(", 나쁨");
+                    dustTv.setText("나쁨");
                 else if (dust.equals("4"))
-                    dustTv.setText(", 매우 나쁨");
+                    dustTv.setText("매우 나쁨");
 
             }
 
@@ -390,20 +480,15 @@ public class ThirdFragment extends Fragment {
             int bul = Integer.valueOf(bulValue);
             //Log.d("hhh9", bulValue);
 
-            bulTv.setText(bulValue);
 
             if (bul >= 80) {
-                bulTv.setText(bulValue);
-                bulExTv.setText(", 매우 높음");
+                bulExTv.setText("매우 높음");
             } else if (bul >= 75 && bul < 80) {
-                bulTv.setText(bulValue);
-                bulExTv.setText(", 높음");
+                bulExTv.setText("높음");
             } else if (bul >= 68 && bul < 75) {
-                bulTv.setText(bulValue);
-                bulExTv.setText(", 보통");
+                bulExTv.setText("보통");
             } else if (bul < 68) {
-                bulTv.setText(bulValue);
-                bulExTv.setText(", 낮음");
+                bulExTv.setText("낮음");
             }
 
 
@@ -458,20 +543,15 @@ public class ThirdFragment extends Fragment {
             int ult = Integer.valueOf(ultValue);
 
             if (ult >= 11) {
-                ultTv.setText(ultValue);
-                ultExTv.setText(", 위험");
+                ultExTv.setText("위험");
             } else if (ult >= 8 && ult < 11) {
-                ultTv.setText(ultValue);
-                ultExTv.setText(", 매우 높음");
+                ultExTv.setText("매우 높음");
             } else if (ult >= 6 && ult < 8) {
-                ultTv.setText(ultValue);
-                ultExTv.setText(", 높음");
+                ultExTv.setText("높음");
             } else if (ult >= 3 && ult < 6) {
-                ultTv.setText(ultValue);
-                ultExTv.setText(", 보통");
+                ultExTv.setText("보통");
             } else if (ult >= 0 && ult < 3) {
-                ultTv.setText(ultValue);
-                ultExTv.setText(", 낮음");
+                ultExTv.setText("낮음");
             }
 
 
@@ -526,23 +606,44 @@ public class ThirdFragment extends Fragment {
             int ult = Integer.valueOf(ultValue);
 
             if (ult >= 95) {
-                sickTv.setText(ultValue);
-                sickExTv.setText(", 위험");
+                sickExTv.setText("위험");
             } else if (ult >= 70 && ult < 95) {
-                sickTv.setText(ultValue);
-                sickExTv.setText(", 경고");
+                sickExTv.setText("경고");
             } else if (ult >= 35 && ult < 70) {
-                sickTv.setText(ultValue);
-                sickExTv.setText(", 주의");
+                sickExTv.setText("주의");
             } else if (ult >= 0 && ult < 35) {
-                sickTv.setText(ultValue);
-                sickExTv.setText(", 관심");
+                sickExTv.setText("관심");
             }
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getToday(int dayFlag) {
+        String day = "";
+        int extraDay = dayFlag;
+
+        if(dayFlag > 7)
+            extraDay = dayFlag - 7;
+
+        if(extraDay == 1)
+            day = "일요일";
+        else if(extraDay == 2)
+            day = "월요일";
+        else if(extraDay == 3)
+            day = "화요일";
+        else if(extraDay == 4)
+            day = "수요일";
+        else if(extraDay == 5)
+            day = "목요일";
+        else if(extraDay == 6)
+            day = "금요일";
+        else if(extraDay == 7)
+            day = "토요일";
+
+        return day;
     }
 
 }

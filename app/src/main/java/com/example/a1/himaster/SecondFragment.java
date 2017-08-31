@@ -62,7 +62,6 @@ public class SecondFragment extends Fragment {
 
         Context mContext = getActivity();
 
-        rightBtn = (ImageView)view.findViewById(R.id.forward);
         weatherIv = (ImageView)view.findViewById(R.id.weatherIv);
         optionBtn = (ImageView)view.findViewById(R.id.optMenuBtn);
         rv1 = (RecyclerView)view.findViewById(R.id.todoRv);
@@ -78,6 +77,7 @@ public class SecondFragment extends Fragment {
         final String userId = saveInfo.getString("USERID", "");   //  userId 가져옴
 
         url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://223.195.0.185:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
 
         todoList = new ArrayList<HashMap<String, String>>();
 
@@ -117,16 +117,6 @@ public class SecondFragment extends Fragment {
 
         WeatherThreeDayThread wt = new WeatherThreeDayThread(handler, mContext, 37.5714000000, 126.9658000000);
         wt.run();   //  내일 날씨
-
-        rightBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DesignTest.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-            }
-
-        });
 
         optionBtn.setOnClickListener(new View.OnClickListener() {
             @Override

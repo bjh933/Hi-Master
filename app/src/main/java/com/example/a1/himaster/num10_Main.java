@@ -64,7 +64,7 @@ public class num10_Main extends AppCompatActivity {
     CheckBox resiChk;
     EditText todoTitle, destEdit, scheMemo, departEdit;
     RadioButton iljung, halil, hangsa;
-    LinearLayout giganLay, giganLay2, siganLay, departLay, destLay, fixLay, hangsaLay;
+    LinearLayout giganLay, giganLay2, siganLay, departLay, destLay, fixLay;
     public static final int REQUEST_CODE1 = 1000;
     public static final int REQUEST_CODE2 = 1001;
     int pos1, pos2, pos3, pos, flag;
@@ -91,8 +91,6 @@ public class num10_Main extends AppCompatActivity {
         destLay = (LinearLayout) findViewById(R.id.destLayout);
         departLay = (LinearLayout) findViewById(R.id.departLayout);
         fixLay = (LinearLayout) findViewById(R.id.fixLayout);
-        hangsaLay = (LinearLayout) findViewById(R.id.hangsaIconLayout);
-        hangsaLay.setVisibility(View.GONE);
         destEdit = (EditText) findViewById(R.id.destEdit);
         scheMemo = (EditText) findViewById(R.id.scheMemoText);
         dText = (TextView) findViewById(R.id.dText);
@@ -114,15 +112,13 @@ public class num10_Main extends AppCompatActivity {
                         siganLay.setVisibility(View.VISIBLE);
                         destLay.setVisibility(View.VISIBLE);
                         fixLay.setVisibility(View.VISIBLE);
-                        hangsaLay.setVisibility(View.GONE);
                         flag = 0;
                         break;
                     case R.id.radio1:
                         giganLay2.setVisibility(View.GONE);
                         siganLay.setVisibility(View.GONE);
                         destLay.setVisibility(View.GONE);
-                        fixLay.setVisibility(View.VISIBLE);
-                        hangsaLay.setVisibility(View.GONE);
+                        fixLay.setVisibility(View.GONE);
                         dText.setVisibility(View.GONE);
                         flag = 1;
                         break;
@@ -133,7 +129,6 @@ public class num10_Main extends AppCompatActivity {
                         destLay.setVisibility(View.GONE);
                         departLay.setVisibility(View.GONE);
                         fixLay.setVisibility(View.GONE);
-                        hangsaLay.setVisibility(View.VISIBLE);
                         flag = 2;
                         break;
                 }

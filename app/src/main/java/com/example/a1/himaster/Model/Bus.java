@@ -4,14 +4,43 @@ package com.example.a1.himaster.Model;
  * Created by a1 on 2017. 8. 30..
  */
 
-public class Destination {
+public class Bus {
 
+
+    private String busNum;
+    private String fname;
+    private String tname;
     private String departLat;
     private String departLon;
     private String destLat;
     private String destLon;
     private String totalTimeStr;
     private int totalTime;
+
+    public String getBusNum() {
+        return busNum;
+    }
+
+    public void setBusNum(String busNum) {
+        this.busNum = busNum;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getTname() {
+        return tname;
+    }
+
+    public void setTname(String tname) {
+        this.tname = tname;
+    }
+
 
     public String getDepartLat() {
         return departLat;

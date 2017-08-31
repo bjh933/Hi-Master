@@ -67,7 +67,7 @@ public class FirstFragment extends Fragment {
         final String userId = saveInfo.getString("USERID", "");   //  userId 가져옴
 
         url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-        //url = "http://223.195.22.107:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://223.195.0.185:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         scheduleList = new ArrayList<HashMap<String, String>>();
         eventList = new ArrayList<HashMap<String, String>>();
         todoList = new ArrayList<HashMap<String, String>>();

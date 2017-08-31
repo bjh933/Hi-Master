@@ -29,18 +29,22 @@
                 android:paddingBottom="15dp"
                 android:text="친구 만나기"
                 android:layout_gravity="center"
-                android:layout_width="260dp"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 />
 
-            <CheckBox
-                android:id="@+id/delayChk"
+            <TextView
+                android:text="D - "
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@drawable/delaybtn_check"
-                android:button="@null"/>
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/dday"
+                android:layout_gravity="center"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
 
     </LinearLayout>
 </LinearLayout>

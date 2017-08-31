@@ -44,28 +44,6 @@ public class TodoDelayAdapter extends RecyclerView.Adapter<TodoDelayAdapter.View
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final HashMap<String, String> noticeItem = todoList.get(position);
         holder.tv_dTitle.setText(noticeItem.get("title")); //제목;
-        holder.chkFlag = 0;
-        holder.delayChkBox.setOnClickListener(null);
-
-        holder.delayChkBox.setOnClickListener(new CheckBox.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(holder.chkFlag == 0)
-                {
-                    holder.chkFlag = 1;
-
-
-                    Log.d("delayList", noticeItem.get("userId") + "-"
-                        + noticeItem.get("title") +"-" + noticeItem.get("dueDate") +
-                        "-" + noticeItem.get("memo") + "-" + noticeItem.get("fix"));
-                }
-                else if(holder.chkFlag == 1)
-                {
-                    holder.chkFlag = 0;
-
-                }
-            }
-        });
 
     }
 
@@ -79,15 +57,15 @@ public class TodoDelayAdapter extends RecyclerView.Adapter<TodoDelayAdapter.View
      **/
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_dTitle;
-        CardView cv;
-        CheckBox delayChkBox;
+        //CardView cv;
+        TextView dday;
         int chkFlag = 0;
 
         public ViewHolder(View v) {
             super(v);
             tv_dTitle = (TextView) v.findViewById(R.id.tv_dtitle);
-            cv = (CardView) v.findViewById(R.id.cv);
-            delayChkBox = (CheckBox) v.findViewById(R.id.delayChk);
+            //cv = (CardView) v.findViewById(R.id.cv);
+            dday = (TextView) v.findViewById(R.id.dday);
         }
 
         @Override

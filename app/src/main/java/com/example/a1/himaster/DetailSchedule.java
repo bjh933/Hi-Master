@@ -1,19 +1,25 @@
 package com.example.a1.himaster;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.a1.himaster.Model.Destination;
+import com.example.a1.himaster.Adapter.BusRouteAdapter;
+import com.example.a1.himaster.Model.Bus;
+import com.example.a1.himaster.SKPlanet.WeatherWeekThread;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,22 +32,31 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Created by a1 on 2017. 8. 17..
  */
 
-public class DetailSchedule extends AppCompatActivity implements View.OnClickListener{
+public class DetailSchedule extends AppCompatActivity {
 
-    JSONArray posts = null;
-    TextView dDateTv, dTimeTv, dTitleTv, dDepartTv, dArriveTv, transportNum, timeTerm, transportdTv;
+    RecyclerView rv1;
+
+    TextView dDateTv, dTimeTv, dTitleTv, dDepartTv, dArriveTv, transportNum, startTransport, firstEndTransport,
+            totalTime, skyTv, tMaxTv, tMinTv, dateWeatherTv;
     Spinner trptSpin;
     String dTitle, dDate, dTime, dDest = "";
-    ImageView trptImg, swapBtn;
+    ImageView trptImg, weatherIv;
     String serviceKey = "Zfm%2Fjv9CdbeGPRRkBK3wjUOpqFhc5gONSyZbz0P4p13fH1s0CHO25CzN8Sf8VNPrjjfhIhdAh1SQagI6bQeTkw%3D%3D";
     String subwayKey = "4e4b704a51646a673733724c474d6e";
     String walkingUrl = "";
-    String carUrl = "";
+    LinearLayout rvLinear;
 
     String firstDepartureLat = "37.643974";
     String firstDepartureLon = "127.0357636";
@@ -56,65 +71,121 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
     String departSubLon = "127.03456915";   //  쌍문역
     String destSubLat = "37.54801363";
     String destSubLon = "127.07467945"; //  어린이대공원역
-    String temp = "";
+
     int spinFlag = 0;
+
     String subwayUrl = "";
+    String busRouteUrl = "";
+    String subwayNumUrl;
 
-    String busUrl = "";
-    String busStUrl = "";
-    String busStLat = "";
-    String busStLon = "";
-
-    String busStationNm = "";
-    String busTerm = "";
-    String busStNm = "";        //  arsId, gps정보 가져옴
-    String getBusNumUrl = "";   //  arsId를 통해 버스번호(BusRouteNm) 제공
-    String arsId = "";
+    String[] routeNm = new String[5];
+    String[] fname = new String[5];
+    String[] tname = new String[5];
+    String[] fx = new String[5];
+    String[] fy = new String[5];
+    String[] tx = new String[5];
+    String[] ty = new String[5];
 
     String walkTotalTime = "";
-    String carTotalTime = "";
+    String busTotalTime = "";
 
-    String departureSt = "쌍문";  //  출발역 명
-    String destinationSt = "어린이대공원";    // 도착역 명명
+    String departureSt = "쌍문역 4번출구";  //  출발역 명
+    String destinationSt = "어린이대공원역 7번출구";    // 도착역 명명
+    ArrayList<Bus> busList;
+    BusRouteAdapter adapter;
+    int walkingTime = 0;
+    int walkFlag = 0;
+
+    private LinearLayoutManager mLinearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailshcedule);
 
+        Context mContext = this;
+
+        rvLinear = (LinearLayout)findViewById(R.id.rvLinear);
+        totalTime = (TextView)findViewById(R.id.totalTime);
+        busList = new ArrayList<Bus>();
+        weatherIv = (ImageView)findViewById(R.id.weatherIv);
+        tMaxTv = (TextView)findViewById(R.id.tMaxTv);
+        tMinTv = (TextView)findViewById(R.id.tMinTv);
+        skyTv = (TextView)findViewById(R.id.skyTv);
+        dateWeatherTv = (TextView)findViewById(R.id.dateWeatherTv);
+
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat toDate = new SimpleDateFormat("MMM . dd / EEE", Locale.ENGLISH);
+        Calendar cal = new GregorianCalendar();
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String tmoDate = toDate.format(date);
+        dateWeatherTv.setText(tmoDate);
+
         subwayUrl = "http://swopenapi.seoul.go.kr/api/subway/" +
                 subwayKey + "/json/shortestRoute/0/5/"+ departureSt + "/" + destinationSt;  //  지하철 최단소요시간
 
-        busUrl = "http://openapi.tago.go.kr/openapi/service/BusSttnInfoInqireService/getCrdntPrxmtSttnList?serviceKey="
-                + serviceKey + "&gpsLati="+ departLat + "&gpsLong=" + departLon + "&_type=json";
+        busRouteUrl = "http://ws.bus.go.kr/api/rest/pathinfo/getPathInfoByBus?serviceKey=" +
+                serviceKey +"&startX="+firstDepartureLon+"&startY="+firstDepartureLat+"&endX="+
+                finalDestLon+"&endY="+finalDestLat;
 
-
-        busStUrl = "http://ws.bus.go.kr/api/rest/stationinfo/getStationByPos?serviceKey=" +
-                serviceKey + "&tmX=" + departLon + "&tmY=" + departLat + "&radius=" + "400";
-
-        transportdTv = (TextView)findViewById(R.id.transportDepartTv);
+        firstEndTransport = (TextView)findViewById(R.id.endBusTv);
         transportNum = (TextView)findViewById(R.id.transportNum);
-        timeTerm = (TextView)findViewById(R.id.leftTimeTv);
+        startTransport = (TextView)findViewById(R.id.startBusTv);
         trptImg = (ImageView)findViewById(R.id.transportImg);
         trptSpin = (Spinner)findViewById(R.id.transportSpinner);
+
+        departureSt = processSubwaySt(departureSt);
+        destinationSt = processSubwaySt(destinationSt);
+
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rv1 = (RecyclerView)findViewById(R.id.busRouteRv);
+        rv1.setHasFixedSize(true);
+        rv1.setLayoutManager(mLinearLayoutManager);
 
         trptSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0) {
+
+                    rvLinear.setVisibility(View.VISIBLE);
                     trptImg.setImageResource(R.drawable.bus);
+                    walkingTime = 0;
+                    walkFlag = 0;
 
                     departLat = firstDepartureLat;
                     departLon = firstDepartureLon;
-                    getBusStopXMLData(busStUrl);    //  출발지 근처 버스정류장을 가져옴(정류장명, arsId, gps)
+                    destLat = finalDestLat;
+                    destLon = finalDestLon;
+
+                    busRouteUrl = "http://ws.bus.go.kr/api/rest/pathinfo/getPathInfoByBus?serviceKey=" +
+                            serviceKey +"&startX="+departLon+"&startY="+departLat+"&endX="+
+                            destLon+"&endY="+destLat;
+
+                    getBusRouteXMLData(busRouteUrl);    //  출발지 근처 버스정류장을 가져옴(정류장명, arsId, gps)
 
                     spinFlag = 0;
                 }
                 else{
+                    rvLinear.setVisibility(View.GONE);
                     trptImg.setImageResource(R.drawable.train);
+                    walkingTime = 0;
+                    walkFlag = 0;
 
-                    // 지하철이 몇분 뒤 도착하는지?
+                    transportNum.setText("");
+                    startTransport.setText(departureSt + "역");
+                    firstEndTransport.setText(destinationSt + "역");
 
+
+                    subwayNumUrl = "http://swopenAPI.seoul.go.kr/api/subway/"+subwayKey+
+                            "/json/stationTimetable/0/5/"+ departureSt; //  지하철 몇 호선인지 정보 가져옴
+
+                    subwayUrl = "http://swopenapi.seoul.go.kr/api/subway/" +
+                            subwayKey + "/json/shortestRoute/0/5/"+ departureSt + "/" + destinationSt;
+
+                    getSubwayNumData(subwayNumUrl);
                     getSubwayStData(subwayUrl); //  출발역부터 도착역까지 걸리는 시간
 
                     departLat = destSubLat;
@@ -130,8 +201,6 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        swapBtn = (ImageView)findViewById(R.id.swapBtn);
-        swapBtn.setOnClickListener(this);
         dTitleTv = (TextView)findViewById(R.id.dtitle);
         dDateTv = (TextView)findViewById(R.id.ddate);
         dTimeTv = (TextView)findViewById(R.id.dtime);
@@ -151,8 +220,24 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
         dTimeTv.setText(dTime);
         dArriveTv.setText(dDest);
 
-        //getWalkTotalTimeData(walkingUrl);   //  초단위 보행자 소요 시간
-        //getCarTotalTimeData(carUrl);   //  초단위 자동차 소요 시간
+        Handler handler = new Handler(){
+            public void handleMessage(Message msg)
+            {
+                String str = msg.getData().getString("WeekWeather");    /// 번들에 들어있는 값 꺼냄
+                Log.d("weather7days", str);
+                String[] weatherStr = str.split("-");
+                skyTv.setText(weatherStr[0]);
+                setSky(weatherStr[0], weatherIv);
+                String tMax = weatherStr[1].replace(".00", "");
+                String tMin = weatherStr[2].replace(".00", "");
+                tMaxTv.setText(tMax);
+                tMaxTv.append(" ℃");
+                tMinTv.setText(tMin);
+                tMinTv.append(" ℃");
+            }};
+
+        WeatherWeekThread wt = new WeatherWeekThread(handler, mContext, 37.5714000000, 126.9658000000);
+        wt.run();   //  내일 날씨
 
     }
 
@@ -171,7 +256,17 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    public void getBusStopXMLData(String url) {
+    public void setSky(String skyStatus, ImageView iv) {
+
+        if(skyStatus.equals("맑음"))
+            iv.setImageResource(R.drawable.sunny);
+        else if(skyStatus.equals("구름조금") || skyStatus.equals("구름많음") || skyStatus.equals("흐림"))
+            iv.setImageResource(R.drawable.cloudy);
+        else if(skyStatus.equals("구름많고 비") || skyStatus.equals("흐리고 비"))
+            iv.setImageResource(R.drawable.rainy);
+    }
+
+    public void getBusRouteXMLData(String url) {
         class GetDataXML extends AsyncTask<String, Void, String> {
             @Override
             protected String doInBackground(String... params) {
@@ -188,6 +283,8 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
 
                     int eventType = xpp.getEventType();
                     boolean isItemTag = false; // <item> .영역에 인지 여부 체크
+                    int i = 0;
+                    Bus bus = new Bus();
 
                     while(eventType != XmlPullParser.END_DOCUMENT){
 
@@ -198,46 +295,98 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
                             if(tag.equals("itemList"))
                                 isItemTag = true;
 
-                        }else if(eventType == XmlPullParser.TEXT){ //내용
+                        }
 
-                            if(isItemTag && tag.equals("arsId")) {
-                                arsId = xpp.getText();
-                                Log.d("arsId", arsId);
+                        else if(eventType == XmlPullParser.TEXT){ //내용
+
+                            if(isItemTag && tag.equals("routeNm")) {
+                                routeNm[i] = xpp.getText();
+                                if(i != 0) {
+                                    bus.setBusNum(routeNm[i]);
+                                }
+                                Log.d("routeNm", routeNm[i]);
                                 buffer.append(xpp.getText());
                                 buffer.append("\n");
                             }
 
-                            if(isItemTag && tag.equals("stationNm")) {
-                                busStationNm = xpp.getText();
-                                Log.d("busstationNm", busStationNm);
+                            if(isItemTag && tag.equals("fname")) {
+                                fname[i] = xpp.getText();
+                                if(i != 0) {
+                                    bus.setFname(fname[i]);
+                                }
+                                Log.d("startPoint", fname[i]);
                                 buffer.append(xpp.getText());
                                 buffer.append("\n");
                             }
 
-                            if(isItemTag && tag.equals("gpsX")) {
-                                busStLon = xpp.getText();
-                                destLon = busStLon;
-                                Log.d("destlon", destLon);
+                            if(isItemTag && tag.equals("tname")) {
+                                tname[i] = xpp.getText();
+                                if(i != 0) {
+                                    bus.setTname(tname[i]);
+                                    busList.add(bus);
+                                    Log.d("whyyy0", busList.get(0).getBusNum());
+                                }
+                                Log.d("endPoint", tname[i]);
                                 buffer.append(xpp.getText());
                                 buffer.append("\n");
                             }
-                            if(isItemTag && tag.equals("gpsY")) {
-                                busStLat = xpp.getText();
-                                destLat = busStLat;
-                                Log.d("destlat", destLat);
+                            if(isItemTag && tag.equals("fx")) {
+                                fx[i] = xpp.getText();
+                                if(i == 0)
+                                    destLon = fx[i];
+                                Log.d("startFx", fx[i]);
                                 buffer.append(xpp.getText());
                                 buffer.append("\n");
                             }
 
+                            if(isItemTag && tag.equals("fy")) {
+                                fy[i] = xpp.getText();
+                                if(i == 0)
+                                    destLat = fy[i];
+                                Log.d("startFy", fy[i]);
+                                buffer.append(xpp.getText());
+                                buffer.append("\n");
+                            }
+
+                            if(isItemTag && tag.equals("tx")) {
+                                tx[i] = xpp.getText();
+                                Log.d("startTx", tx[i]);
+                                buffer.append(xpp.getText());
+                                buffer.append("\n");
+                            }
+
+                            if(isItemTag && tag.equals("ty")) {
+                                ty[i] = xpp.getText();
+                                Log.d("startTy", ty[i]);
+                                buffer.append(xpp.getText());
+                                buffer.append("\n");
+                            }
+
+                            if(isItemTag && tag.equals("time")) {
+                                busTotalTime = xpp.getText();
+                                int mTosTotalTime = Integer.valueOf(busTotalTime) * 60;
+                                walkingTime += mTosTotalTime;
+
+                                Log.d("busTotalTime", busTotalTime);
+                                buffer.append(xpp.getText());
+                                buffer.append("\n");
+                            }
+
+                            if(i != 0) {
+
+                            }
                         }else if(eventType == XmlPullParser.END_TAG){ //닫는 태그를 만났을때
                             //태그명을 저장
                             tag=xpp.getName();
 
-                            if(tag.equals("itemList")){
+                            if(tag.equals("pathList"))
+                            {
+                                i++;
+                            }
 
+                            if(tag.equals("itemList"))
                                 break;
 
-                            }
                         }
 
                         eventType = xpp.next(); //다음 이벤트 타입
@@ -246,23 +395,34 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Log.d("receiveresult", buffer.toString());
+                Log.d("Routeresult", buffer.toString());
                 return buffer.toString();
             }
 
             @Override
             protected void onPostExecute(String buffer) {
-                //Log.d("my", buffer);
+                Log.d("startBusSt", departLat+ ", " +departLon +", "+ destLat+", "+destLon);
+                Log.d("busListSize", String.valueOf(busList.size()));
 
-                getBusNumUrl = "http://ws.bus.go.kr/api/rest/stationinfo/getRouteByStation?ServiceKey="+serviceKey
-                        +"&arsId="+arsId;
-                getBusNumXMLData(getBusNumUrl);
+                transportNum.setText(routeNm[0]);
+                startTransport.setText(fname[0]);
+                firstEndTransport.setText(tname[0]);
 
                 walkingUrl = "https://apis.skplanetx.com/tmap/routes/pedestrian?version=1" +
                         "&appKey=b42a1814-4abc-36c2-a743-43c5f81cd73d&" +
                         "startX="+departLon+"&startY="+departLat+"&endX="+destLon+"&endY="+destLat+"&startName="
                         +"start"+"&endName="+"end"+"&reqCoordType=WGS84GEO&resCoordType=WGS84GEO";
+
+                departLon = tx[busList.size()];
+                departLat = ty[busList.size()];
+                destLon = finalDestLon;
+                destLat = finalDestLat;
                 getWalkTotalTimeData(walkingUrl);   //  걸어서 정류장까지 걸리는 시간
+
+                walkFlag = 1;
+                makeBusRouteList(busList);
+
+
             }
         }
 
@@ -270,78 +430,37 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
         g.execute(url);
     }
 
-    public void getBusNumXMLData(String url) {
-        class GetDataXML extends AsyncTask<String, Void, String> {
-            @Override
-            protected String doInBackground(String... params) {
-                StringBuffer buffer = new StringBuffer();
-                try {
-                    String uri = params[0];
-                    URL url = new URL(uri); //문자열로 된 요청 url을 URL 객체로 생성.
-                    InputStream is = url.openStream();  //url위치로 입력스트림 연결
-                    XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-                    XmlPullParser xpp = factory.newPullParser();
-                    xpp.setInput(new InputStreamReader(is, "UTF-8"));  //inputstream 으로부터 xml 입력받기
-                    String tag = null;
-                    xpp.next();
+    public void makeBusRouteList(ArrayList<Bus> busList) {
 
-                    int eventType = xpp.getEventType();
-                    boolean isItemTag = false; // <item> .영역에 인지 여부 체크
+        ArrayList<HashMap<String,String>> busRouteList = new ArrayList<HashMap<String, String>>();;
 
-                    while(eventType != XmlPullParser.END_DOCUMENT){
+        for(int i=0;i<busList.size();i++)
+        {
+            HashMap<String,String> posts = new HashMap<String, String>();
+            posts.put("busNum", busList.get(i).getBusNum().toString());
+            posts.put("start", busList.get(i).getFname().toString());
+            posts.put("end", busList.get(i).getTname().toString());
 
+            //ArrayList에 HashMap 붙이기
+            busRouteList.add(posts);
 
-                        if(eventType == XmlPullParser.START_TAG){ //시작 태그를 만났을때.
-                            //태그명을 저장
-                            tag = xpp.getName();
-                            if(tag.equals("itemList"))
-                                isItemTag = true;
-
-                        }else if(eventType == XmlPullParser.TEXT){ //내용
-
-                            if(isItemTag && tag.equals("busRouteNm")) {
-                                busStNm = xpp.getText();
-                                buffer.append(xpp.getText());
-                                buffer.append("\n");
-                            }
-
-                            if(isItemTag && tag.equals("term")) {
-                                busTerm = xpp.getText();
-                                buffer.append(xpp.getText());
-                                buffer.append("\n");
-                            }
-
-                        }else if(eventType == XmlPullParser.END_TAG){ //닫는 태그를 만났을때
-                            //태그명을 저장
-                            tag=xpp.getName();
-
-                            if(tag.equals("itemList")){
-
-                                break;
-
-                            }
-                        }
-
-                        eventType = xpp.next(); //다음 이벤트 타입
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                Log.d("BusNumresult", busStNm +", " + busTerm);
-                return buffer.toString();
-            }
-
-            @Override
-            protected void onPostExecute(String buffer) {
-                transportNum.setText(busStNm);
-                timeTerm.setText(busTerm+"분 간격");
-                transportdTv.setText(busStationNm);
-            }
         }
 
-        GetDataXML g = new GetDataXML();
-        g.execute(url);
+        adapter = new BusRouteAdapter(this, busRouteList);
+        rv1.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        int size = busList.size();
+        for(int i=0;i<size;i++) {
+            busList.remove(i);
+        }
+
+        walkingUrl = "https://apis.skplanetx.com/tmap/routes/pedestrian?version=1" +
+                "&appKey=b42a1814-4abc-36c2-a743-43c5f81cd73d&" +
+                "startX="+departLon+"&startY="+departLat+"&endX="+destLon+"&endY="+destLat+"&startName="
+                +"start"+"&endName="+"end"+"&reqCoordType=WGS84GEO&resCoordType=WGS84GEO";
+
+        getWalkTotalTimeData(walkingUrl);   //  하차지에서 목적지까지 걸어서 걸리는 시간
     }
 
     public void getSubwayStData(String url) {
@@ -371,17 +490,18 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
             }
             @Override
             protected void onPostExecute(String myJSON) {
-                //Log.d("my", myJSON);
                 departLat = firstDepartureLat;
                 departLon = firstDepartureLon;
                 destLat = departSubLat;
                 destLon = departSubLon;
+
                 walkingUrl = "https://apis.skplanetx.com/tmap/routes/pedestrian?version=1" +
                         "&appKey=b42a1814-4abc-36c2-a743-43c5f81cd73d&" +
                         "startX="+departLon+"&startY="+departLat+"&endX="+destLon+"&endY="+destLat+"&startName="
                         +"start"+"&endName="+"end"+"&reqCoordType=WGS84GEO&resCoordType=WGS84GEO";
 
                 getWalkTotalTimeData(walkingUrl);   //  출발지부터 근처 역까지 걸어서 가는 시간
+                walkFlag = 1;
                 makeSubwayStList(myJSON); //리스트를 보여줌
             }
         }
@@ -392,7 +512,7 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
     public void makeSubwayStList(String myJSON) {
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            posts = jsonObj.getJSONArray("shortestRouteList");
+            JSONArray posts = jsonObj.getJSONArray("shortestRouteList");
 
             for(int i=0; i<posts.length(); i++) {
                 //JSON에서 각각의 요소를 뽑아옴
@@ -402,6 +522,8 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
                 String stimeInfo = c.getString("shtTravelMsg");    //  최단 시간 도착예정 안내
                 String stationCnt = c.getString("shtStatnCnt");    //  지나는 역 수
                 String sTime = c.getString("shtTravelTm");    //  도착까지 걸리는 시간(분)
+                int mTosTotalTime = Integer.valueOf(sTime) * 60;
+                walkingTime += mTosTotalTime;
 
 
                 Log.d("SubwayInfo", departStation + ", " + destStation + ", " + stimeInfo + ", " +
@@ -454,18 +576,6 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
             protected void onPostExecute(String myJSON) {
                 //Log.d("my", myJSON);
                 makeWalkTotalList(myJSON); //리스트를 보여줌
-            if(spinFlag == 0)
-                {
-                    departLat = busStLat;
-                    departLon = busStLon;
-                    destLat = finalDestLat;
-                    destLon = finalDestLon;
-                    carUrl = "https://apis.skplanetx.com/tmap/routes?version=1" +
-                            "&appKey=b42a1814-4abc-36c2-a743-43c5f81cd73d&" +
-                            "startX="+departLon+"&startY="+departLat+"&endX="+destLon+"&endY="+destLat+"&startName="
-                            +"start"+"&endName="+"end"+"&reqCoordType=WGS84GEO&resCoordType=WGS84GEO";
-                    getCarTotalTimeData(carUrl);
-                }
             }
         }
         GetDataJSON g = new GetDataJSON();
@@ -475,21 +585,44 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
     public void makeWalkTotalList(String myJSON) {
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            posts = jsonObj.getJSONArray("features");
+            JSONArray posts = jsonObj.getJSONArray("features");
 
             JSONObject c = posts.getJSONObject(0).getJSONObject("properties");
             walkTotalTime = c.getString("totalTime");
-
-            Log.d("walkTotalTime", walkTotalTime);
-
-
+            if(walkFlag == 1)
+            {
+                walkingTime += Integer.valueOf(walkTotalTime);
+                walkingTime /= 60;
+                String totalMinute = String.valueOf(walkingTime) + "분";
+                totalTime.setText(totalMinute);
+                walkFlag = 0;
+            }
+            else
+            {
+                walkingTime += Integer.valueOf(walkTotalTime);
+                Log.d("walkingTime", String.valueOf(walkingTime));
+            }
         }catch(JSONException e) {
             e.printStackTrace();
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
 
-    public void getCarTotalTimeData(String url) {
+    }
+
+    public String processSubwaySt(String str)
+    {
+        int index = str.indexOf("역");
+        String subwayName = str.substring(0, index);
+
+        return subwayName;
+    }
+
+    public void getSubwayNumData(String url) {
         class GetDataJSON extends AsyncTask<String,Void,String> {
             @Override
             protected String doInBackground(String... params) {
@@ -508,7 +641,7 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
                     while((json = br.readLine()) != null) {
                         sb.append(json+"\n");
                     }
-                    Log.d("receiveCarTotalTime", String.valueOf(sb));
+                    Log.d("receiveJsonSubwayInfo", String.valueOf(sb));
                     return sb.toString().trim();
                 }catch (Exception e) {
                     return null;
@@ -516,62 +649,26 @@ public class DetailSchedule extends AppCompatActivity implements View.OnClickLis
             }
             @Override
             protected void onPostExecute(String myJSON) {
-                //Log.d("my", myJSON);
-                makeCarTotalList(myJSON); //리스트를 보여줌
+
+                getSubwayNum(myJSON); //리스트를 보여줌
             }
         }
         GetDataJSON g = new GetDataJSON();
         g.execute(url);
     }
 
-    public void makeCarTotalList(String myJSON) {
+    public void getSubwayNum(String myJSON) {
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
-            posts = jsonObj.getJSONArray("features");
+            JSONArray posts = jsonObj.getJSONArray("timeTableList");
 
-            JSONObject c = posts.getJSONObject(0).getJSONObject("properties");
-            carTotalTime = c.getString("totalTime");
+                JSONObject c = posts.getJSONObject(0);
+                String subwayNm = c.getString("subwayNm");    //  출발역 호선 번호
 
-            Log.d("carTotalTime", carTotalTime);
-
+            transportNum.setText(subwayNm);
 
         }catch(JSONException e) {
             e.printStackTrace();
-        }
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        temp = dDepartTv.getText().toString();
-        dDepartTv.setText(dArriveTv.getText().toString());
-        dArriveTv.setText(temp);
-
-        temp = departLat;
-        departLat = destLat;
-        destLat = temp;
-
-        temp = departLon;
-        departLon = destLon;
-        destLon = temp;
-
-        subwayUrl = "http://swopenapi.seoul.go.kr/api/subway/" + subwayKey + "/json/shortestRoute/0/5/"+ departureSt + "/" + destinationSt;
-
-        busStUrl = "http://ws.bus.go.kr/api/rest/stationinfo/getStationByPos?serviceKey=" +
-                serviceKey + "&tmX=" + departLon + "&tmY=" + departLat + "&radius=" + "400";
-
-        if(spinFlag == 0)
-        {
-            getBusStopXMLData(busStUrl);
-        }
-        else if(spinFlag == 1)
-        {
-            getSubwayStData(subwayUrl);
         }
     }
 
