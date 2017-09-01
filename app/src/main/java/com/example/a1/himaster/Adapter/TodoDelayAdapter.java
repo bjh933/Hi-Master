@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.example.a1.himaster.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 /**
  * Created by a1 on 2017. 8. 10..
@@ -44,6 +46,15 @@ public class TodoDelayAdapter extends RecyclerView.Adapter<TodoDelayAdapter.View
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final HashMap<String, String> noticeItem = todoList.get(position);
         holder.tv_dTitle.setText(noticeItem.get("title")); //제목;
+        String dueDate = noticeItem.get("dueDate");
+        String[] dDate = dueDate.split("-");
+        int intDday = calcDate(Integer.valueOf(dDate[0]), Integer.valueOf(dDate[1]), Integer.valueOf(dDate[2]));
+        String dDay = String.valueOf(intDday);
+
+        if(intDday == 0)
+            dDay = "- Day!";
+
+        holder.dday.setText(String.valueOf(dDay)); //제목;
 
     }
 
@@ -57,7 +68,6 @@ public class TodoDelayAdapter extends RecyclerView.Adapter<TodoDelayAdapter.View
      **/
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_dTitle;
-        //CardView cv;
         TextView dday;
         int chkFlag = 0;
 
@@ -73,5 +83,25 @@ public class TodoDelayAdapter extends RecyclerView.Adapter<TodoDelayAdapter.View
 
         }
 
+    }
+
+    public int calcDate(int _year, int _month, int _day)
+    {
+        try {
+            TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
+            Calendar today = Calendar.getInstance(tz);
+            Calendar dday = Calendar.getInstance(tz);
+
+            dday.set(_year, _month-1, _day);
+
+            long cnt_dday = dday.getTimeInMillis() / 86400000;
+            long cnt_today = today.getTimeInMillis() / 86400000;
+            long sub = cnt_today - cnt_dday;
+
+            return (int) sub;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 }

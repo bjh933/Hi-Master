@@ -21,7 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.a1.himaster.R;
-import com.example.a1.himaster.num20_Main;
+import com.example.a1.himaster.UserInfo;
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapGpsManager;
 import com.skp.Tmap.TMapMarkerItem;
@@ -218,7 +218,7 @@ public class MapActivityBackup extends AppCompatActivity implements TMapGpsManag
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MapActivityBackup.this, num20_Main.class);
+                Intent intent = new Intent(MapActivityBackup.this, UserInfo.class);
 
                 if(mapFlag == 1 || mapFlag == 3)
                 {
@@ -501,7 +501,7 @@ public class MapActivityBackup extends AppCompatActivity implements TMapGpsManag
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(MapActivityBackup.this, num20_Main.class);
+        Intent intent = new Intent(MapActivityBackup.this, UserInfo.class);
         setResult(RESULT_CANCELED, intent);
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
         finish();

@@ -39,6 +39,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, int position) {
         HashMap<String, String> noticeItem = todoList.get(position);
         holder.tv_title.setText(noticeItem.get("title")); //제목
+        holder.tv_dueDate.setText(noticeItem.get("conDate")); //제목
 
     }
 
@@ -52,12 +53,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
      **/
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv_title;
-        //CardView cv;
+        TextView tv_dueDate;
 
         public ViewHolder(View v) {
             super(v);
             tv_title = (TextView) v.findViewById(R.id.tv_title);
-            //cv = (CardView) v.findViewById(R.id.cv);
+            tv_dueDate = (TextView) v.findViewById(R.id.tv_dueDate);
         }
     }
 }

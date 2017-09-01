@@ -35,7 +35,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class num10_Main extends AppCompatActivity {
+public class MakeSchedule extends AppCompatActivity {
 
     Spinner spinner1, spinner2, spinner3, spinner4, spinner5, spinner6, spinner7, spinner8,
             spinner9, spinner10;
@@ -76,7 +76,7 @@ public class num10_Main extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.num10);
+        setContentView(R.layout.makeschedule);
 
         okBtn = (Button) findViewById(R.id.okBtn);
         repeatChk = (CheckBox) findViewById(R.id.repeatCheck);
@@ -212,7 +212,7 @@ public class num10_Main extends AppCompatActivity {
         final String getTime = sdf.format(date);
         Log.d("today", getTime);
         //
-        final Intent intent = new Intent(num10_Main.this, BottombarActivity.class);
+        final Intent intent = new Intent(MakeSchedule.this, BottombarActivity.class);
 
         final SharedPreferences resiInfo = getSharedPreferences("loginFlag", MODE_PRIVATE);
 
@@ -248,7 +248,7 @@ public class num10_Main extends AppCompatActivity {
         departBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num10_Main.this, MapActivity.class);
+                Intent intent = new Intent(MakeSchedule.this, MapActivity.class);
                 intent.putExtra("MAPFLAG", 1);
                 startActivityForResult(intent, REQUEST_CODE1);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
@@ -259,7 +259,7 @@ public class num10_Main extends AppCompatActivity {
         destBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num10_Main.this, MapActivity.class);
+                Intent intent = new Intent(MakeSchedule.this, MapActivity.class);
                 intent.putExtra("MAPFLAG", 2);
                 startActivityForResult(intent, REQUEST_CODE2);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
@@ -283,9 +283,9 @@ public class num10_Main extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (todoTitle.getText().toString().equals("")) {
-                    Intent intent = new Intent(num10_Main.this, Popup_emailchk.class);
+                    Intent intent = new Intent(MakeSchedule.this, Popup_titlechk.class);
                     startActivity(intent);
-                    Log.d("emailchk", "wrong email format");
+                    Log.d("titlechk", "wrong format");
                 }
 
                 else if (!todoTitle.getText().toString().equals("")) {
@@ -451,7 +451,7 @@ public class num10_Main extends AppCompatActivity {
             destEdit.setText(iDestination);
 
             } else {
-                Toast.makeText(num10_Main.this, "REQUEST_CODE가 아님", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MakeSchedule.this, "REQUEST_CODE가 아님", Toast.LENGTH_SHORT).show();
             }
         }
 

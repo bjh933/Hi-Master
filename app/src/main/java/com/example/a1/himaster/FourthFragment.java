@@ -24,7 +24,7 @@ import static android.app.Activity.RESULT_OK;
 public class FourthFragment extends Fragment {
 
     private OneCalendarView calendarView;
-    Button detailBtn, addBtn;
+    Button addBtn;
     Button rewriteBtn, deleteBtn;
     int thisPos, exPos;
     int dateCheck = -1;
@@ -47,13 +47,11 @@ public class FourthFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.num09, container, false);
+        View view = inflater.inflate(R.layout.fourthfragment, container, false);
 
         calendarView = (OneCalendarView)view.findViewById(R.id.oneCalendar);
-        detailBtn = (Button)view.findViewById(R.id.detailBtn);
         addBtn = (Button)view.findViewById(R.id.addBtn);
 
-        detailBtn.setVisibility(View.GONE);
         addBtn.setVisibility(View.GONE);
         listView = (ListView) view. findViewById(R.id.listview);
 
@@ -87,7 +85,7 @@ public class FourthFragment extends Fragment {
 
         return view;
 
-        //return inflater.inflate(R.layout.num09, container, false);
+        //return inflater.inflate(R.layout.fourthfragment, container, false);
     }
 
 
@@ -198,7 +196,7 @@ public class FourthFragment extends Fragment {
                 addBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), num10_Main.class);
+                        Intent intent = new Intent(getActivity(), MakeSchedule.class);
                         intent.putExtra("calDay", numDay);
                         intent.putExtra("calMonth", month);
                         intent.putExtra("calYear", year);

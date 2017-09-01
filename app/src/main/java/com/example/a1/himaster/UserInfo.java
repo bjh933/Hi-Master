@@ -16,7 +16,7 @@ import com.example.a1.himaster.SKPlanet.Tmap.MapActivity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class num20_Main extends AppCompatActivity {
+public class UserInfo extends AppCompatActivity {
     public static final int REQUEST_CODE = 1003;
     ArrayAdapter<CharSequence> adapter;
     EditText addressEt, nameEt, emailEt;
@@ -30,7 +30,7 @@ public class num20_Main extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.num20);
+        setContentView(R.layout.userinfo);
         okBtn = (Button)findViewById(R.id.okButton);
         myAddressBtn = (Button)findViewById(R.id.myaddress);
         addressEt = (EditText)findViewById(R.id.addressEdit);
@@ -98,7 +98,7 @@ public class num20_Main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(num20_Main.this, MapActivity.class);
+                Intent intent = new Intent(UserInfo.this, MapActivity.class);
                 intent.putExtra("MAPFLAG", 3);
                 startActivityForResult(intent, REQUEST_CODE);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
@@ -165,7 +165,7 @@ public class num20_Main extends AppCompatActivity {
             }
                 if(emailEt.length() == 0 || checkEmail(emailEt.getText().toString()) != true)
                 {
-                    Intent intent = new Intent(num20_Main.this, Popup_emailchk.class);
+                    Intent intent = new Intent(UserInfo.this, Popup_emailchk.class);
                     startActivity(intent);
                     Log.d("emailchk", "wrong email format");
                 }
@@ -185,7 +185,7 @@ public class num20_Main extends AppCompatActivity {
                     Log.d("subwaydd", departSubwayName + ", " + departSubwayLat + ", " + departSubwayLon);
 
                     editor.commit();
-                    Intent intent = new Intent(num20_Main.this, MyInfo.class);
+                    Intent intent = new Intent(UserInfo.this, MyInfo.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                     finish();
@@ -212,7 +212,7 @@ public class num20_Main extends AppCompatActivity {
             departSubwayLat = data.getExtras().getString("DEPART_SUBWAY_LAT");
             departSubwayLon = data.getExtras().getString("DEPART_SUBWAY_LON");
         } else {
-            Toast.makeText(num20_Main.this, "REQUEST_CODE가 아님", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UserInfo.this, "REQUEST_CODE가 아님", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -233,7 +233,7 @@ public class num20_Main extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(num20_Main.this, MyInfo.class);
+        Intent intent = new Intent(UserInfo.this, MyInfo.class);
         startActivity(intent);
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
         finish();

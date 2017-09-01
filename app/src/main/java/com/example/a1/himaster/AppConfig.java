@@ -1,21 +1,14 @@
 package com.example.a1.himaster;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
 
-import static android.view.LayoutInflater.from;
-
-public class num15_Main extends AppCompatActivity {
+public class AppConfig extends AppCompatActivity {
 
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
@@ -24,7 +17,7 @@ public class num15_Main extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.num15);
+        setContentView(R.layout.appconfig);
 
         spinner = (Spinner) findViewById(R.id.alarm);
         spinner = (Spinner) findViewById(R.id.alarmSound);
@@ -46,7 +39,7 @@ public class num15_Main extends AppCompatActivity {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(num15_Main.this, MyInfo.class);
+                Intent intent = new Intent(AppConfig.this, MyInfo.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();
@@ -58,7 +51,7 @@ public class num15_Main extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(num15_Main.this, MyInfo.class);
+        Intent intent = new Intent(AppConfig.this, MyInfo.class);
         startActivity(intent);
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
         finish();

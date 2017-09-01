@@ -11,7 +11,7 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="10dp"
                 android:paddingLeft="15dp"
@@ -30,7 +30,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:text="5월 17일"
                 />
 
@@ -38,7 +38,8 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:paddingBottom="15dp"
+                android:layout_height="35dp"
                 android:id="@+id/todoDelBtn"
                 android:src="@drawable/delete"/>
     </LinearLayout>

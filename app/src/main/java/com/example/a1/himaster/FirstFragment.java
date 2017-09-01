@@ -263,6 +263,12 @@ public class FirstFragment extends Fragment {
                 //JSON에서 각각의 요소를 뽑아옴
                 JSONObject c = tPosts.getJSONObject(i);
                 String title = c.getString(TAG_TITLE);
+                String dueDate = c.getString("dueDate");
+                String pattern = "yyyy년 M월 d일";
+
+                SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+                Date cDate = Date.valueOf(dueDate);
+                String conDate = (String)formatter.format(cDate);
 
                 if(title.length() > 16 ) {
                     title = title.substring(0,16) + "..."; //18자 자르고 ... 붙이기
@@ -271,6 +277,8 @@ public class FirstFragment extends Fragment {
                 //HashMap에 붙이기
                 HashMap<String,String> tPosts = new HashMap<String, String>();
                 tPosts.put(TAG_TITLE,title);
+                tPosts.put("dueDate", dueDate);
+                tPosts.put("conDate", conDate);
 
                 //ArrayList에 HashMap 붙이기
                 todoList.add(tPosts);

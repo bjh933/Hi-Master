@@ -8,15 +8,15 @@ import java.sql.Timestamp;
 
 public class Todo {
     private String title = "";
-    private Timestamp startDate = new Timestamp(System.currentTimeMillis());
+    private Timestamp dueDate = new Timestamp(System.currentTimeMillis());
     private String memo = "";
     private Boolean fix = false;
 
-    public Timestamp getStartDate() {
-        return startDate;
+    public Timestamp getDueDate() {
+        return dueDate;
     }
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
+    public void setDueDate(Timestamp dueDate) {
+        this.dueDate = dueDate;
     }
     public String getTitle() {
         return title;

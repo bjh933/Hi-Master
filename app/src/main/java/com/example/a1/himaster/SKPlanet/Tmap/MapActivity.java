@@ -1,13 +1,11 @@
 package com.example.a1.himaster.SKPlanet.Tmap;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,14 +16,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.a1.himaster.R;
-import com.example.a1.himaster.num20_Main;
-import com.google.android.gms.vision.text.Line;
+import com.example.a1.himaster.UserInfo;
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapGpsManager;
 import com.skp.Tmap.TMapMarkerItem;
@@ -228,7 +224,7 @@ public class MapActivity extends AppCompatActivity implements TMapGpsManager.onL
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MapActivity.this, num20_Main.class);
+                Intent intent = new Intent(MapActivity.this, UserInfo.class);
 
                 if(mapFlag == 1 || mapFlag == 3)
                 {
@@ -524,7 +520,7 @@ public class MapActivity extends AppCompatActivity implements TMapGpsManager.onL
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(MapActivity.this, num20_Main.class);
+        Intent intent = new Intent(MapActivity.this, UserInfo.class);
         setResult(RESULT_CANCELED, intent);
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
         finish();

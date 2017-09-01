@@ -200,7 +200,6 @@ public class SecondFragment extends Fragment {
                 String title = c.getString(TAG_TITLE);
                 String dueDate = c.getString("dueDate");
                 String memo = c.getString("memo");
-                String fix = c.getString("fix");
 
                 if(title.length() > 16 ) {
                     title = title.substring(0,16) + "..."; //18자 자르고 ... 붙이기
@@ -212,7 +211,6 @@ public class SecondFragment extends Fragment {
                 tPosts.put("dueDate", dueDate);
                 tPosts.put("userId", userId);
                 tPosts.put("memo", memo);
-                tPosts.put("fix", fix);
 
                 //ArrayList에 HashMap 붙이기
                 todoList.add(tPosts);

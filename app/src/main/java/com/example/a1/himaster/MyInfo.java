@@ -31,7 +31,7 @@ public class MyInfo extends AppCompatActivity {
         myInfoTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyInfo.this, num20_Main.class);
+                Intent intent = new Intent(MyInfo.this, UserInfo.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 finish();
@@ -42,7 +42,7 @@ public class MyInfo extends AppCompatActivity {
         appConfigTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyInfo.this, num15_Main.class);
+                Intent intent = new Intent(MyInfo.this, AppConfig.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 finish();
@@ -53,7 +53,7 @@ public class MyInfo extends AppCompatActivity {
         helpTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyInfo.this, num16_Main.class);
+                Intent intent = new Intent(MyInfo.this, HelpMenu.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 finish();

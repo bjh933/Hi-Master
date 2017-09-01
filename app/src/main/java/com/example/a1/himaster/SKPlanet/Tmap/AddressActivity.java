@@ -2,7 +2,6 @@ package com.example.a1.himaster.SKPlanet.Tmap;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -14,16 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.a1.himaster.MyInfo;
 import com.example.a1.himaster.R;
-import com.example.a1.himaster.num20_Main;
+import com.example.a1.himaster.UserInfo;
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapGpsManager;
 import com.skp.Tmap.TMapMarkerItem;
@@ -149,7 +145,7 @@ public class AddressActivity extends AppCompatActivity implements TMapGpsManager
                 editor.putString("RESIDENCE_LON", String.valueOf(selectLon));
                 editor.commit();
                 */
-                Intent intent = new Intent(AddressActivity.this, num20_Main.class);
+                Intent intent = new Intent(AddressActivity.this, UserInfo.class);
 
                 intent.putExtra("RESIDENCE", residenceName);
                 intent.putExtra("RESIDENCE_LAT", String.valueOf(selectLat));
@@ -255,7 +251,7 @@ public class AddressActivity extends AppCompatActivity implements TMapGpsManager
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(AddressActivity.this, num20_Main.class);
+        Intent intent = new Intent(AddressActivity.this, UserInfo.class);
         setResult(RESULT_CANCELED, intent);
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
         finish();
