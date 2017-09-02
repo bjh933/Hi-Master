@@ -1,6 +1,9 @@
 package com.example.a1.himaster;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,20 +15,40 @@ import android.widget.ListView;
 
 import com.darwindeveloper.onecalendar.clases.Day;
 import com.darwindeveloper.onecalendar.views.OneCalendarView;
-import com.example.a1.himaster.Adapter.listItemAdapter;
+import com.example.a1.himaster.Adapter.CalListItemAdapter;
+import com.example.a1.himaster.Adapter.EventAdapter;
+import com.example.a1.himaster.Adapter.NoticeAdapter;
+import com.example.a1.himaster.Adapter.TodoAdapter;
+import com.example.a1.himaster.Adapter.ListItemAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 
 public class FourthFragment extends Fragment {
 
     private OneCalendarView calendarView;
+    JSONArray posts = null;
+    JSONArray ePosts = null;
+    JSONArray tPosts = null;
     Button addBtn;
     Button rewriteBtn, deleteBtn;
+    ArrayList<HashMap<String,String>> scheduleList, eventList, todoList, calList;
     int thisPos, exPos;
     int dateCheck = -1;
     int datePos;
@@ -33,13 +56,15 @@ public class FourthFragment extends Fragment {
     int cDay;
     int cYear;
     int boolpos[] = new int[60];
-    Hashtable<String, ArrayList> ht = new Hashtable<String, ArrayList>();  //일정 저장용 테이블
+    Hashtable<String, ArrayList> ht = null;  //일정 저장용 테이블
     ListView listView;  //리스트뷰
-    listItemAdapter listAdapter;  //리스트 어댑터
+    ListItemAdapter listAdapter;  //리스트 어댑터
+    CalListItemAdapter calListAdapter;
     Calendar mCalendar;
     int firstDay;
     int firstPos = 0;
     public static final int REQUEST_CODE = 1001;    //  달력 날짜 데이터 전달
+    Context mContext;
 
     public static FourthFragment newInstance() {
         return new FourthFragment();
@@ -48,6 +73,14 @@ public class FourthFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fourthfragment, container, false);
+        SharedPreferences saveInfo = this.getActivity().getSharedPreferences("loginFlag", MODE_PRIVATE);
+        final String userId = saveInfo.getString("USERID", "");   //  userId 가져옴
+        scheduleList = new ArrayList<HashMap<String, String>>();
+        eventList = new ArrayList<HashMap<String, String>>();
+        todoList = new ArrayList<HashMap<String, String>>();
+        calList = new ArrayList<HashMap<String, String>>();
+        ht = new Hashtable<String, ArrayList>();
+        String url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
 
         calendarView = (OneCalendarView)view.findViewById(R.id.oneCalendar);
         addBtn = (Button)view.findViewById(R.id.addBtn);
@@ -82,6 +115,7 @@ public class FourthFragment extends Fragment {
 
         initCalendar();
         recalculate();
+        getData(url);
 
         return view;
 
@@ -91,6 +125,7 @@ public class FourthFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);
+        mContext = getActivity();
 
     }
 
@@ -132,7 +167,7 @@ public class FourthFragment extends Fragment {
                 final int numDay = cal.get(Calendar.DAY_OF_MONTH);
                 String strMonth = Integer.toString(month+1);
                 String strDay = Integer.toString(numDay);
-
+                Log.d("datePos", String.valueOf(position));
                 if(month+1 < 10) {
                     strMonth = "0"+String.valueOf(month+1);
                 }
@@ -142,7 +177,7 @@ public class FourthFragment extends Fragment {
 
                 String key = Integer.toString(year) + "-" + strMonth + "-"
                         + strDay;
-
+                Log.d("dateee", key);
 
                 if(boolpos[position] != 1)
                     exPos = position;
@@ -152,13 +187,14 @@ public class FourthFragment extends Fragment {
                     if(exPos != position)
                         calendarView.removeDaySeleted(exPos);
 
-                    listAdapter = new listItemAdapter();
+                    listAdapter = new ListItemAdapter();
 
                     ArrayList<listItem> itemList = ht.get(key);
-                    Log.d("whykey", key);
+
                     for (int i = 0; i < itemList.size(); i++) {  //아이템 추가
                         listAdapter.add(itemList.get(i));
                     }
+
 
                     listView.setAdapter(listAdapter);  //연결
 
@@ -300,5 +336,171 @@ public class FourthFragment extends Fragment {
         return result;
     }
 
+    public void getData(String url) {
+        class GetDataJSON extends AsyncTask<String,Void,String> {
+            @Override
+            protected String doInBackground(String... params) {
+                //JSON 받아온다.
+                String uri = params[0];
+                BufferedReader br = null;
+                try {
+                    URL url = new URL(uri);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                    StringBuilder sb = new StringBuilder();
+
+                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                    String json;
+                    while((json = br.readLine()) != null) {
+                        sb.append(json+"\n");
+                    }
+                    Log.d("ssssss", String.valueOf(sb));
+                    return sb.toString().trim();
+                }catch (Exception e) {
+                    return null;
+                }
+            }
+            @Override
+            protected void onPostExecute(String myJSON) {
+                Log.d("my", myJSON);
+                makeList(myJSON); //리스트를 보여줌
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute(url);
+    }
+
+
+    public void makeList(String myJSON) {
+        try {
+            JSONObject jsonObj = new JSONObject(myJSON);
+            String userId = jsonObj.getString("userId");
+            posts = jsonObj.getJSONArray("schedules");
+
+            for(int i=0; i<posts.length(); i++) {
+                //JSON에서 각각의 요소를 뽑아옴
+                JSONObject c = posts.getJSONObject(i);
+                String title = c.getString("title");
+                String startTime = c.getString("startTime");
+                String startDate = c.getString("startDate");    //  key
+                String endDate = c.getString("endDate");
+
+                Date sDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+                Date eDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+
+
+                String[] strDate = startDate.split("-");
+                String strDay = strDate[2];
+                int startDay = Integer.valueOf(strDay);
+                calendarView.addDaySelected(startDay+firstPos-1);
+                boolpos[startDay+firstPos-1] = 1;
+                listItem item = new listItem(startTime, title);
+
+                if (ht.containsKey(startDate)) {  //키가 있으면 있는 ArrayList에 추가
+                    ArrayList<listItem> al = ht.get(startDate);
+                    ht.remove(startDate);
+                    al.add(item);
+                    ht.put(startDate, al);
+
+                } else {  //없으면 새로운 ArrayList를 만들어서 추가
+                    ArrayList<listItem> al = new ArrayList<>();
+                    al.add(item);
+                    ht.put(startDate, al);
+
+                }
+
+                if(title.length() > 16 ) {
+                    title = title.substring(0,16) + "..."; //18자 자르고 ... 붙이기
+                }
+
+            }
+
+            ePosts = jsonObj.getJSONArray("events");
+            for(int i=0; i<ePosts.length(); i++) {
+                //JSON에서 각각의 요소를 뽑아옴
+                JSONObject c = ePosts.getJSONObject(i);
+                String title = c.getString("title");
+                String startDate = c.getString("startDate");
+                String[] strDate = startDate.split("-");
+                String strDay = strDate[2];
+                int startDay = Integer.valueOf(strDay);
+                calendarView.addDaySelected(startDay+firstPos-1);
+                boolpos[startDay+firstPos-1] = 1;
+
+                listItem item = new listItem(strDay, title);
+
+                if (ht.containsKey(startDate)) {  //키가 있으면 있는 ArrayList에 추가
+                    ArrayList<listItem> al = ht.get(startDate);
+                    ht.remove(startDate);
+                    al.add(item);
+                    ht.put(startDate, al);
+
+                } else {  //없으면 새로운 ArrayList를 만들어서 추가
+                    ArrayList<listItem> al = new ArrayList<>();
+                    al.add(item);
+                    ht.put(startDate, al);
+
+                }
+
+
+                if(title.length() > 16 ) {
+                    title = title.substring(0,16) + "..."; //18자 자르고 ... 붙이기
+                }
+
+            }
+
+            ///
+
+            tPosts = jsonObj.getJSONArray("todos");
+            for(int i=0; i<tPosts.length(); i++) {
+                //JSON에서 각각의 요소를 뽑아옴
+                JSONObject c = tPosts.getJSONObject(i);
+                String title = c.getString("title");
+                String dueDate = c.getString("dueDate");
+                String[] strDate = dueDate.split("-");
+                String strDay = strDate[2];
+                int startDay = Integer.valueOf(strDay);
+                calendarView.addDaySelected(startDay+firstPos-1);
+                boolpos[startDay+firstPos-1] = 1;
+
+                listItem item = new listItem(strDay, title);
+
+                if (ht.containsKey(dueDate)) {  //키가 있으면 있는 ArrayList에 추가
+                    ArrayList<listItem> al = ht.get(dueDate);
+                    ht.remove(dueDate);
+                    al.add(item);
+                    ht.put(dueDate, al);
+
+                } else {  //없으면 새로운 ArrayList를 만들어서 추가
+                    ArrayList<listItem> al = new ArrayList<>();
+                    al.add(item);
+                    ht.put(dueDate, al);
+
+                }
+
+                if(title.length() > 16 ) {
+                    title = title.substring(0,16) + "..."; //18자 자르고 ... 붙이기
+                }
+
+            }
+
+
+        }catch(JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getDateSub(Date a, Date b) {
+        long calDate = b.getTime() - a.getTime();
+        long calDateDays = calDate / ( 24*60*60*1000);
+
+        calDateDays = Math.abs(calDateDays);
+
+        int ans = (int) calDateDays;
+        return ans;
+    }
 
 }

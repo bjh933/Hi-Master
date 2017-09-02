@@ -54,13 +54,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv_title;
         TextView tv_date;
-        CardView cv;
 
         public ViewHolder(View v) {
             super(v);
             tv_title = (TextView) v.findViewById(R.id.tv_title);
             tv_date = (TextView) v.findViewById(R.id.tv_date);
-            cv = (CardView) v.findViewById(R.id.cv);
         }
     }
 }

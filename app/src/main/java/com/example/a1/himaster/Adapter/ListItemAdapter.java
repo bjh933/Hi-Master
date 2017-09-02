@@ -13,16 +13,20 @@ import com.example.a1.himaster.R;
 import com.example.a1.himaster.listItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Dong on 2015-03-15.
  */
-public class listItemAdapter extends BaseAdapter {
+public class ListItemAdapter extends BaseAdapter {
     private ArrayList<listItem> mItems;  //리스트아이템을 보관
-    Button rewriteBtn, deleteBtn;
 
-    public listItemAdapter() {  //생성자
+    public ListItemAdapter() {  //생성자
         mItems = new ArrayList<listItem>();
+    }
+
+    public ListItemAdapter(Context mContext, ArrayList<HashMap<String, String>> scheduleList) {
+
     }
 
     @Override
@@ -57,9 +61,6 @@ public class listItemAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.listitem, parent, false);
 
-            rewriteBtn = (Button)convertView.findViewById(R.id.rewriteBtn);
-            deleteBtn = (Button)convertView.findViewById(R.id.deleteBtn);
-
             //textView에 현재 position의 문자열 추가
             timeTv = (TextView) convertView.findViewById(R.id.timetextView);
             planTv = (TextView) convertView.findViewById(R.id.plantextView);
@@ -80,22 +81,13 @@ public class listItemAdapter extends BaseAdapter {
         timeTv.setText(mItems.get(position).getTime());
         planTv.setText(mItems.get(position).getPlan());
 
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                mItems.remove(pos);
-                notifyDataSetChanged();
-
-            }
-        });
 
         //리스트 아이템을 터치 했을 때 이벤트 발생
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //터치 시 해당 아이템 이름 출력
-                Toast.makeText(context, "리스트 클릭 : " + mItems.get(pos), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "리스트 클릭 : " + mItems.get(pos), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -104,7 +96,7 @@ public class listItemAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View v) {
                 //롱 터치 시 해당 아이템 이름 출력
-                Toast.makeText(context, "리스트 롱 클릭 : " + mItems.get(pos), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "리스트 롱 클릭 : " + mItems.get(pos), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

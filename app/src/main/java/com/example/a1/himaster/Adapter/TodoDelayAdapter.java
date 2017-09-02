@@ -52,7 +52,7 @@ public class TodoDelayAdapter extends RecyclerView.Adapter<TodoDelayAdapter.View
         String dDay = String.valueOf(intDday);
 
         if(intDday == 0)
-            dDay = "- Day!";
+            dDay = "- Day !";
 
         holder.dday.setText(String.valueOf(dDay)); //제목;
 
@@ -98,7 +98,7 @@ public class TodoDelayAdapter extends RecyclerView.Adapter<TodoDelayAdapter.View
             long cnt_today = today.getTimeInMillis() / 86400000;
             long sub = cnt_today - cnt_dday;
 
-            return (int) sub;
+            return (int) sub ;
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
