@@ -1,6 +1,7 @@
 package com.example.a1.himaster;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,7 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.a1.himaster.SKPlanet.Tmap.MapFragment;
+
+import com.example.a1.himaster.PopUp.Popup_pathchk;
 import com.example.a1.himaster.SKPlanet.Tmap.MapListItem;
 import com.example.a1.himaster.SKPlanet.Tmap.MapListItemAdapter;
 import com.example.a1.himaster.SKPlanet.Tmap.MapPoint;
@@ -76,8 +78,8 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
     int gpsFlag = 0;
     JSONArray posts = null;
 
-    public static MapFragment newInstance() {
-        return new MapFragment();
+    public static FifthFragment newInstance() {
+        return new FifthFragment();
     }
 
     @Override
@@ -211,7 +213,14 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
         titleTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( (departLat != null && departLon != null) && (destLat != null && destLon != null) )
+                if( (departLat == null || departLon == null) && (destLat == null || destLon == null) )
+                {
+                    Intent intent = new Intent(mContext, Popup_pathchk.class);
+                    startActivity(intent);
+
+                }
+
+                else if( (departLat != null && departLon != null) && (destLat != null && destLon != null) )
                 {
                     tmapView.setTrackingMode(false);
                     tmapView.setCompassMode(false);
@@ -235,7 +244,7 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
         });
 
         linearLayout.addView(tmapView);
-
+        setGps();
 
         return view;
     }
@@ -644,12 +653,12 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
 
             case R.id.rTv6 :
                 recoCategory = "숙박";
-                rTv5.setTextColor(Color.parseColor("#BC0003"));
+                rTv6.setTextColor(Color.parseColor("#BC0003"));
                 rTv2.setTextColor(Color.parseColor("#BABABA"));
                 rTv1.setTextColor(Color.parseColor("#BABABA"));
                 rTv4.setTextColor(Color.parseColor("#BABABA"));
                 rTv3.setTextColor(Color.parseColor("#BABABA"));
-                rTv6.setTextColor(Color.parseColor("#BABABA"));
+                rTv5.setTextColor(Color.parseColor("#BABABA"));
                 rTv7.setTextColor(Color.parseColor("#BABABA"));
                 rTv8.setTextColor(Color.parseColor("#BABABA"));
                 getAroundPlace();
@@ -657,13 +666,13 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
 
             case R.id.rTv7 :
                 recoCategory = "공원";
-                rTv6.setTextColor(Color.parseColor("#BC0003"));
+                rTv7.setTextColor(Color.parseColor("#BC0003"));
                 rTv2.setTextColor(Color.parseColor("#BABABA"));
                 rTv3.setTextColor(Color.parseColor("#BABABA"));
                 rTv1.setTextColor(Color.parseColor("#BABABA"));
                 rTv5.setTextColor(Color.parseColor("#BABABA"));
                 rTv4.setTextColor(Color.parseColor("#BABABA"));
-                rTv7.setTextColor(Color.parseColor("#BABABA"));
+                rTv6.setTextColor(Color.parseColor("#BABABA"));
                 rTv8.setTextColor(Color.parseColor("#BABABA"));
                 getAroundPlace();
                 break ;
@@ -682,27 +691,31 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
                 break ;
 
             case R.id.myLocaTv :
-
-                /*
-                tmapGps = new TMapGpsManager(mContext);
-                tmapGps.setMinTime(1000);
-                tmapGps.setMinDistance(5);
-                tmapGps.setProvider(tmapGps.NETWORK_PROVIDER);  //  연결된 인터넷으로 현 위치를 받음, 실내에 유용
-                // tmapGps.setProvider(tmapGps.GPS_PROVIDER);
-                tmapGps.OpenGps();
-                */
-
                 setGps();
-
-                tmapView.setCompassMode(true);
-                tmapView.setIconVisibility(true);   //  현 위치 아이콘 표시
-                tmapView.setTrackingMode(true);
-                tmapView.setSightVisible(true);
-                //Log.d("gps", String.valueOf(tmapGps.setLocationCallback()));
                 break ;
 
         }
     }
+
+    private final LocationListener mLocationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+
+            double longitude = location.getLongitude(); //경도
+            double latitude = location.getLatitude();   //위도
+
+            tmapView.setCenterPoint(longitude, latitude);
+            tmapView.setLocationPoint(longitude, latitude);
+
+        }
+        public void onProviderDisabled(String provider) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    };
 
     public void setGps() {
         final LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -716,23 +729,8 @@ public class FifthFragment extends Fragment implements TMapGpsManager.onLocation
                 1000, // 통지사이의 최소 시간간격 (miliSecond)
                 1, // 통지사이의 최소 변경거리 (m)
                 mLocationListener);
+
+        tmapView.setIconVisibility(true);
     }
 
-    private final LocationListener mLocationListener = new LocationListener() {
-        public void onLocationChanged(Location location) {
-
-            double longitude = location.getLongitude(); //경도
-            double latitude = location.getLatitude();   //위도
-
-            tmapView.setCenterPoint(longitude, latitude);
-        }
-        public void onProviderDisabled(String provider) {
-        }
-
-        public void onProviderEnabled(String provider) {
-        }
-
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-    };
 }

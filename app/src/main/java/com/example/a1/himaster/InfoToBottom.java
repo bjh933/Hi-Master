@@ -9,8 +9,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
+
+import com.example.a1.himaster.PopUp.Popup_emailchk;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

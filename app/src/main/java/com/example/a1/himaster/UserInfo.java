@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.a1.himaster.PopUp.Popup_emailchk;
 import com.example.a1.himaster.SKPlanet.Tmap.MapActivity;
 
 import java.util.regex.Matcher;

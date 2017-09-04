@@ -63,9 +63,10 @@
         <activity android:name=".SKPlanet.Tmap.AddressActivity"/>
         <activity android:name=".SKPlanet.Tmap.MapActivity"/>
         <activity android:name=".Popup" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".Popup_emailchk" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".Popup_titlechk" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".Popup_deletechk" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".PopUp.Popup_emailchk" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".PopUp.Popup_titlechk" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".PopUp.Popup_deletechk" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".PopUp.Popup_pathchk" android:theme="@android:style/Theme.Dialog"/>
     </application>
 
 </manifest>

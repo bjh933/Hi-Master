@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/popText"
             android:layout_gravity="center"
-            android:text="제목을 입력해주세요!"
+            android:text="출발지와 도착지 모두 입력해주세요 !"
             />
 
         <LinearLayout

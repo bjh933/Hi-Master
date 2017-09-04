@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a1.himaster.PopUp.Popup_titlechk;
 import com.example.a1.himaster.SKPlanet.Tmap.MapActivity;
 
 

@@ -1,17 +1,20 @@
-package com.example.a1.himaster;
+package com.example.a1.himaster.PopUp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.a1.himaster.R;
+
 /**
  * Created by a1 on 2017. 7. 29..
  */
 
-public class Popup_titlechk extends Activity {
+public class Popup_emailchk extends Activity {
 
     Button popupBtn;
     TextView tvPop;
@@ -20,7 +23,7 @@ public class Popup_titlechk extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.popup_title);
+        setContentView(R.layout.popup_email);
         this.setFinishOnTouchOutside(false);
         tvPop = (TextView)findViewById(R.id.popText);
         popupBtn = (Button)findViewById(R.id.popBtn);

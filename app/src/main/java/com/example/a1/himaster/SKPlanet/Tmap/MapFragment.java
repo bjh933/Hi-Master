@@ -1,3 +1,4 @@
+/*
 package com.example.a1.himaster.SKPlanet.Tmap;
 
 import android.content.Context;
@@ -633,3 +634,5 @@ public class MapFragment extends Fragment implements TMapGpsManager.onLocationCh
         }
     }
 }
+
+*/

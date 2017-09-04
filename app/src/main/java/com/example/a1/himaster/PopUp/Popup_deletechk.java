@@ -1,4 +1,4 @@
-package com.example.a1.himaster;
+package com.example.a1.himaster.PopUp;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.a1.himaster.R;
 
 /**
  * Created by a1 on 2017. 7. 29..
