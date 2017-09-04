@@ -150,6 +150,9 @@ public class InfoToBottom extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        return;
+        Intent intent = new Intent(InfoToBottom.this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+        finish();
     }
 }

@@ -36,6 +36,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -53,18 +54,21 @@ public class FourthFragment extends Fragment {
     int dateCheck = -1;
     int datePos;
     String cMonth;
+    int monthEndDay;
+    int nowMonth;
+    int prevEndDay;
     int cDay;
     int cYear;
     int boolpos[] = new int[60];
     Hashtable<String, ArrayList> ht = null;  //일정 저장용 테이블
     ListView listView;  //리스트뷰
     ListItemAdapter listAdapter;  //리스트 어댑터
-    CalListItemAdapter calListAdapter;
     Calendar mCalendar;
     int firstDay;
     int firstPos = 0;
     public static final int REQUEST_CODE = 1001;    //  달력 날짜 데이터 전달
     Context mContext;
+    String url;
 
     public static FourthFragment newInstance() {
         return new FourthFragment();
@@ -78,9 +82,8 @@ public class FourthFragment extends Fragment {
         scheduleList = new ArrayList<HashMap<String, String>>();
         eventList = new ArrayList<HashMap<String, String>>();
         todoList = new ArrayList<HashMap<String, String>>();
-        calList = new ArrayList<HashMap<String, String>>();
         ht = new Hashtable<String, ArrayList>();
-        String url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
 
         calendarView = (OneCalendarView)view.findViewById(R.id.oneCalendar);
         addBtn = (Button)view.findViewById(R.id.addBtn);
@@ -139,15 +142,19 @@ public class FourthFragment extends Fragment {
             @Override
             public void prevMonth() {
                 mCalendar.add(Calendar.MONTH, -1);
+                ht = new Hashtable<String, ArrayList>();
                 recalculate();
-                //Toast.makeText(com.example.a1.himaster.FourthFragment.this, calendarView.getStringMonth(calendarView.getMonth()) + " " + calendarView.getYear(), Toast.LENGTH_SHORT).show();
+                getData(url);
+
             }
 
             @Override
             public void nextMonth() {
                 mCalendar.add(Calendar.MONTH, 1);
+                ht = new Hashtable<String, ArrayList>();
                 recalculate();
-                //Toast.makeText(com.example.a1.himaster.num09_Main.this, calendarView.getStringMonth(calendarView.getMonth()) + " " + calendarView.getYear(), Toast.LENGTH_SHORT).show();
+                getData(url);
+
             }
         });
 
@@ -255,11 +262,16 @@ public class FourthFragment extends Fragment {
     public void recalculate() {
         mCalendar.set(Calendar.DAY_OF_MONTH, 1);  //날짜를 현재달의 1일로 설정
         int dayOfWeek = mCalendar.get(Calendar.DAY_OF_WEEK);  //현재요일을 얻는다.
+        nowMonth = mCalendar.get(Calendar.MONTH) + 1;
+        Log.d("prevMonth", String.valueOf(prevEndDay));
+        Log.d("nowMonth", String.valueOf(nowMonth));
         String dow = Integer.toString(dayOfWeek);
         Log.d("dayofWeek : ", dow);
         firstDay = getFirstDay(dayOfWeek);
         String fd = Integer.toString(firstDay);
+        monthEndDay = mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         Log.d("firstDay : ", fd);
+        Log.d("endDay : ", String.valueOf(monthEndDay));
         firstPos = firstDay;
 
         for(int i=0;i<42;i++)
@@ -386,29 +398,198 @@ public class FourthFragment extends Fragment {
                 String startDate = c.getString("startDate");    //  key
                 String endDate = c.getString("endDate");
 
+                String[] endDateStr = endDate.split("-");
+                String endDateMonth = endDateStr[1];
+
                 Date sDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
                 Date eDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
 
-
+                int subDate = getDateSub(sDate, eDate);
                 String[] strDate = startDate.split("-");
                 String strDay = strDate[2];
-                int startDay = Integer.valueOf(strDay);
-                calendarView.addDaySelected(startDay+firstPos-1);
-                boolpos[startDay+firstPos-1] = 1;
-                listItem item = new listItem(startTime, title);
 
-                if (ht.containsKey(startDate)) {  //키가 있으면 있는 ArrayList에 추가
-                    ArrayList<listItem> al = ht.get(startDate);
-                    ht.remove(startDate);
-                    al.add(item);
-                    ht.put(startDate, al);
 
-                } else {  //없으면 새로운 ArrayList를 만들어서 추가
-                    ArrayList<listItem> al = new ArrayList<>();
-                    al.add(item);
-                    ht.put(startDate, al);
+
+                if(Integer.valueOf(strDate[1]) != Integer.valueOf(endDateMonth) && Integer.valueOf(endDateMonth) == nowMonth) {
+
+                    //시작 달 != 끝나는 달 && 끝나는 달 == 현재 달
+
+
+
+                    subDate = subDate - prevEndDay;
+
+                    for (int j = 0; j < subDate; j++) {
+
+                        int startDay = j + 1;
+                        String tempDay = String.valueOf(startDay);
+                        if(monthEndDay+firstPos-1 < startDay+firstPos-1)
+                            break;
+
+                        if (startDay < 10)
+                            tempDay = "0" + String.valueOf(startDay);
+
+                        String key = strDate[0] + "-" + strDate[1] + "-" + tempDay;
+                        calendarView.addDaySelected(startDay + firstPos - 1);
+                        boolpos[startDay + firstPos - 1] = 1;
+                        listItem item = new listItem("[일정]    " + startTime, title);
+
+                        if (ht.containsKey(key)) {  //키가 있으면 있는 ArrayList에 추가
+                            ArrayList<listItem> al = ht.get(key);
+                            ht.remove(key);
+                            al.add(item);
+                            ht.put(key, al);
+
+                        } else {  //없으면 새로운 ArrayList를 만들어서 추가
+                            ArrayList<listItem> al = new ArrayList<>();
+                            al.add(item);
+                            ht.put(key, al);
+
+                        }
+
+
+
+                    }
+                }
+
+                else if(Integer.valueOf(strDate[1]) != Integer.valueOf(endDateMonth) && Integer.valueOf(endDateMonth) > nowMonth
+                        && Integer.valueOf(strDate[1]) < nowMonth)
+                {
+                    // 시작 달 != 끝나는 달 && 끝나는 달 > 현재 달 && 시작달 < 현재 달
+
+                    prevEndDay = monthEndDay;
+                    for(int j=0;j<subDate;j++)
+                    {
+                        int startDay = j+1;
+                        if(monthEndDay+firstPos-1 < startDay+firstPos-1)
+                            break;
+
+                        String tempDay = String.valueOf(startDay);
+                        String midMonth = String.valueOf(nowMonth);
+
+                        if(startDay < 10)
+                            tempDay = "0" + String.valueOf(startDay);
+
+                        if(nowMonth < 10)
+                            midMonth = "0" + String.valueOf(nowMonth);
+
+
+
+                        String key = strDate[0]+"-"+midMonth+"-"+tempDay;
+                        calendarView.addDaySelected(startDay+firstPos-1);
+                        boolpos[startDay+firstPos-1] = 1;
+                        listItem item = new listItem("[일정]    "+startTime, title);
+
+                        if (ht.containsKey(key)) {  //키가 있으면 있는 ArrayList에 추가
+                            ArrayList<listItem> al = ht.get(key);
+                            ht.remove(key);
+                            al.add(item);
+                            ht.put(key, al);
+
+                        } else {  //없으면 새로운 ArrayList를 만들어서 추가
+                            ArrayList<listItem> al = new ArrayList<>();
+                            al.add(item);
+                            ht.put(key, al);
+
+                        }
+
+                        if(subDate > 41 && j == 41)
+                        {
+                            break;
+                        }
+                    }
+
 
                 }
+
+                else if(Integer.valueOf(strDate[1]) != Integer.valueOf(endDateMonth) && Integer.valueOf(endDateMonth) > nowMonth )
+                {
+                    // 시작 달 != 끝나는 달 && 끝나는 달 > 현재 달 && 시작달 == 현재 달
+                    prevEndDay = monthEndDay;
+                    for(int j=0;j<subDate;j++)
+                    {
+
+
+                        int startDay = Integer.valueOf(strDay) + j;
+                        String tempDay = String.valueOf(startDay);
+
+                        if(monthEndDay+firstPos-1 < startDay+firstPos-1)
+                            break;
+
+                        if (startDay < 10)
+                            tempDay = "0" + String.valueOf(startDay);
+
+                        String key = strDate[0] + "-" + strDate[1] + "-" + tempDay;
+                        calendarView.addDaySelected(startDay + firstPos - 1);
+                        boolpos[startDay + firstPos - 1] = 1;
+                        listItem item = new listItem("[일정]    "+startTime, title);
+
+                        if (ht.containsKey(key)) {  //키가 있으면 있는 ArrayList에 추가
+                            ArrayList<listItem> al = ht.get(key);
+                            ht.remove(key);
+                            al.add(item);
+                            ht.put(key, al);
+
+                        } else {  //없으면 새로운 ArrayList를 만들어서 추가
+                            ArrayList<listItem> al = new ArrayList<>();
+                            al.add(item);
+                            ht.put(key, al);
+
+                        }
+                        if(subDate > 41 && j == 41)
+                        {
+                            break;
+                        }
+                    }
+
+
+                }
+
+
+            else if(Integer.valueOf(strDate[1]) == Integer.valueOf(endDateMonth) && Integer.valueOf(endDateMonth) == nowMonth)
+            {
+                prevEndDay = monthEndDay;
+
+                for (int j = 0; j <= subDate; j++) {
+
+                    int startDay = Integer.valueOf(strDay) + j;
+                    String tempDay = String.valueOf(startDay);
+                    if(monthEndDay+firstPos-1 < startDay+firstPos-1)
+                        break;
+
+                    if (startDay < 10)
+                        tempDay = "0" + String.valueOf(startDay);
+
+                    String key = strDate[0] + "-" + strDate[1] + "-" + tempDay;
+                    calendarView.addDaySelected(startDay + firstPos - 1);
+                    boolpos[startDay + firstPos - 1] = 1;
+                    listItem item = new listItem("[일정]    " + startTime, title);
+
+                    if (ht.containsKey(key)) {  //키가 있으면 있는 ArrayList에 추가
+                        ArrayList<listItem> al = ht.get(key);
+                        ht.remove(key);
+                        al.add(item);
+                        ht.put(key, al);
+
+                    } else {  //없으면 새로운 ArrayList를 만들어서 추가
+                        ArrayList<listItem> al = new ArrayList<>();
+                        al.add(item);
+                        ht.put(key, al);
+
+                    }
+                    if(subDate > 41 && j == 41)
+                    {
+                        break;
+                    }
+
+                }
+            }
+
+            else {
+
+
+                }
+
+
 
                 if(title.length() > 16 ) {
                     title = title.substring(0,16) + "..."; //18자 자르고 ... 붙이기
@@ -422,27 +603,199 @@ public class FourthFragment extends Fragment {
                 JSONObject c = ePosts.getJSONObject(i);
                 String title = c.getString("title");
                 String startDate = c.getString("startDate");
+                String endDate = c.getString("endDate");
+
+                String[] endDateStr = endDate.split("-");
+                String endDateMonth = endDateStr[1];
+
+                Date sDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+                Date eDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+
+                int subDate = getDateSub(sDate, eDate);
                 String[] strDate = startDate.split("-");
                 String strDay = strDate[2];
-                int startDay = Integer.valueOf(strDay);
-                calendarView.addDaySelected(startDay+firstPos-1);
-                boolpos[startDay+firstPos-1] = 1;
 
-                listItem item = new listItem(strDay, title);
 
-                if (ht.containsKey(startDate)) {  //키가 있으면 있는 ArrayList에 추가
-                    ArrayList<listItem> al = ht.get(startDate);
-                    ht.remove(startDate);
-                    al.add(item);
-                    ht.put(startDate, al);
+                if(Integer.valueOf(strDate[1]) != Integer.valueOf(endDateMonth) && Integer.valueOf(endDateMonth) == nowMonth) {
 
-                } else {  //없으면 새로운 ArrayList를 만들어서 추가
-                    ArrayList<listItem> al = new ArrayList<>();
-                    al.add(item);
-                    ht.put(startDate, al);
+                    //시작 달 != 끝나는 달 && 끝나는 달 == 현재 달
+
+
+                    for (int j = 0; j < Integer.valueOf(endDateStr[2]); j++) {
+
+                        int startDay = j + 1;
+                        if(monthEndDay+firstPos-1 < startDay+firstPos-1)
+                            break;
+
+                        String tempDay = String.valueOf(startDay);
+
+                        if (startDay < 10)
+                            tempDay = "0" + String.valueOf(startDay);
+
+                        String key = endDateStr[0] + "-" + endDateStr[1] + "-" + tempDay;
+                        calendarView.addDaySelected(startDay + firstPos - 1);
+                        boolpos[startDay + firstPos - 1] = 1;
+                        listItem item = new listItem("[행사] ", title);
+
+                        if (ht.containsKey(key)) {  //키가 있으면 있는 ArrayList에 추가
+                            ArrayList<listItem> al = ht.get(key);
+                            ht.remove(key);
+                            al.add(item);
+                            ht.put(key, al);
+
+                        } else {  //없으면 새로운 ArrayList를 만들어서 추가
+                            ArrayList<listItem> al = new ArrayList<>();
+                            al.add(item);
+                            ht.put(key, al);
+
+                        }
+
+
+                    }
+                }
+
+                else if(Integer.valueOf(strDate[1]) != Integer.valueOf(endDateMonth) && Integer.valueOf(endDateMonth) > nowMonth
+                        && Integer.valueOf(strDate[1]) < nowMonth)
+                {
+                    // 시작 달 != 끝나는 달 && 끝나는 달 > 현재 달 && 시작달 < 현재 달
+
+                    prevEndDay = monthEndDay;
+                    for(int j=0;j<subDate;j++)
+                    {
+                        int startDay = j+1;
+                        if(monthEndDay+firstPos-1 < startDay+firstPos-1)
+                            break;
+
+                        String tempDay = String.valueOf(startDay);
+                        String midMonth = String.valueOf(nowMonth);
+
+                        if(startDay < 10)
+                            tempDay = "0" + String.valueOf(startDay);
+
+                        if(nowMonth < 10)
+                            midMonth = "0" + String.valueOf(nowMonth);
+
+
+
+                        String key = strDate[0]+"-"+midMonth+"-"+tempDay;
+                        calendarView.addDaySelected(startDay+firstPos-1);
+                        boolpos[startDay+firstPos-1] = 1;
+                        listItem item = new listItem("[행사] ", title);
+
+                        if (ht.containsKey(key)) {  //키가 있으면 있는 ArrayList에 추가
+                            ArrayList<listItem> al = ht.get(key);
+                            ht.remove(key);
+                            al.add(item);
+                            ht.put(key, al);
+
+                        } else {  //없으면 새로운 ArrayList를 만들어서 추가
+                            ArrayList<listItem> al = new ArrayList<>();
+                            al.add(item);
+                            ht.put(key, al);
+
+                        }
+
+                        if(subDate > 41 && j == 41)
+                        {
+                            break;
+                        }
+                    }
+
 
                 }
 
+                else if(Integer.valueOf(strDate[1]) != Integer.valueOf(endDateMonth) && Integer.valueOf(endDateMonth) > nowMonth )
+                {
+                    // 시작 달 != 끝나는 달 && 끝나는 달 > 현재 달 && 시작달 == 현재 달
+                    prevEndDay = monthEndDay;
+                    for(int j=0;j<subDate;j++)
+                    {
+
+
+                        int startDay = Integer.valueOf(strDay) + j;
+                        String tempDay = String.valueOf(startDay);
+
+                        if(monthEndDay+firstPos-1 < startDay+firstPos-1)
+                            break;
+
+                        if (startDay < 10)
+                            tempDay = "0" + String.valueOf(startDay);
+
+                        String key = strDate[0] + "-" + strDate[1] + "-" + tempDay;
+                        calendarView.addDaySelected(startDay + firstPos - 1);
+                        boolpos[startDay + firstPos - 1] = 1;
+                        listItem item = new listItem("[행사] ", title);
+
+                        if (ht.containsKey(key)) {  //키가 있으면 있는 ArrayList에 추가
+                            ArrayList<listItem> al = ht.get(key);
+                            ht.remove(key);
+                            al.add(item);
+                            ht.put(key, al);
+
+                        } else {  //없으면 새로운 ArrayList를 만들어서 추가
+                            ArrayList<listItem> al = new ArrayList<>();
+                            al.add(item);
+                            ht.put(key, al);
+
+                        }
+                        if(subDate > 41 && j == 41)
+                        {
+                            break;
+                        }
+
+                    }
+
+
+                }
+
+
+                else if(Integer.valueOf(strDate[1]) == Integer.valueOf(endDateMonth) && Integer.valueOf(endDateMonth) == nowMonth)
+                {
+                    //시작 달 == 끝나는 달 && 끝나는 달 == 현재달
+                    prevEndDay = monthEndDay;
+
+                    for (int j = 0; j <= subDate; j++) {
+
+
+
+                        int startDay = Integer.valueOf(strDay) + j;
+                        if(monthEndDay+firstPos-1 < startDay+firstPos-1)
+                            break;
+
+                        String tempDay = String.valueOf(startDay);
+
+                        if (startDay < 10)
+                            tempDay = "0" + String.valueOf(startDay);
+
+                        String key = strDate[0] + "-" + strDate[1] + "-" + tempDay;
+                        calendarView.addDaySelected(startDay + firstPos - 1);
+                        boolpos[startDay + firstPos - 1] = 1;
+                        listItem item = new listItem("[행사] ", title);
+
+                        if (ht.containsKey(key)) {  //키가 있으면 있는 ArrayList에 추가
+                            ArrayList<listItem> al = ht.get(key);
+                            ht.remove(key);
+                            al.add(item);
+                            ht.put(key, al);
+
+                        } else {  //없으면 새로운 ArrayList를 만들어서 추가
+                            ArrayList<listItem> al = new ArrayList<>();
+                            al.add(item);
+                            ht.put(key, al);
+
+                        }
+                        if(subDate > 41 && j == 41)
+                        {
+                            break;
+                        }
+
+                    }
+                }
+
+                else {
+
+
+                }
 
                 if(title.length() > 16 ) {
                     title = title.substring(0,16) + "..."; //18자 자르고 ... 붙이기
@@ -458,24 +811,41 @@ public class FourthFragment extends Fragment {
                 JSONObject c = tPosts.getJSONObject(i);
                 String title = c.getString("title");
                 String dueDate = c.getString("dueDate");
-                String[] strDate = dueDate.split("-");
-                String strDay = strDate[2];
-                int startDay = Integer.valueOf(strDay);
-                calendarView.addDaySelected(startDay+firstPos-1);
-                boolpos[startDay+firstPos-1] = 1;
 
-                listItem item = new listItem(strDay, title);
+                String[] endDateStr = dueDate.split("-");
+                String endDateMonth = endDateStr[1];
 
-                if (ht.containsKey(dueDate)) {  //키가 있으면 있는 ArrayList에 추가
-                    ArrayList<listItem> al = ht.get(dueDate);
-                    ht.remove(dueDate);
-                    al.add(item);
-                    ht.put(dueDate, al);
+                Date eDate = new SimpleDateFormat("yyyy-MM-dd").parse(dueDate);
 
-                } else {  //없으면 새로운 ArrayList를 만들어서 추가
-                    ArrayList<listItem> al = new ArrayList<>();
-                    al.add(item);
-                    ht.put(dueDate, al);
+
+                if(Integer.valueOf(endDateMonth) == nowMonth) {
+
+                    //끝나는 달 == 현재 달
+
+                    String[] strDate = dueDate.split("-");
+                    String strDay = strDate[2];
+                    int startDay = Integer.valueOf(strDay);
+                    calendarView.addDaySelected(startDay+firstPos-1);
+                    boolpos[startDay+firstPos-1] = 1;
+
+                    listItem item = new listItem("[할일 마감] ", title);
+
+                    if (ht.containsKey(dueDate)) {  //키가 있으면 있는 ArrayList에 추가
+                        ArrayList<listItem> al = ht.get(dueDate);
+                        ht.remove(dueDate);
+                        al.add(item);
+                        ht.put(dueDate, al);
+
+                    } else {  //없으면 새로운 ArrayList를 만들어서 추가
+                        ArrayList<listItem> al = new ArrayList<>();
+                        al.add(item);
+                        ht.put(dueDate, al);
+
+                    }
+                }
+
+                else {
+
 
                 }
 
@@ -484,7 +854,6 @@ public class FourthFragment extends Fragment {
                 }
 
             }
-
 
         }catch(JSONException e) {
             e.printStackTrace();
