@@ -39,6 +39,8 @@
             android:layout_marginTop="20dp"
             android:id="@+id/nameEdit"
             android:layout_marginLeft="10dp"
+            android:textCursorDrawable="@null"
+            android:textColor="#000000"
             android:hint="이름"/>
 
     </LinearLayout>
@@ -62,6 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
+            android:textCursorDrawable="@null"
+            android:textColor="#000000"
             android:id="@+id/emailEdit"
             android:hint="이메일"/>
 
@@ -90,6 +94,8 @@
             android:layout_marginTop="5dp"
             android:id="@+id/addressEdit"
             android:hint="우측 버튼을 클릭하세요"
+            android:textCursorDrawable="@null"
+            android:textColor="#000000"
             android:focusableInTouchMode="false" />
 
         <Button

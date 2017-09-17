@@ -27,20 +27,23 @@
                 android:checked="true"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="60dp"
-                android:text="일정" />
+                android:text="일정"
+                android:buttonTint="#000000"/>
 
             <RadioButton
                 android:id="@+id/radio1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="60dp"
-                android:text="할일" />
+                android:text="할일"
+                android:buttonTint="#000000"/>
 
             <RadioButton
                 android:id="@+id/radio2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="행사" />
+                android:text="행사"
+                android:buttonTint="#000000"/>
 
         </RadioGroup>
     </LinearLayout>
@@ -65,8 +68,11 @@
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
+            android:textCursorDrawable="@null"
+            android:textColor="#000000"
             android:id="@+id/todoEt"
-            android:hint="내용을 입력해주세요"/>
+            android:hint="내용을 입력해주세요"
+            />
 
     </LinearLayout>
 
@@ -234,6 +240,8 @@
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
+            android:textCursorDrawable="@null"
+            android:textColor="#000000"
             android:id="@+id/departEdit"
             android:focusableInTouchMode="false"
             android:hint="우측 버튼을 클릭하세요"/>
@@ -274,6 +282,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:id="@+id/destEdit"
+            android:textCursorDrawable="@null"
+            android:textColor="#000000"
             android:focusableInTouchMode="false"
             android:hint="우측 버튼을 클릭하세요"/>
 
@@ -306,6 +316,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:paddingLeft="10dp"
+            android:textCursorDrawable="@null"
+            android:textColor="#000000"
             android:background="@drawable/j_border"/>
 
     </LinearLayout>

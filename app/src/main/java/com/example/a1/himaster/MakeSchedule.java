@@ -3,6 +3,8 @@ package com.example.a1.himaster;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,7 +43,9 @@ public class MakeSchedule extends AppCompatActivity {
     Spinner spinner1, spinner2, spinner3, spinner4, spinner5, spinner6, spinner7, spinner8,
             spinner9, spinner10;
     ArrayAdapter<CharSequence> adapter;
-    String url = "http://192.168.0.12:8080/saveschedule";
+    //String url = "http://192.168.0.12:8080/saveschedule";
+    //String url = "http://223.195.30.43:8080/saveschedule";
+    String url = "http://58.236.52.33:8080/saveschedule";
     String str="";
     String fix = "false";
     String iDestination = "";
@@ -79,6 +83,9 @@ public class MakeSchedule extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.makeschedule);
 
+        int color = Color.parseColor("#000000");
+
+
         okBtn = (Button) findViewById(R.id.okBtn);
         repeatChk = (CheckBox) findViewById(R.id.repeatCheck);
         cancelBtn = (Button) findViewById(R.id.cancelBtn);
@@ -99,6 +106,9 @@ public class MakeSchedule extends AppCompatActivity {
         departBtn = (Button) findViewById(R.id.departBtn);
         departEdit = (EditText) findViewById(R.id.departEdit);
         resiChk = (CheckBox) findViewById(R.id.residencechk);
+        todoTitle.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        departEdit.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        destEdit.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
 
         RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup1);
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

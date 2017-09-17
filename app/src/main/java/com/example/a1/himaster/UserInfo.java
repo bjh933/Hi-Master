@@ -2,6 +2,8 @@ package com.example.a1.himaster;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -39,6 +41,10 @@ public class UserInfo extends AppCompatActivity {
         emailEt = (EditText)findViewById(R.id.emailEdit);
         addressEt.setFocusable(false);
         addressEt.setClickable(false);
+        int color = Color.parseColor("#000000");
+        emailEt.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        nameEt.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        addressEt.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
 
         final SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
         final String loginFlag = pref.getString("FLAG", "4");

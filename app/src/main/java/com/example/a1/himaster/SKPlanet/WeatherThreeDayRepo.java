@@ -121,6 +121,7 @@ public class WeatherThreeDayRepo {
     public interface WeatherApiInterface {
         @Headers({"Accept: application/json", "appKey:b42a1814-4abc-36c2-a743-43c5f81cd73d"})
         @GET("weather/forecast/3days")
-        Call<WeatherThreeDayRepo> get_Weather_3day(@Query("version") int version, @Query("lat") String lat, @Query("lon") String lon);
+        Call<WeatherThreeDayRepo> get_Weather_3day(@Query("version") int version,
+                                                   @Query("lat") String lat, @Query("lon") String lon);
     }
 }

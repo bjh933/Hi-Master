@@ -76,8 +76,8 @@ public class SecondFragment extends Fragment {
         SharedPreferences saveInfo = this.getActivity().getSharedPreferences("loginFlag", MODE_PRIVATE);
         final String userId = saveInfo.getString("USERID", "");   //  userId 가져옴
 
-        url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-        //url = "http://223.195.0.185:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        url = "http://192.168.21.129:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
 
         todoList = new ArrayList<HashMap<String, String>>();
 

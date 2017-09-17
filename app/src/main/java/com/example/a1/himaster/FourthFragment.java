@@ -83,8 +83,8 @@ public class FourthFragment extends Fragment {
         eventList = new ArrayList<HashMap<String, String>>();
         todoList = new ArrayList<HashMap<String, String>>();
         ht = new Hashtable<String, ArrayList>();
-        url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-
+        //url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        url = "http://192.168.21.129:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         calendarView = (OneCalendarView)view.findViewById(R.id.oneCalendar);
         addBtn = (Button)view.findViewById(R.id.addBtn);
 
@@ -142,6 +142,8 @@ public class FourthFragment extends Fragment {
             @Override
             public void prevMonth() {
                 mCalendar.add(Calendar.MONTH, -1);
+                listAdapter = new ListItemAdapter();
+                listView.setAdapter(listAdapter);
                 ht = new Hashtable<String, ArrayList>();
                 recalculate();
                 getData(url);
@@ -151,6 +153,8 @@ public class FourthFragment extends Fragment {
             @Override
             public void nextMonth() {
                 mCalendar.add(Calendar.MONTH, 1);
+                listAdapter = new ListItemAdapter();
+                listView.setAdapter(listAdapter);
                 ht = new Hashtable<String, ArrayList>();
                 recalculate();
                 getData(url);
@@ -501,7 +505,8 @@ public class FourthFragment extends Fragment {
 
                 }
 
-                else if(Integer.valueOf(strDate[1]) != Integer.valueOf(endDateMonth) && Integer.valueOf(endDateMonth) > nowMonth )
+                else if(Integer.valueOf(strDate[1]) != Integer.valueOf(endDateMonth) && Integer.valueOf(endDateMonth) > nowMonth
+                        && Integer.valueOf(strDate[1]) == nowMonth)
                 {
                     // 시작 달 != 끝나는 달 && 끝나는 달 > 현재 달 && 시작달 == 현재 달
                     prevEndDay = monthEndDay;
@@ -704,7 +709,8 @@ public class FourthFragment extends Fragment {
 
                 }
 
-                else if(Integer.valueOf(strDate[1]) != Integer.valueOf(endDateMonth) && Integer.valueOf(endDateMonth) > nowMonth )
+                else if(Integer.valueOf(strDate[1]) != Integer.valueOf(endDateMonth) && Integer.valueOf(endDateMonth) > nowMonth
+                        && Integer.valueOf(strDate[1]) == nowMonth)
                 {
                     // 시작 달 != 끝나는 달 && 끝나는 달 > 현재 달 && 시작달 == 현재 달
                     prevEndDay = monthEndDay;
