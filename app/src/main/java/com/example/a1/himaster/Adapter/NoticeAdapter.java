@@ -50,10 +50,15 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     String departure = "";
     String depart_lat = "";
     String depart_lon = "";
-    String subway_name = "";
-    String subway_lat = "";
-    String subway_lon = "";
+    String depart_subway_name = "";
+    String depart_subway_lat = "";
+    String depart_subway_lon = "";
     String destination = "";
+    String destination_lat = "";
+    String destination_lon = "";
+    String dest_subway_name = "";
+    String dest_subway_lat = "";
+    String dest_subway_lon = "";
     String memo = "";
 
     //public static final int REQUEST_CODE = 1101;
@@ -77,27 +82,12 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
      **/
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        HashMap<String, String> noticeItem = scheduleList.get(position);
+        final int pos = holder.getAdapterPosition();
+        HashMap<String, String> noticeItem = scheduleList.get(pos);
         holder.tv_title.setText(noticeItem.get("title")); //제목
         holder.tv_date.setText(noticeItem.get("startDate")); //작성일
         holder.tv_time.setText(noticeItem.get("startTime"));
         holder.tv_dest.setText(noticeItem.get("destination"));
-        final int pos = holder.getAdapterPosition();
-
-        userId = noticeItem.get("userId");
-        title = noticeItem.get("title");
-        date = noticeItem.get("startDate");
-        endDate = noticeItem.get("endDate");
-        startTime = noticeItem.get("startTime");
-        departure = noticeItem.get("departure");
-        depart_lat = noticeItem.get("depart_lat");
-        depart_lon = noticeItem.get("depart_lon");
-        subway_name = noticeItem.get("subway_name");
-        subway_lat = noticeItem.get("subway_lat");
-        subway_lon = noticeItem.get("subway_lon");
-        destination = noticeItem.get("destination");
-        memo = noticeItem.get("memo");
-        Log.d("relog", title+" "+date+" "+endDate+" "+destination);
 
         holder.rewriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,16 +159,50 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
+            final int pos = getAdapterPosition();
+            HashMap<String, String> noticeItem = scheduleList.get(pos);
+            userId = noticeItem.get("userId");
+            title = noticeItem.get("title");
+            date = noticeItem.get("startDate");
+            endDate = noticeItem.get("endDate");
+            startTime = noticeItem.get("startTime");
+            departure = noticeItem.get("departure");
+            depart_lat = noticeItem.get("depart_lat");
+            depart_lon = noticeItem.get("depart_lon");
+            depart_subway_name = noticeItem.get("depart_subway_name");
+            depart_subway_lat = noticeItem.get("depart_subway_lat");
+            depart_subway_lon = noticeItem.get("depart_subway_lon");
+            destination = noticeItem.get("destination");
+            destination_lat = noticeItem.get("destination_lat");
+            destination_lon = noticeItem.get("destination_lon");
+            dest_subway_name = noticeItem.get("dest_subway_name");
+            dest_subway_lat = noticeItem.get("dest_subway_lat");
+            dest_subway_lon = noticeItem.get("dest_subway_lon");
+            memo = noticeItem.get("memo");
 
             Intent intent = new Intent(v.getContext(), DetailSchedule.class);
             dTitle = tv_title.getText().toString();
             dDate = tv_date.getText().toString();
             dTime = tv_time.getText().toString();
             dDest = tv_dest.getText().toString();
+            Log.d("dee", departure);
             intent.putExtra("DTITLE", dTitle);
             intent.putExtra("DDATE", dDate);
             intent.putExtra("DTIME", dTime);
             intent.putExtra("DDEST", dDest);
+
+            intent.putExtra("DEPARTURE", departure);
+            intent.putExtra("DEPART_LAT", depart_lat);
+            intent.putExtra("DEPART_LON", depart_lon);
+            intent.putExtra("DEPART_SUBWAY_NAME", depart_subway_name);
+            intent.putExtra("DEPART_SUBWAY_LAT", depart_subway_lat);
+            intent.putExtra("DEPART_SUBWAY_LON", depart_subway_lon);
+            intent.putExtra("DESTINATION", destination);
+            intent.putExtra("DESTINATION_LAT", destination_lat);
+            intent.putExtra("DESTINATION_LON", destination_lon);
+            intent.putExtra("DEST_SUBWAY_NAME", dest_subway_name);
+            intent.putExtra("DEST_SUBWAY_LAT", dest_subway_lat);
+            intent.putExtra("DEST_SUBWAY_LON", dest_subway_lon);
             v.getContext().startActivity(intent);
             mActivity.overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
         }

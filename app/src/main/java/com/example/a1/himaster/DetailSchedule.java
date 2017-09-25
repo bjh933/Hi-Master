@@ -63,6 +63,7 @@ public class DetailSchedule extends AppCompatActivity {
     String finalDestLat = "37.5505411";
     String finalDestLon = "127.07384612";
 
+    String departure = "";
     String departLat = "37.643974";
     String departLon = "127.0357636";  //  강원학사
     String destLat = "37.55054112";
@@ -136,14 +137,54 @@ public class DetailSchedule extends AppCompatActivity {
         trptImg = (ImageView)findViewById(R.id.transportImg);
         trptSpin = (Spinner)findViewById(R.id.transportSpinner);
 
-        departureSt = processSubwaySt(departureSt);
-        destinationSt = processSubwaySt(destinationSt);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv1 = (RecyclerView)findViewById(R.id.busRouteRv);
         rv1.setHasFixedSize(true);
         rv1.setLayoutManager(mLinearLayoutManager);
+
+        dTitleTv = (TextView)findViewById(R.id.dtitle);
+        dDateTv = (TextView)findViewById(R.id.ddate);
+        dTimeTv = (TextView)findViewById(R.id.dtime);
+        dDepartTv = (TextView)findViewById(R.id.depart);
+        dArriveTv = (TextView)findViewById(R.id.arrive);
+
+
+        Intent data = getIntent();
+        dTitle = data.getExtras().getString("DTITLE");
+        dDate = data.getExtras().getString("DDATE");
+        dTime = data.getExtras().getString("DTIME");
+        dDest = data.getExtras().getString("DDEST");
+        String[] dateArr = dDate.split(" ");
+        firstDepartureLat = data.getExtras().getString("DEPART_LAT");
+        firstDepartureLon = data.getExtras().getString("DEPART_LON");
+        departure = data.getExtras().getString("DEPARTURE");
+        departLat = data.getExtras().getString("DEPART_LAT");
+        departLon = data.getExtras().getString("DEPART_LON");
+        departureSt = data.getExtras().getString("DEPART_SUBWAY_NAME");
+        departSubLat = data.getExtras().getString("DEPART_SUBWAY_LAT");
+        departSubLon = data.getExtras().getString("DEPART_SUBWAY_LON");
+
+        finalDestLat = data.getExtras().getString("DESTINATION_LAT");
+        finalDestLon = data.getExtras().getString("DESTINATION_LON");
+
+        destLat = data.getExtras().getString("DESTINATION_LAT");
+        destLon = data.getExtras().getString("DESTINATION_LON");
+        destinationSt = data.getExtras().getString("DEST_SUBWAY_NAME");
+        destSubLat = data.getExtras().getString("DEST_SUBWAY_LAT");
+        destSubLon = data.getExtras().getString("DEST_SUBWAY_LON");
+
+        dTitleTv.setText(dTitle);
+        dDateTv.setText(dateArr[0]);
+        dTimeTv.setText(dTime);
+        dDepartTv.setText(departure);
+        dArriveTv.setText(dDest);
+
+
+        departureSt = processSubwaySt(departureSt);
+        destinationSt = processSubwaySt(destinationSt);
+
 
         trptSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -201,24 +242,7 @@ public class DetailSchedule extends AppCompatActivity {
             }
         });
 
-        dTitleTv = (TextView)findViewById(R.id.dtitle);
-        dDateTv = (TextView)findViewById(R.id.ddate);
-        dTimeTv = (TextView)findViewById(R.id.dtime);
-        dDepartTv = (TextView)findViewById(R.id.depart);
-        dArriveTv = (TextView)findViewById(R.id.arrive);
 
-
-        Intent data = getIntent();
-        dTitle = data.getExtras().getString("DTITLE");
-        dDate = data.getExtras().getString("DDATE");
-        dTime = data.getExtras().getString("DTIME");
-        dDest = data.getExtras().getString("DDEST");
-        String[] dateArr = dDate.split(" ");
-
-        dTitleTv.setText(dTitle);
-        dDateTv.setText(dateArr[0]);
-        dTimeTv.setText(dTime);
-        dArriveTv.setText(dDest);
 
         Handler handler = new Handler(){
             public void handleMessage(Message msg)
