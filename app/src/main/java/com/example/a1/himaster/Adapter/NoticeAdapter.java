@@ -14,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a1.himaster.DetailSchedule;
+import com.example.a1.himaster.MakeSchedule;
 import com.example.a1.himaster.R;
+import com.example.a1.himaster.RewriteSchedule;
 
 import org.json.JSONObject;
 
@@ -36,13 +38,23 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     Activity mActivity;
     ArrayList<HashMap<String, String>> scheduleList; //일정 정보 담겨있음
     String dTitle, dDate, dDest, dTime;
-    ImageView delBtn, rewriteBtn;
+    //ImageView delBtn, rewriteBtn;
     String urlDel = "http://192.168.0.12:8080/deleteschedule";
-    String urlPost = "http://192.168.0.12:8080/postschedule";
+
 
     String userId = "";
     String title = "";
     String date = "";
+    String endDate = "";
+    String startTime = "";
+    String departure = "";
+    String depart_lat = "";
+    String depart_lon = "";
+    String subway_name = "";
+    String subway_lat = "";
+    String subway_lon = "";
+    String destination = "";
+    String memo = "";
 
     //public static final int REQUEST_CODE = 1101;
     public NoticeAdapter(Context context, ArrayList<HashMap<String, String>> scheduleList, Activity mActivity) {
@@ -70,15 +82,57 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         holder.tv_date.setText(noticeItem.get("startDate")); //작성일
         holder.tv_time.setText(noticeItem.get("startTime"));
         holder.tv_dest.setText(noticeItem.get("destination"));
+        final int pos = holder.getAdapterPosition();
 
         userId = noticeItem.get("userId");
         title = noticeItem.get("title");
         date = noticeItem.get("startDate");
+        endDate = noticeItem.get("endDate");
+        startTime = noticeItem.get("startTime");
+        departure = noticeItem.get("departure");
+        depart_lat = noticeItem.get("depart_lat");
+        depart_lon = noticeItem.get("depart_lon");
+        subway_name = noticeItem.get("subway_name");
+        subway_lat = noticeItem.get("subway_lat");
+        subway_lon = noticeItem.get("subway_lon");
+        destination = noticeItem.get("destination");
+        memo = noticeItem.get("memo");
+        Log.d("relog", title+" "+date+" "+endDate+" "+destination);
+
+        holder.rewriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String, String> noticeItem = scheduleList.get(pos);
+                Intent intent = new Intent(v.getContext(), RewriteSchedule.class);
+                intent.putExtra("USERID", noticeItem.get("userId"));
+                intent.putExtra("TITLE", noticeItem.get("title"));
+                intent.putExtra("DATE", noticeItem.get("startDate"));
+                intent.putExtra("ENDDATE", noticeItem.get("endDate"));
+                intent.putExtra("STARTTIME", noticeItem.get("startTime"));
+                intent.putExtra("DEPARTURE", noticeItem.get("departure"));
+                intent.putExtra("DEPART_LAT", noticeItem.get("depart_lat"));
+                intent.putExtra("DEPART_LON", noticeItem.get("depart_lon"));
+                intent.putExtra("DEPART_SUBWAY_NAME", noticeItem.get("depart_subway_name"));
+                intent.putExtra("DEPART_SUBWAY_LAT", noticeItem.get("depart_subway_lat"));
+                intent.putExtra("DEPART_SUBWAY_LON", noticeItem.get("depart_subway_lon"));
+                intent.putExtra("DESTINATION", noticeItem.get("destination"));
+                intent.putExtra("DESTINATION_LAT", noticeItem.get("destination_lat"));
+                intent.putExtra("DESTINATION_LON", noticeItem.get("destination_lon"));
+                intent.putExtra("DEST_SUBWAY_NAME", noticeItem.get("dest_subway_name"));
+                intent.putExtra("DEST_SUBWAY_LAT", noticeItem.get("dest_subway_lat"));
+                intent.putExtra("DEST_SUBWAY_LON", noticeItem.get("dest_subway_lon"));
+                intent.putExtra("MEMO", noticeItem.get("memo"));
+
+                Log.d("relog2", noticeItem.get("title")+" "+noticeItem.get("startDate")+" "+noticeItem.get("endDate")+" "+noticeItem.get("destination"));
+                v.getContext().startActivity(intent);
+                mActivity.overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+            }
+        });
 
         holder.delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.d("del","clicked");
             }
         });
 
@@ -129,61 +183,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
             mActivity.overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
         }
 
-
-    }
-
-    class PostDataJSON extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            //JSON 받아온다.
-            String uri = params[0];
-            String str = params[1];
-            Log.d("url", uri);
-
-            BufferedWriter bw = null;
-            try {
-                JSONObject jsonO = null;
-                jsonO = new JSONObject(str);
-                URL url = new URL(uri);
-
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setDoInput(true);
-                con.setDoOutput(true);  // Enable writing
-                con.setRequestMethod("POST");
-                con.setRequestProperty("Content-type", "application/json");
-                con.setConnectTimeout(5000);
-                Log.d("sendContents", str);
-                byte[] outputInBytes = params[1].getBytes("UTF-8");
-                OutputStream os = con.getOutputStream();
-                os.write( outputInBytes );
-                os.flush();
-                os.close();
-
-                //--------------------------
-                //   서버에서 전송받기
-                //--------------------------
-                InputStreamReader tmp = new InputStreamReader(con.getInputStream(), "UTF-8");
-                BufferedReader reader = new BufferedReader(tmp);
-                StringBuilder builder = new StringBuilder();
-                String str1;
-                while ((str1 = reader.readLine()) != null) {       // 서버에서 라인단위로 보내줄 것이므로 라인단위로 읽는다
-                    builder.append(str1 + "\n");                     // View에 표시하기 위해 라인 구분자 추가
-                }
-                String result = builder.toString();                       // 전송결과를 전역 변수에 저장
-                Log.d("receiveString", result);
-
-                Log.d("sendResult", "success");
-                return null;
-            } catch (Exception e) {
-                Log.d("sendResult", "fail");
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String myJSON) {
-            //Log.d("my", myJSON);
-        }
 
     }
 

@@ -41,7 +41,7 @@ public class IntroActivity extends Activity {
                     Intent intent = new Intent(IntroActivity.this,
                             BottombarActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                     finish();
                 }
             }, 2000);
@@ -55,7 +55,7 @@ public class IntroActivity extends Activity {
                     Intent intent = new Intent(IntroActivity.this,
                             MainActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                     finish();
                 }
             }, 2000);

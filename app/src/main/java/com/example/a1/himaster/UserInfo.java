@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a1.himaster.PopUp.Popup_emailchk;
@@ -22,7 +23,8 @@ import java.util.regex.Pattern;
 public class UserInfo extends AppCompatActivity {
     public static final int REQUEST_CODE = 1003;
     ArrayAdapter<CharSequence> adapter;
-    EditText addressEt, nameEt, emailEt;
+    EditText addressEt;
+    TextView nameEt, emailEt;
     Button okBtn, myAddressBtn;
     String residence_lat = "";
     String residence_lon = "";
@@ -37,13 +39,11 @@ public class UserInfo extends AppCompatActivity {
         okBtn = (Button)findViewById(R.id.okButton);
         myAddressBtn = (Button)findViewById(R.id.myaddress);
         addressEt = (EditText)findViewById(R.id.addressEdit);
-        nameEt = (EditText)findViewById(R.id.nameEdit);
-        emailEt = (EditText)findViewById(R.id.emailEdit);
+        nameEt = (TextView)findViewById(R.id.nameEdit);
+        emailEt = (TextView)findViewById(R.id.emailEdit);
         addressEt.setFocusable(false);
         addressEt.setClickable(false);
         int color = Color.parseColor("#000000");
-        emailEt.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-        nameEt.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         addressEt.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
 
         final SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
@@ -70,8 +70,6 @@ public class UserInfo extends AppCompatActivity {
             addressEt.setText(residence);
             nameEt.setText(name);
             emailEt.setText(email);
-            emailEt.setFocusable(false);
-            emailEt.setClickable(false);
         }
         else if(loginFlag.equals("3"))
         {
@@ -81,17 +79,10 @@ public class UserInfo extends AppCompatActivity {
             String residence = guestInfo.getString("RESIDENCE", "");
             addressEt.setText(residence);
             nameEt.setText(name);
-            nameEt.setFocusable(false);
-            nameEt.setClickable(false);
             emailEt.setText(email);
         }
         else
         {
-            nameEt.setFocusable(true);
-            nameEt.setClickable(true);
-            emailEt.setFocusable(true);
-            emailEt.setClickable(true);
-
             SharedPreferences guestInfo = getSharedPreferences("common_login", MODE_PRIVATE);
             String name = guestInfo.getString("CNAME", "");
             email = guestInfo.getString("CEMAIL", "");
@@ -119,57 +110,57 @@ public class UserInfo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-            if(loginFlag.equals("1")){
-                SharedPreferences pref = getSharedPreferences("fb_login", MODE_PRIVATE);
-                SharedPreferences.Editor edit = pref.edit();
-                edit.putString("RESIDENCE", addressEt.getText().toString());
-                edit.putString("RESIDENCE_LAT", residence_lat);
-                edit.putString("RESIDENCE_LON", residence_lon);
-                edit.putString("DEPART_SUBWAY_NAME", departSubwayName);
-                edit.putString("DEPART_SUBWAY_LAT", departSubwayLat);
-                edit.putString("DEPART_SUBWAY_LON", departSubwayLon);
-                edit.commit();
-            }
+                if(loginFlag.equals("1")){
+                    SharedPreferences pref = getSharedPreferences("fb_login", MODE_PRIVATE);
+                    SharedPreferences.Editor edit = pref.edit();
+                    edit.putString("RESIDENCE", addressEt.getText().toString());
+                    edit.putString("RESIDENCE_LAT", residence_lat);
+                    edit.putString("RESIDENCE_LON", residence_lon);
+                    edit.putString("DEPART_SUBWAY_NAME", departSubwayName);
+                    edit.putString("DEPART_SUBWAY_LAT", departSubwayLat);
+                    edit.putString("DEPART_SUBWAY_LON", departSubwayLon);
+                    edit.commit();
+                }
 
-            else if(loginFlag.equals("2")){
-                SharedPreferences pref = getSharedPreferences("gg_login", MODE_PRIVATE);
-                SharedPreferences.Editor edit = pref.edit();
-                edit.putString("GNAME", nameEt.getText().toString());
-                edit.putString("RESIDENCE", addressEt.getText().toString());
-                edit.putString("RESIDENCE_LAT", residence_lat);
-                edit.putString("RESIDENCE_LON", residence_lon);
-                edit.putString("DEPART_SUBWAY_NAME", departSubwayName);
-                edit.putString("DEPART_SUBWAY_LAT", departSubwayLat);
-                edit.putString("DEPART_SUBWAY_LON", departSubwayLon);
-                edit.commit();
-            }
+                else if(loginFlag.equals("2")){
+                    SharedPreferences pref = getSharedPreferences("gg_login", MODE_PRIVATE);
+                    SharedPreferences.Editor edit = pref.edit();
+                    edit.putString("GNAME", nameEt.getText().toString());
+                    edit.putString("RESIDENCE", addressEt.getText().toString());
+                    edit.putString("RESIDENCE_LAT", residence_lat);
+                    edit.putString("RESIDENCE_LON", residence_lon);
+                    edit.putString("DEPART_SUBWAY_NAME", departSubwayName);
+                    edit.putString("DEPART_SUBWAY_LAT", departSubwayLat);
+                    edit.putString("DEPART_SUBWAY_LON", departSubwayLon);
+                    edit.commit();
+                }
 
-            else if(loginFlag.equals("3")){
-                SharedPreferences pref = getSharedPreferences("ka_login", MODE_PRIVATE);
-                SharedPreferences.Editor edit = pref.edit();
-                edit.putString("KEMAIL", emailEt.getText().toString());
-                edit.putString("RESIDENCE", addressEt.getText().toString());
-                edit.putString("RESIDENCE_LAT", residence_lat);
-                edit.putString("RESIDENCE_LON", residence_lon);
-                edit.putString("DEPART_SUBWAY_NAME", departSubwayName);
-                edit.putString("DEPART_SUBWAY_LAT", departSubwayLat);
-                edit.putString("DEPART_SUBWAY_LON", departSubwayLon);
-                edit.commit();
-            }
+                else if(loginFlag.equals("3")){
+                    SharedPreferences pref = getSharedPreferences("ka_login", MODE_PRIVATE);
+                    SharedPreferences.Editor edit = pref.edit();
+                    edit.putString("KEMAIL", emailEt.getText().toString());
+                    edit.putString("RESIDENCE", addressEt.getText().toString());
+                    edit.putString("RESIDENCE_LAT", residence_lat);
+                    edit.putString("RESIDENCE_LON", residence_lon);
+                    edit.putString("DEPART_SUBWAY_NAME", departSubwayName);
+                    edit.putString("DEPART_SUBWAY_LAT", departSubwayLat);
+                    edit.putString("DEPART_SUBWAY_LON", departSubwayLon);
+                    edit.commit();
+                }
 
-            else if(loginFlag.equals("4")) {
-                SharedPreferences pref = getSharedPreferences("common_login", MODE_PRIVATE);
-                SharedPreferences.Editor edit = pref.edit();
-                edit.putString("CNAME", nameEt.getText().toString());
-                edit.putString("CEMAIL", emailEt.getText().toString());
-                edit.putString("RESIDENCE", addressEt.getText().toString());
-                edit.putString("RESIDENCE_LAT", residence_lat);
-                edit.putString("RESIDENCE_LON", residence_lon);
-                edit.putString("DEPART_SUBWAY_NAME", departSubwayName);
-                edit.putString("DEPART_SUBWAY_LAT", departSubwayLat);
-                edit.putString("DEPART_SUBWAY_LON", departSubwayLon);
-                edit.commit();
-            }
+                else if(loginFlag.equals("4")) {
+                    SharedPreferences pref = getSharedPreferences("common_login", MODE_PRIVATE);
+                    SharedPreferences.Editor edit = pref.edit();
+                    edit.putString("CNAME", nameEt.getText().toString());
+                    edit.putString("CEMAIL", emailEt.getText().toString());
+                    edit.putString("RESIDENCE", addressEt.getText().toString());
+                    edit.putString("RESIDENCE_LAT", residence_lat);
+                    edit.putString("RESIDENCE_LON", residence_lon);
+                    edit.putString("DEPART_SUBWAY_NAME", departSubwayName);
+                    edit.putString("DEPART_SUBWAY_LAT", departSubwayLat);
+                    edit.putString("DEPART_SUBWAY_LON", departSubwayLon);
+                    edit.commit();
+                }
                 if(emailEt.length() == 0 || checkEmail(emailEt.getText().toString()) != true)
                 {
                     Intent intent = new Intent(UserInfo.this, Popup_emailchk.class);

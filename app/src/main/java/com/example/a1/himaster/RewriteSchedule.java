@@ -6,8 +6,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -24,7 +24,6 @@ import android.widget.Toast;
 import com.example.a1.himaster.PopUp.Popup_titlechk;
 import com.example.a1.himaster.SKPlanet.Tmap.MapActivity;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +37,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MakeSchedule extends AppCompatActivity {
+public class RewriteSchedule extends AppCompatActivity {
 
     Spinner spinner1, spinner2, spinner3, spinner4, spinner5, spinner6, spinner7, spinner8,
             spinner9, spinner10;
@@ -46,6 +45,8 @@ public class MakeSchedule extends AppCompatActivity {
     String url = "http://192.168.0.12:8080/saveschedule";
     //String url = "http://223.195.28.195:8080/saveschedule";
     //String url = "http://192.168.21.127:8080/saveschedule";
+    String urlPost = "http://192.168.0.12:8080/postschedule";
+
     String str="";
     String fix = "false";
     String iDestination = "";
@@ -84,7 +85,6 @@ public class MakeSchedule extends AppCompatActivity {
         setContentView(R.layout.makeschedule);
 
         int color = Color.parseColor("#000000");
-
 
         okBtn = (Button) findViewById(R.id.okBtn);
         repeatChk = (CheckBox) findViewById(R.id.repeatCheck);
@@ -196,8 +196,74 @@ public class MakeSchedule extends AppCompatActivity {
         final String userId = saveInfo.getString("USERID", "");   //  userId 가져옴
         Log.d("uid", userId);
 
-        Intent data = getIntent();
-        pos1 = data.getExtras().getInt("calYear");
+        Intent reData = getIntent();
+
+        //String userId = reData.getExtras().getString("USERID");
+        String title = reData.getExtras().getString("TITLE");
+        String startDate = reData.getExtras().getString("DATE");
+        String endDate = reData.getExtras().getString("ENDDATE");
+        String startTime = reData.getExtras().getString("STARTTIME");
+        String departure = reData.getExtras().getString("DEPARTURE");
+        String depart_lat = reData.getExtras().getString("DEPART_LAT");
+        String depart_lon = reData.getExtras().getString("DEPART_LON");
+        String subway_name = reData.getExtras().getString("SUBWAY_NAME");
+        String subway_lat = reData.getExtras().getString("SUBWAY_LAT");
+        String subway_lon = reData.getExtras().getString("SUBWAY_LON");
+        String destination = reData.getExtras().getString("DESTINATION");
+        String memo = reData.getExtras().getString("MEMO");
+
+        iDeparture = reData.getExtras().getString("DEPARTURE");
+        iDepartLat = reData.getExtras().getString("DEPART_LAT");
+        iDepartLon = reData.getExtras().getString("DEPART_LON");
+        departSubwayName = reData.getExtras().getString("DEPART_SUBWAY_NAME");
+        departSubwayLat = reData.getExtras().getString("DEPART_SUBWAY_LAT");
+        departSubwayLon = reData.getExtras().getString("DEPART_SUBWAY_LON");
+
+        iDestination = reData.getExtras().getString("DESTINATION");
+        iDestinationLat = reData.getExtras().getString("DESTINATION_LAT");
+        iDestinationLon = reData.getExtras().getString("DESTINATION_LON");
+        destSubwayName = reData.getExtras().getString("DEST_SUBWAY_NAME");
+        destSubwayLat = reData.getExtras().getString("DEST_SUBWAY_LAT");
+        destSubwayLon = reData.getExtras().getString("DEST_SUBWAY_LON");
+
+        todoTitle.setText(title);
+        departEdit.setText(iDeparture);
+        destEdit.setText(iDestination);
+        scheMemo.setText(memo);
+
+        ////
+
+        String[] sTime = startTime.split(":");
+        int startHour = Integer.valueOf(sTime[0]);
+        int startMinute = Integer.valueOf(sTime[1]);
+
+        if(startHour > 12)
+        {
+            spinner1.setSelection(1);
+            startHour -= 12;
+            spinner2.setSelection(startHour-1);
+        }
+
+        else if(startHour <= 12)
+        {
+            spinner1.setSelection(0);
+            spinner2.setSelection(startHour-1);
+        }
+
+        for(int i=0;i<12;i++) {
+            if (startMinute == i * 5)
+            {
+                spinner3.setSelection(i);
+                break;
+            }
+
+
+        }
+
+        ////받아온 시간 설정
+
+        String[] syDate = startDate.split("년 ");
+        pos1 = Integer.valueOf(syDate[0]);
         if (pos1 == 2017)
             pos = 0;
         else if (pos1 == 2018)
@@ -205,16 +271,38 @@ public class MakeSchedule extends AppCompatActivity {
         else
             pos = 2;
 
-        pos2 = data.getExtras().getInt("calMonth");
-        pos3 = data.getExtras().getInt("calDay");
-
         spinner5.setSelection(pos);
-        spinner6.setSelection(pos2);
-        spinner7.setSelection(pos3 - 1);
+
+        String[] smDate = syDate[1].split("월 ");
+        pos2 = Integer.valueOf(smDate[0]);
+        spinner6.setSelection(pos2-1);
+
+        String[] sdDate = smDate[1].split("일");
+        pos3 = Integer.valueOf(sdDate[0]);
+        spinner7.setSelection(pos3-1);
+        //// 받아온 시작 날짜 설정
+
+        String[] eyDate = endDate.split("년 ");
+        pos1 = Integer.valueOf(eyDate[0]);
+        if (pos1 == 2017)
+            pos = 0;
+        else if (pos1 == 2018)
+            pos = 1;
+        else
+            pos = 2;
 
         spinner8.setSelection(pos);
-        spinner9.setSelection(pos2);
-        spinner10.setSelection(pos3 - 1);
+
+        String[] emDate = eyDate[1].split("월 ");
+        pos2 = Integer.valueOf(emDate[0]);
+        spinner9.setSelection(pos2-1);
+
+        String[] edDate = emDate[1].split("일");
+        pos3 = Integer.valueOf(edDate[0]);
+        spinner10.setSelection(pos3-1);
+
+        //// 받아온 종료 날짜 설정
+
 
         //날짜 생성일 구하기
         long now = System.currentTimeMillis();
@@ -223,7 +311,7 @@ public class MakeSchedule extends AppCompatActivity {
         final String getTime = sdf.format(date);
         Log.d("today", getTime);
         //
-        final Intent intent = new Intent(MakeSchedule.this, BottombarActivity.class);
+        final Intent intent = new Intent(RewriteSchedule.this, BottombarActivity.class);
 
         final SharedPreferences resiInfo = getSharedPreferences("loginFlag", MODE_PRIVATE);
 
@@ -259,7 +347,7 @@ public class MakeSchedule extends AppCompatActivity {
         departBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MakeSchedule.this, MapActivity.class);
+                Intent intent = new Intent(RewriteSchedule.this, MapActivity.class);
                 intent.putExtra("MAPFLAG", 1);
                 startActivityForResult(intent, REQUEST_CODE1);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
@@ -270,7 +358,7 @@ public class MakeSchedule extends AppCompatActivity {
         destBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MakeSchedule.this, MapActivity.class);
+                Intent intent = new Intent(RewriteSchedule.this, MapActivity.class);
                 intent.putExtra("MAPFLAG", 2);
                 startActivityForResult(intent, REQUEST_CODE2);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
@@ -294,7 +382,7 @@ public class MakeSchedule extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (todoTitle.getText().toString().equals("")) {
-                    Intent intent = new Intent(MakeSchedule.this, Popup_titlechk.class);
+                    Intent intent = new Intent(RewriteSchedule.this, Popup_titlechk.class);
                     startActivity(intent);
                     Log.d("titlechk", "wrong format");
                 }
@@ -346,6 +434,7 @@ public class MakeSchedule extends AppCompatActivity {
                     if (ampm.equals("오후")) {
                         int sHour = Integer.parseInt(startHour);
                         sHour = sHour + 12;
+
                         startHour = String.valueOf(sHour);
                     }
 
@@ -418,7 +507,7 @@ public class MakeSchedule extends AppCompatActivity {
                     }
 
                     if (doTitle.length() != 0) {
-                        PutDataJSON g = new PutDataJSON();
+                        PostDataJSON g = new PostDataJSON();
                         g.execute(url, str);
                         setResult(RESULT_OK, intent);
                         overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
@@ -462,70 +551,71 @@ public class MakeSchedule extends AppCompatActivity {
             destEdit.setText(iDestination);
 
             } else {
-                Toast.makeText(MakeSchedule.this, "REQUEST_CODE가 아님", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RewriteSchedule.this, "REQUEST_CODE가 아님", Toast.LENGTH_SHORT).show();
             }
         }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }
 
 
-    class PutDataJSON extends AsyncTask<String, Void, String> {
-            @Override
-            protected String doInBackground(String... params) {
-                //JSON 받아온다.
-                String uri = params[0];
-                String str = params[1];
-                Log.d("url", uri);
+    class PostDataJSON extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            //JSON 받아온다.
+            String uri = params[0];
+            String str = params[1];
+            Log.d("url", uri);
 
-                BufferedWriter bw = null;
-                try {
-                    JSONObject jsonO = null;
-                    jsonO = new JSONObject(str);
-                    URL url = new URL(uri);
+            BufferedWriter bw = null;
+            try {
+                JSONObject jsonO = null;
+                jsonO = new JSONObject(str);
+                URL url = new URL(uri);
 
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    con.setDoInput(true);
-                    con.setDoOutput(true);
-                    con.setRequestMethod("PUT");
-                    con.setRequestProperty("Content-type", "application/json");
-                    con.setConnectTimeout(5000);
-                    Log.d("sendContents", str);
-                    byte[] outputInBytes = params[1].getBytes("UTF-8");
-                    OutputStream os = con.getOutputStream();
-                    os.write( outputInBytes );
-                    os.flush();
-                    os.close();
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setDoInput(true);
+                con.setDoOutput(true);  // Enable writing
+                con.setRequestMethod("POST");
+                con.setRequestProperty("Content-type", "application/json");
+                con.setConnectTimeout(5000);
+                Log.d("sendContents", str);
+                byte[] outputInBytes = params[1].getBytes("UTF-8");
+                OutputStream os = con.getOutputStream();
+                os.write( outputInBytes );
+                os.flush();
+                os.close();
 
-                    //--------------------------
-                    //   서버에서 전송받기
-                    //--------------------------
-                    InputStreamReader tmp = new InputStreamReader(con.getInputStream(), "UTF-8");
-                    BufferedReader reader = new BufferedReader(tmp);
-                    StringBuilder builder = new StringBuilder();
-                    String str1;
-                    while ((str1 = reader.readLine()) != null) {       // 서버에서 라인단위로 보내줄 것이므로 라인단위로 읽는다
-                        builder.append(str1 + "\n");                     // View에 표시하기 위해 라인 구분자 추가
-                    }
-                    String result = builder.toString();                       // 전송결과를 전역 변수에 저장
-                    Log.d("receiveString", result);
-
-                    Log.d("sendResult", "success");
-                    return null;
-                } catch (Exception e) {
-                    Log.d("sendResult", "fail");
-                    return null;
+                //--------------------------
+                //   서버에서 전송받기
+                //--------------------------
+                InputStreamReader tmp = new InputStreamReader(con.getInputStream(), "UTF-8");
+                BufferedReader reader = new BufferedReader(tmp);
+                StringBuilder builder = new StringBuilder();
+                String str1;
+                while ((str1 = reader.readLine()) != null) {       // 서버에서 라인단위로 보내줄 것이므로 라인단위로 읽는다
+                    builder.append(str1 + "\n");                     // View에 표시하기 위해 라인 구분자 추가
                 }
-            }
+                String result = builder.toString();                       // 전송결과를 전역 변수에 저장
+                Log.d("receiveString", result);
 
-            @Override
-            protected void onPostExecute(String myJSON) {
-                //Log.d("my", myJSON);
+                Log.d("sendResult", "success");
+                return null;
+            } catch (Exception e) {
+                Log.d("sendResult", "fail");
+                return null;
             }
-
         }
+
+        @Override
+        protected void onPostExecute(String myJSON) {
+            //Log.d("my", myJSON);
+        }
+
+    }
+
 
 }

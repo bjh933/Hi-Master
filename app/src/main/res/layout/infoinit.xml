@@ -92,6 +92,7 @@
             android:hint="상세 주소"/>
 
         <Button
+            android:id="@+id/myaddress"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"

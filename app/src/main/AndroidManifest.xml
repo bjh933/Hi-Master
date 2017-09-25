@@ -54,6 +54,7 @@
         <activity android:name=".DetailSchedule"/>
         <activity android:name=".DesignTest"/>
         <activity android:name=".MakeSchedule"/>
+        <activity android:name=".RewriteSchedule"/>
         <activity android:name=".AppConfig"/>
         <activity android:name=".HelpMenu"/>
         <activity android:name=".UserInfo"/>

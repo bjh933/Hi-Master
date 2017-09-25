@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String STATE_RESOLVING_ERROR = "resolving_error";
 
-   // private SignInButton signInButton;
+    // private SignInButton signInButton;
     //private TextView printData;
 
     @Override
@@ -100,40 +100,41 @@ public class MainActivity extends AppCompatActivity {
                             public void onSuccess(LoginResult loginResult) {
                                 Log.e("onSuccess", "onSuccess");
                                 GraphRequest request = GraphRequest.newMeRequest(
-                                loginResult.getAccessToken(),
-                                new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(
-                                            JSONObject object,
-                                            GraphResponse response) {
-                                        // Application code
-                                        try{
-                                            String email = object.getString("email");
-                                            String name = object.getString("name");
-                                            String gender = object.getString("gender");
+                                        loginResult.getAccessToken(),
+                                        new GraphRequest.GraphJSONObjectCallback() {
+                                            @Override
+                                            public void onCompleted(
+                                                    JSONObject object,
+                                                    GraphResponse response) {
+                                                // Application code
+                                                try{
+                                                    String email = object.getString("email");
+                                                    String name = object.getString("name");
+                                                    String gender = object.getString("gender");
 
-                                            SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
-                                            SharedPreferences.Editor edit = pref.edit();
-                                            edit.putString("FLAG", "1");
-                                            edit.commit();
+                                                    SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
+                                                    SharedPreferences.Editor edit = pref.edit();
+                                                    edit.putString("FLAG", "1");
+                                                    edit.putString("USERID", email);
+                                                    edit.commit();
 
-                                            SharedPreferences fb_login = getSharedPreferences("fb_login", MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = fb_login.edit();
-                                            editor.putString("EMAIL", email);
-                                            editor.putString("NAME", name);
-                                            editor.putString("GENDER", gender);
-                                            editor.commit();
+                                                    SharedPreferences fb_login = getSharedPreferences("fb_login", MODE_PRIVATE);
+                                                    SharedPreferences.Editor editor = fb_login.edit();
+                                                    editor.putString("EMAIL", email);
+                                                    editor.putString("NAME", name);
+                                                    editor.putString("GENDER", gender);
+                                                    editor.commit();
 
-                                            Intent intent = new Intent(MainActivity.this, BottombarActivity.class);
-                                            startActivity(intent);
-                                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-                                            finish();
-                                        }
-                                        catch(Exception e){
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
+                                                    Intent intent = new Intent(MainActivity.this, BottombarActivity.class);
+                                                    startActivity(intent);
+                                                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                                                    finish();
+                                                }
+                                                catch(Exception e){
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
                                 Bundle parameters = new Bundle();
                                 parameters.putString("fields", "id,name,email,gender, birthday");
                                 request.setParameters(parameters);
@@ -212,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
             handleSignInResult(result);
         }
         else    //  페이스북 콜백
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+            callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
@@ -229,11 +230,13 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences pref = getSharedPreferences("loginFlag", MODE_PRIVATE);
             SharedPreferences.Editor edit = pref.edit();
             edit.putString("FLAG", "2");
+            edit.putString("USERID", gemail);
             edit.commit();
 
             SharedPreferences gg_login = getSharedPreferences("gg_login", MODE_PRIVATE);
             SharedPreferences.Editor editor = gg_login.edit();
             editor.putString("GMAIL", gemail);
+
             //editor.putString("NAME", gname);
             editor.commit();
 
