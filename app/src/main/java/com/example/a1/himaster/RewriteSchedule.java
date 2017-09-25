@@ -76,7 +76,6 @@ public class RewriteSchedule extends AppCompatActivity {
     int pos1, pos2, pos3, pos, flag;
     JSONArray posts = null;
     TextView dText;
-    CheckBox repeatChk;
     int chkFlag = 0;
 
     @Override
@@ -87,7 +86,6 @@ public class RewriteSchedule extends AppCompatActivity {
         int color = Color.parseColor("#000000");
 
         okBtn = (Button) findViewById(R.id.okBtn);
-        repeatChk = (CheckBox) findViewById(R.id.repeatCheck);
         cancelBtn = (Button) findViewById(R.id.cancelBtn);
         todoTitle = (EditText) findViewById(R.id.todoEt);
         iljung = (RadioButton) findViewById(R.id.radio0);
@@ -98,7 +96,6 @@ public class RewriteSchedule extends AppCompatActivity {
         siganLay = (LinearLayout) findViewById(R.id.siganLayout);
         destLay = (LinearLayout) findViewById(R.id.destLayout);
         departLay = (LinearLayout) findViewById(R.id.departLayout);
-        fixLay = (LinearLayout) findViewById(R.id.fixLayout);
         destEdit = (EditText) findViewById(R.id.destEdit);
         scheMemo = (EditText) findViewById(R.id.scheMemoText);
         dText = (TextView) findViewById(R.id.dText);
@@ -121,15 +118,15 @@ public class RewriteSchedule extends AppCompatActivity {
                         giganLay.setVisibility(View.VISIBLE);
                         giganLay2.setVisibility(View.VISIBLE);
                         siganLay.setVisibility(View.VISIBLE);
+                        departLay.setVisibility(View.VISIBLE);
                         destLay.setVisibility(View.VISIBLE);
-                        fixLay.setVisibility(View.VISIBLE);
                         flag = 0;
                         break;
                     case R.id.radio1:
                         giganLay2.setVisibility(View.GONE);
                         siganLay.setVisibility(View.GONE);
+                        departLay.setVisibility(View.GONE);
                         destLay.setVisibility(View.GONE);
-                        fixLay.setVisibility(View.GONE);
                         dText.setVisibility(View.GONE);
                         flag = 1;
                         break;
@@ -139,7 +136,6 @@ public class RewriteSchedule extends AppCompatActivity {
                         siganLay.setVisibility(View.GONE);
                         destLay.setVisibility(View.GONE);
                         departLay.setVisibility(View.GONE);
-                        fixLay.setVisibility(View.GONE);
                         flag = 2;
                         break;
                 }
@@ -412,10 +408,7 @@ public class RewriteSchedule extends AppCompatActivity {
                     String key = yEText + "-" + mEText + "-" + dEText;  //해쉬 Key
                     Log.d("KeyValue", key);
                     String endDate = key;
-                    if (repeatChk.isChecked()) {
-                        fix = "true";
-                    } else
-                        fix = "false";
+
                     String destination = destEdit.getText().toString();
                     String memo = scheMemo.getText().toString();
 

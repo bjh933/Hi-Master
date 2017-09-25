@@ -200,29 +200,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/fixLayout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:id="@+id/scheduleCountText"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="고정 여부 : "
-            android:textSize="20dp" />
-
-        <CheckBox
-            android:id="@+id/repeatCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="7dp"></CheckBox>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/departLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp">

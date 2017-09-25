@@ -15,9 +15,11 @@ import android.widget.TextView;
 
 import com.example.a1.himaster.DetailSchedule;
 import com.example.a1.himaster.MakeSchedule;
+import com.example.a1.himaster.PopUp.Popup_deletechk;
 import com.example.a1.himaster.R;
 import com.example.a1.himaster.RewriteSchedule;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -40,7 +42,8 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     String dTitle, dDate, dDest, dTime;
     //ImageView delBtn, rewriteBtn;
     String urlDel = "http://192.168.0.12:8080/deleteschedule";
-
+    int delFlag = 0;
+    public static final int REQUEST_CODE = 1001;
 
     String userId = "";
     String title = "";
@@ -60,6 +63,8 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     String dest_subway_lat = "";
     String dest_subway_lon = "";
     String memo = "";
+
+    String str = "";
 
     //public static final int REQUEST_CODE = 1101;
     public NoticeAdapter(Context context, ArrayList<HashMap<String, String>> scheduleList, Activity mActivity) {
@@ -122,8 +127,29 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         holder.delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("del","clicked");
-            }
+                final int pos = holder.getAdapterPosition();
+                HashMap<String, String> noticeItem = scheduleList.get(pos);
+
+                JSONObject jsonOb = null;
+                jsonOb = new JSONObject();
+                try {
+                    jsonOb.put("userId", noticeItem.get("userId"));
+                    jsonOb.put("title", noticeItem.get("title"));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                str = jsonOb.toString();
+
+                Log.d("deleteStr", str);
+                //DeleteDataJSON g = new DeleteDataJSON();
+               // g.execute(urlDel, str);
+                Intent intent = new Intent(context, Popup_deletechk.class);
+                intent.putExtra("delFlag", "1");
+                intent.putExtra("delStr", str);
+                context.startActivity(intent);
+                }
+
         });
 
     }
@@ -206,51 +232,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
             v.getContext().startActivity(intent);
             mActivity.overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
         }
-
-
     }
 
-    class DeleteDataJSON extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            //JSON 받아온다.
-            String uri = params[0];
-            String str = params[1];
-            Log.d("url", uri);
 
-            try {
-                URL url = new URL(uri);
-
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setDoInput(true);
-                con.setDoOutput(true);  // Enable writing
-                con.setRequestMethod("DELETE");
-                con.setRequestProperty("Content-type", "application/json");
-                con.setConnectTimeout(5000);
-                Log.d("DeleteContents", str);
-
-                byte[] outputInBytes = params[1].getBytes("UTF-8");
-                OutputStream os = con.getOutputStream();
-                os.write( outputInBytes );
-                os.flush();
-                os.close();
-
-                con.connect();
-
-                String response = String.valueOf(con.getResponseCode());
-                Log.d("DeleteCode", response);
-                Log.d("DeleteResult", "success");
-                return null;
-            } catch (Exception e) {
-                Log.d("DeleteResult", "fail");
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String myJSON) {
-            //Log.d("my", myJSON);
-        }
-
-    }
 }

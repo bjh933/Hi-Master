@@ -124,9 +124,6 @@ public class FirstFragment extends Fragment {
 
     }
 
-
-
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -159,6 +156,7 @@ public class FirstFragment extends Fragment {
                     Log.d("ssssss", String.valueOf(sb));
                     return sb.toString().trim();
                 }catch (Exception e) {
+                    Log.d("nonono", "null");
                     return null;
                 }
             }
