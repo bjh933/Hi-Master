@@ -41,12 +41,14 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     ArrayList<HashMap<String, String>> scheduleList; //일정 정보 담겨있음
     String dTitle, dDate, dDest, dTime;
     //ImageView delBtn, rewriteBtn;
-    String urlDel = "http://192.168.0.12:8080/deleteschedule";
+    //String urlDel = "http://192.168.0.12:8080/deleteschedule";
+    String urlDel = "http://192.168.39.252:8080/deleteschedule";
     int delFlag = 0;
     public static final int REQUEST_CODE = 1001;
 
     String userId = "";
     String title = "";
+    String subTitle = "";
     String date = "";
     String endDate = "";
     String startTime = "";
@@ -101,6 +103,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
                 Intent intent = new Intent(v.getContext(), RewriteSchedule.class);
                 intent.putExtra("USERID", noticeItem.get("userId"));
                 intent.putExtra("TITLE", noticeItem.get("title"));
+                intent.putExtra("SUBTITLE", noticeItem.get("subTitle"));
                 intent.putExtra("DATE", noticeItem.get("startDate"));
                 intent.putExtra("ENDDATE", noticeItem.get("endDate"));
                 intent.putExtra("STARTTIME", noticeItem.get("startTime"));
@@ -143,7 +146,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
 
                 Log.d("deleteStr", str);
                 //DeleteDataJSON g = new DeleteDataJSON();
-               // g.execute(urlDel, str);
+                //g.execute(urlDel, str);
                 Intent intent = new Intent(context, Popup_deletechk.class);
                 intent.putExtra("delFlag", "1");
                 intent.putExtra("delStr", str);
@@ -189,6 +192,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
             HashMap<String, String> noticeItem = scheduleList.get(pos);
             userId = noticeItem.get("userId");
             title = noticeItem.get("title");
+            subTitle = noticeItem.get("subTitle");
             date = noticeItem.get("startDate");
             endDate = noticeItem.get("endDate");
             startTime = noticeItem.get("startTime");

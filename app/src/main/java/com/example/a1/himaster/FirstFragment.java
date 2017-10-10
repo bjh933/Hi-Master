@@ -67,8 +67,11 @@ public class FirstFragment extends Fragment {
         SharedPreferences saveInfo = this.getActivity().getSharedPreferences("loginFlag", MODE_PRIVATE);
         final String userId = saveInfo.getString("USERID", "");   //  userId 가져옴
 
-        url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-        //url = "http://223.195.23.201:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://223.195.15.173:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://58.233.244.25:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        url = "http://192.168.39.252:8080/home?userid="+userId;
+        //url = "http://223.195.31.217:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://192.168.21.129:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         scheduleList = new ArrayList<HashMap<String, String>>();
         eventList = new ArrayList<HashMap<String, String>>();
@@ -181,6 +184,7 @@ public class FirstFragment extends Fragment {
                 //JSON에서 각각의 요소를 뽑아옴
                 JSONObject c = posts.getJSONObject(i);
                 String title = c.getString(TAG_TITLE);
+                String subTitle = c.getString("subTitle");
                 String date = c.getString(TAG_DATE);
                 String endDate = c.getString("endDate");
                 String departure = c.getString("departure");
@@ -217,12 +221,12 @@ public class FirstFragment extends Fragment {
                 if(title.length() > 16 ) {
                     title = title.substring(0,16) + "..."; //18자 자르고 ... 붙이기
                 }
-                Log.d("title", title);
-                Log.d("destination", dest);
+
                 //HashMap에 붙이기
                 HashMap<String,String> posts = new HashMap<String, String>();
                 posts.put("userId", userId);
                 posts.put(TAG_TITLE,title);
+                posts.put("subTitle",subTitle);
                 posts.put(TAG_DATE,conDate);
                 posts.put("endDate",econDate);
                 posts.put("departure",departure);
@@ -268,10 +272,10 @@ public class FirstFragment extends Fragment {
                 String pattern = "M월 d일";
                 SimpleDateFormat formatter = new SimpleDateFormat(pattern);
                 Date cDate = Date.valueOf(date);
-                String conDate = (String)formatter.format(cDate);
+                String startDate = (String)formatter.format(cDate);
 
                 Date ecDate = Date.valueOf(eDate);
-                String econDate = (String)formatter.format(ecDate);
+                String endDate = (String)formatter.format(ecDate);
 
                 if(date.length() > 50 ) {
                     date = date.substring(0,50) + "..."; //50자 자르고 ... 붙이기
@@ -284,8 +288,8 @@ public class FirstFragment extends Fragment {
                 HashMap<String,String> ePosts = new HashMap<String, String>();
                 ePosts.put("userId", userId);
                 ePosts.put(TAG_TITLE,title);
-                ePosts.put(TAG_DATE,conDate);
-                ePosts.put(TAG_DATE,econDate);
+                ePosts.put(TAG_DATE,startDate);
+                ePosts.put(TAG_DATE,endDate);
                 ePosts.put("memo",memo);
 
                 //ArrayList에 HashMap 붙이기
@@ -304,13 +308,13 @@ public class FirstFragment extends Fragment {
                 //JSON에서 각각의 요소를 뽑아옴
                 JSONObject c = tPosts.getJSONObject(i);
                 String title = c.getString(TAG_TITLE);
-                String dueDate = c.getString("dueDate");
+                String conDate = c.getString("dueDate");
                 String memo = c.getString("memo");
                 String pattern = "yyyy년 M월 d일";
 
                 SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-                Date cDate = Date.valueOf(dueDate);
-                String conDate = (String)formatter.format(cDate);
+                Date cDate = Date.valueOf(conDate);
+                String dueDate = (String)formatter.format(cDate);
 
                 if(title.length() > 16 ) {
                     title = title.substring(0,16) + "..."; //18자 자르고 ... 붙이기
@@ -321,7 +325,7 @@ public class FirstFragment extends Fragment {
                 tPosts.put("userId", userId);
                 tPosts.put(TAG_TITLE,title);
                 //tPosts.put("dueDate", dueDate);
-                tPosts.put("conDate", conDate);
+                tPosts.put("conDate", dueDate);
                 tPosts.put("memo", memo);
 
                 //ArrayList에 HashMap 붙이기

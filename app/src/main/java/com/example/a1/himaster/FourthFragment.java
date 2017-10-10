@@ -83,8 +83,11 @@ public class FourthFragment extends Fragment {
         eventList = new ArrayList<HashMap<String, String>>();
         todoList = new ArrayList<HashMap<String, String>>();
         ht = new Hashtable<String, ArrayList>();
-        url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-        //url = "http://223.195.23.201:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        url = "http://192.168.39.252:8080/home?userid="+userId;
+        //url = "http://223.195.31.217:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://223.195.8.171:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://58.233.244.25:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         calendarView = (OneCalendarView)view.findViewById(R.id.oneCalendar);
         addBtn = (Button)view.findViewById(R.id.addBtn);
 

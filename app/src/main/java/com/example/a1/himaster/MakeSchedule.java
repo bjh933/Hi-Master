@@ -43,9 +43,16 @@ public class MakeSchedule extends AppCompatActivity {
     Spinner spinner1, spinner2, spinner3, spinner4, spinner5, spinner6, spinner7, spinner8,
             spinner9, spinner10;
     ArrayAdapter<CharSequence> adapter;
-    String url = "http://192.168.0.12:8080/saveschedule";
-    //String url = "http://223.195.28.195:8080/saveschedule";
+    //String url = "http://192.168.0.12:8080/saveschedule";
+    //String url2 = "http://192.168.0.12:8080/savetodo";
+    //String url3 = "http://192.168.0.12:8080/saveevent";
+
+    String url = "http://192.168.39.252:8080/saveschedule";
+    String url2 = "http://192.168.39.252:8080/savetodo";
+    String url3 = "http://192.168.39.252:8080/saveevent";
+    //String url = "http://223.195.8.171:8080/saveschedule";
     //String url = "http://192.168.21.127:8080/saveschedule";
+    //String url = "http://58.233.244.25:8080/saveschedule";
     String str="";
     String fix = "false";
     String iDestination = "";
@@ -348,6 +355,7 @@ public class MakeSchedule extends AppCompatActivity {
                         try {
                             jsonOb.put("userId", userId);
                             jsonOb.put("title", doTitle);
+                            jsonOb.put("subTitle", doTitle);
                             jsonOb.put("startDate", startDate);
                             jsonOb.put("endDate", endDate);
                             jsonOb.put("startTime", startTime);
@@ -367,7 +375,6 @@ public class MakeSchedule extends AppCompatActivity {
                             jsonOb.put("dest_subway_lon", destSubwayLon);
 
                             jsonOb.put("memo", memo);
-                            jsonOb.put("fix", fix);
 
                             Log.d("jsonSchedule", jsonOb.toString());
                         } catch (JSONException e) {
@@ -382,7 +389,6 @@ public class MakeSchedule extends AppCompatActivity {
                             jsonOb.put("title", doTitle);
                             jsonOb.put("dueDate", dueDate);
                             jsonOb.put("memo", memo);
-                            jsonOb.put("fix", fix);
                             destEdit.setText("");
 
                             Log.d("jsonTodo", jsonOb.toString());
@@ -411,10 +417,16 @@ public class MakeSchedule extends AppCompatActivity {
 
                     if (doTitle.length() != 0) {
                         PutDataJSON g = new PutDataJSON();
-                        g.execute(url, str);
+                        if(flag == 0)
+                            g.execute(url, str);
+                        else if(flag == 1)
+                            g.execute(url2, str);
+                        else if(flag == 2)
+                            g.execute(url3, str);
                         setResult(RESULT_OK, intent);
                         overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                         finish();
+
                     } else {
                         setResult(RESULT_CANCELED, intent);
                         finish();

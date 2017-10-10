@@ -42,11 +42,11 @@ public class RewriteSchedule extends AppCompatActivity {
     Spinner spinner1, spinner2, spinner3, spinner4, spinner5, spinner6, spinner7, spinner8,
             spinner9, spinner10;
     ArrayAdapter<CharSequence> adapter;
-    String url = "http://192.168.0.12:8080/saveschedule";
-    //String url = "http://223.195.28.195:8080/saveschedule";
-    //String url = "http://192.168.21.127:8080/saveschedule";
-    String urlPost = "http://192.168.0.12:8080/postschedule";
 
+    //String urlPost = "http://192.168.0.12:8080/postschedule";
+    String urlPost = "http://223.195.15.173:8080/postschedule";
+
+    String subTitle = "";
     String str="";
     String fix = "false";
     String iDestination = "";
@@ -196,6 +196,7 @@ public class RewriteSchedule extends AppCompatActivity {
 
         //String userId = reData.getExtras().getString("USERID");
         String title = reData.getExtras().getString("TITLE");
+        subTitle = reData.getExtras().getString("SUBTITLE");
         String startDate = reData.getExtras().getString("DATE");
         String endDate = reData.getExtras().getString("ENDDATE");
         String startTime = reData.getExtras().getString("STARTTIME");
@@ -438,6 +439,7 @@ public class RewriteSchedule extends AppCompatActivity {
                         try {
                             jsonOb.put("userId", userId);
                             jsonOb.put("title", doTitle);
+                            jsonOb.put("subTitle", subTitle);
                             jsonOb.put("startDate", startDate);
                             jsonOb.put("endDate", endDate);
                             jsonOb.put("startTime", startTime);
@@ -501,7 +503,7 @@ public class RewriteSchedule extends AppCompatActivity {
 
                     if (doTitle.length() != 0) {
                         PostDataJSON g = new PostDataJSON();
-                        g.execute(url, str);
+                        g.execute(urlPost, str);
                         setResult(RESULT_OK, intent);
                         overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                         finish();

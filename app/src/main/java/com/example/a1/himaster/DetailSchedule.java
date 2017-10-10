@@ -54,7 +54,7 @@ public class DetailSchedule extends AppCompatActivity {
     String dTitle, dDate, dTime, dDest = "";
     ImageView trptImg, weatherIv;
     String serviceKey = "Zfm%2Fjv9CdbeGPRRkBK3wjUOpqFhc5gONSyZbz0P4p13fH1s0CHO25CzN8Sf8VNPrjjfhIhdAh1SQagI6bQeTkw%3D%3D";
-    String subwayKey = "4e4b704a51646a673733724c474d6e";
+    String subwayKey = "50496e7a64646a673235696b79684b";
     String walkingUrl = "";
     LinearLayout rvLinear;
 
@@ -91,7 +91,7 @@ public class DetailSchedule extends AppCompatActivity {
     String busTotalTime = "";
 
     String departureSt = "쌍문역 4번출구";  //  출발역 명
-    String destinationSt = "어린이대공원역 7번출구";    // 도착역 명명
+    String destinationSt = "어린이대공원역 7번출구";    // 도착역 명
     ArrayList<Bus> busList;
     BusRouteAdapter adapter;
     int walkingTime = 0;
@@ -225,6 +225,7 @@ public class DetailSchedule extends AppCompatActivity {
 
                     subwayUrl = "http://swopenapi.seoul.go.kr/api/subway/" +
                             subwayKey + "/json/shortestRoute/0/5/"+ departureSt + "/" + destinationSt;
+                    Log.d("subway",departureSt);
 
                     getSubwayNumData(subwayNumUrl);
                     getSubwayStData(subwayUrl); //  출발역부터 도착역까지 걸리는 시간
