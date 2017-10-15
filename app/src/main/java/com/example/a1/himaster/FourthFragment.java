@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.darwindeveloper.onecalendar.clases.Day;
@@ -47,7 +48,7 @@ public class FourthFragment extends Fragment {
     JSONArray posts = null;
     JSONArray ePosts = null;
     JSONArray tPosts = null;
-    Button addBtn;
+    ImageView addBtn;
     Button rewriteBtn, deleteBtn;
     ArrayList<HashMap<String,String>> scheduleList, eventList, todoList, calList;
     int thisPos, exPos;
@@ -83,13 +84,13 @@ public class FourthFragment extends Fragment {
         eventList = new ArrayList<HashMap<String, String>>();
         todoList = new ArrayList<HashMap<String, String>>();
         ht = new Hashtable<String, ArrayList>();
-        //url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-        url = "http://192.168.39.252:8080/home?userid="+userId;
+        url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://192.168.39.252:8080/home?userid="+userId;
         //url = "http://223.195.31.217:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://223.195.8.171:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://58.233.244.25:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         calendarView = (OneCalendarView)view.findViewById(R.id.oneCalendar);
-        addBtn = (Button)view.findViewById(R.id.addBtn);
+        addBtn = (ImageView)view.findViewById(R.id.addBtn);
 
         addBtn.setVisibility(View.GONE);
         listView = (ListView) view. findViewById(R.id.listview);

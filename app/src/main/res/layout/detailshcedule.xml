@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="50dp">
+            android:layout_marginLeft="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -127,19 +127,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="50dp"
-        android:layout_marginLeft="35dp">
+        android:layout_marginLeft="15dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="교통정보 "
+            android:text="교통 정보 "
             android:textSize="15dp"
             android:textColor="#000000"/>
 
         <Spinner
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="160dp"
+            android:layout_marginLeft="170dp"
             android:id="@+id/transportSpinner"
             android:entries="@array/transportSpinner"
             ></Spinner>
@@ -150,7 +150,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="87dp">
+        android:layout_marginLeft="91dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -164,7 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="승차지"
-            android:layout_marginLeft="43dp"
+            android:layout_marginLeft="47dp"
             android:textSize="10dp"
             android:textStyle="bold"
             android:textColor="#000000"/>
@@ -173,7 +173,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="하차지"
-            android:layout_marginLeft="72dp"
+            android:layout_marginLeft="75dp"
             android:textSize="10dp"
             android:textStyle="bold"
             android:textColor="#000000"/>

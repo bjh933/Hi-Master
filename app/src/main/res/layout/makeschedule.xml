@@ -225,7 +225,7 @@
 
         <Button
             android:id="@+id/departBtn"
-            android:layout_width="30dp"
+            android:layout_width="20dp"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/j_maps"/>
@@ -266,7 +266,7 @@
 
         <Button
             android:id="@+id/destBtn"
-            android:layout_width="30dp"
+            android:layout_width="20dp"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/j_maps"/>
@@ -299,6 +299,7 @@
 
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
@@ -308,16 +309,31 @@
 
         <Button
             android:id="@+id/cancelBtn"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="취소"/>
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="취소"
+            android:textSize="20dp"
+            android:textColor="#AA0000"
+            android:background="#00ff0000" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textColor="#AA0000"
+            android:gravity="center"
+            android:layout_marginLeft="100dp"
+            android:textSize="20dp"
+            android:text="완료"
+            />
 
         <Button
             android:id="@+id/okBtn"
-            android:layout_marginLeft="80dp"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="완료"/>
+            android:gravity="center"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="2dp"
+            android:background="@drawable/complebtn"/>
 
         </LinearLayout>
 </LinearLayout>

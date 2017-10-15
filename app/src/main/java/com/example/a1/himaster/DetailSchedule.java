@@ -54,7 +54,7 @@ public class DetailSchedule extends AppCompatActivity {
     String dTitle, dDate, dTime, dDest = "";
     ImageView trptImg, weatherIv;
     String serviceKey = "Zfm%2Fjv9CdbeGPRRkBK3wjUOpqFhc5gONSyZbz0P4p13fH1s0CHO25CzN8Sf8VNPrjjfhIhdAh1SQagI6bQeTkw%3D%3D";
-    String subwayKey = "50496e7a64646a673235696b79684b";
+    String subwayKey = "724a744b45646a6738394863715179";
     String walkingUrl = "";
     LinearLayout rvLinear;
 

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#E8E7E7">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,11 +20,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/popTitle"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:layout_gravity="center"
-                android:text="자기 전 팝업"
+                android:text="알림"
                 android:layout_margin="10dp"
-                android:textColor="#000000"
+                android:textColor="#AA0000"
                 />
             </LinearLayout>
     <TextView
@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/popText"
         android:layout_gravity="center"
+        android:textColor="#7C7C7C"
         android:text="      오늘 하루는 어땠나요? 자기 전에\n\n오늘을 되돌아 보고 내일 스케줄을 확인하세요!"
         />
 
@@ -46,7 +47,7 @@
         android:id="@+id/popCloseBtn"
         android:layout_gravity="center"
         android:text="닫기"
-        android:background="#FFFFFF"
+        android:background="#E8E7E7"
         />
 
     <Button
@@ -56,7 +57,7 @@
         android:id="@+id/popBtn"
         android:layout_gravity="center"
         android:text="확인하러 가기"
-        android:background="#FFFFFF"
+        android:background="#E8E7E7"
         />
     </LinearLayout>
     </LinearLayout>
