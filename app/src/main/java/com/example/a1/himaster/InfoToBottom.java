@@ -42,7 +42,7 @@ public class InfoToBottom extends AppCompatActivity {
     String departSubwayName = "";
     String departSubwayLat = "";
     String departSubwayLon = "";
-    String url = "http://223.195.28.195:8080/saveinfo";
+    String url = "http://223.195.9.198:8080/saveinfo";
     String str="";
 
     @Override

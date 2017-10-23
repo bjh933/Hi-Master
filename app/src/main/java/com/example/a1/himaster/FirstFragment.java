@@ -70,7 +70,7 @@ public class FirstFragment extends Fragment {
         url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://223.195.15.173:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://58.233.244.25:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-        //url = "http://192.168.0.12:8080/home?userid="+userId;
+        //url = "http://223.195.9.198:8080/home?userid="+userId;
         //url = "http://223.195.31.217:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://192.168.21.129:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         scheduleList = new ArrayList<HashMap<String, String>>();

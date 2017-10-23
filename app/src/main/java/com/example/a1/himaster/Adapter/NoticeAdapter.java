@@ -41,8 +41,8 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     ArrayList<HashMap<String, String>> scheduleList; //일정 정보 담겨있음
     String dTitle, dDate, dDest, dTime;
     //ImageView delBtn, rewriteBtn;
-    //String urlDel = "http://192.168.0.12:8080/deleteschedule";
-    String urlDel = "http://192.168.39.252:8080/deleteschedule";
+    String urlDel = "http://192.168.0.12:8080/deleteschedule";
+    //String urlDel = "http://223.195.9.198:8080/deleteschedule";
     int delFlag = 0;
     public static final int REQUEST_CODE = 1001;
 

@@ -33,7 +33,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     Context context;
     ArrayList<HashMap<String, String>> todoList; //일정 정보 담겨있음
     String str = "";
-    String urlDel = "http://192.168.39.252:8080/deletetodo";
+    String urlDel = "223.195.9.198:8080/deletetodo";
 
     public TodoAdapter(Context context, ArrayList<HashMap<String, String>> todoList) {
         this.context = context;
