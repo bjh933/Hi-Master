@@ -41,6 +41,14 @@
                 android:layout_marginLeft="25dp"
                 />
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/refreshbtn"
+                android:src="@drawable/refresh_icon"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="180dp"/>
+
         </LinearLayout>
 
     <LinearLayout

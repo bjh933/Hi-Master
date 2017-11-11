@@ -196,7 +196,23 @@ public class ThirdFragment extends Fragment {
             {
                 String str = msg.getData().getString("weatherToday");    /// 번들에 들어있는 값 꺼냄
                 Log.d("weathertoday", str);
-                String[] weatherStr = str.split("-");
+                StringBuilder nStr = new StringBuilder(str);
+
+                for(int i=0;i<str.length()-1;i++)
+                {
+                    if(str.charAt(i) == '-')
+                    {
+                        if(str.charAt(i+1) == '-')
+                        {
+                            nStr.setCharAt(i, '=');
+                            i++;
+                        }
+                        else
+                            nStr.setCharAt(i, '=');
+                    }
+                }
+                str = nStr.toString();
+                weatherStr = str.split("=");
                 skyTv.setText(weatherStr[0]);
                 setSky(weatherStr[0], weatherIv);
                 String tMax = weatherStr[1].replace(".00", "");
@@ -218,7 +234,23 @@ public class ThirdFragment extends Fragment {
             {
                 str = msg.getData().getString("weather");    /// 번들에 들어있는 값 꺼냄
                 Log.d("weather3days", str);
-                weatherStr = str.split("-");
+                StringBuilder nStr = new StringBuilder(str);
+
+                for(int i=0;i<str.length()-1;i++)
+                {
+                    if(str.charAt(i) == '-')
+                    {
+                        if(str.charAt(i+1) == '-')
+                        {
+                            nStr.setCharAt(i, '=');
+                            i++;
+                        }
+                        else
+                            nStr.setCharAt(i, '=');
+                    }
+                }
+                str = nStr.toString();
+                weatherStr = str.split("=");
                 setSky(weatherStr[0], twoIv);
                 String tMax = weatherStr[1].replace(".00", "");
                 String tMin = weatherStr[2].replace(".00", "");
@@ -235,7 +267,24 @@ public class ThirdFragment extends Fragment {
             {
                 str = msg.getData().getString("WeekWeather");    /// 번들에 들어있는 값 꺼냄
                 Log.d("weather7days", str);
-                weatherStr = str.split("-");
+                StringBuilder nStr = new StringBuilder(str);
+
+                for(int i=0;i<str.length()-1;i++)
+                {
+                    if(str.charAt(i) == '-')
+                    {
+                        if(str.charAt(i+1) == '-')
+                        {
+                            nStr.setCharAt(i, '=');
+                            i++;
+                        }
+                        else
+                            nStr.setCharAt(i, '=');
+                    }
+                }
+                str = nStr.toString();
+                weatherStr = str.split("=");
+                Log.d("Fixweather7days", str);
                 setSky(weatherStr[0], threeIv);
                 threeHighTv.setText(weatherStr[1]);
                 threeLowTv.setText(weatherStr[2]);

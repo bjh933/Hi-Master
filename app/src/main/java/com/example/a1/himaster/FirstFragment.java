@@ -57,7 +57,10 @@ public class FirstFragment extends Fragment {
     private RecyclerView rv1, rv2, rv3;
     private LinearLayoutManager mLinearLayoutManager1, mLinearLayoutManager2, mLinearLayoutManager3;
     TextView tv1, tv2, tv3, dateTv;
-    ImageView optMenu;
+    ImageView optMenu, refreshBtn;
+    NoticeAdapter reNoadt;
+    EventAdapter reEvadt;
+    TodoAdapter reToadt;
 
 
     @Override
@@ -67,7 +70,7 @@ public class FirstFragment extends Fragment {
         SharedPreferences saveInfo = this.getActivity().getSharedPreferences("loginFlag", MODE_PRIVATE);
         final String userId = saveInfo.getString("USERID", "");   //  userId 가져옴
 
-        url = "http://192.168.0.12:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        url = "http://192.168.0.6:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://223.195.15.173:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://58.233.244.25:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://223.195.9.198:8080/home?userid="+userId;
@@ -78,6 +81,7 @@ public class FirstFragment extends Fragment {
         todoList = new ArrayList<HashMap<String, String>>();
 
         dateTv = (TextView)view.findViewById(R.id.dateTv);
+        refreshBtn = (ImageView)view.findViewById(R.id.refreshbtn);
 
         mLinearLayoutManager1 = new LinearLayoutManager(getActivity());
         mLinearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
@@ -109,6 +113,18 @@ public class FirstFragment extends Fragment {
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 //finish();
+            }
+
+        });
+
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scheduleList.clear();
+                eventList.clear();
+                todoList.clear();
+
+                getData(url);
             }
 
         });
@@ -249,7 +265,7 @@ public class FirstFragment extends Fragment {
             }
             //카드 리스트뷰 어댑터에 연결
             NoticeAdapter adapter = new NoticeAdapter(getActivity(), scheduleList, getActivity());
-
+            reNoadt = adapter;
             rv1.setAdapter(adapter);
             adapter.notifyDataSetChanged();
 
@@ -297,7 +313,7 @@ public class FirstFragment extends Fragment {
             }
             //카드 리스트뷰 어댑터에 연결
             EventAdapter adapter2 = new EventAdapter(getActivity(), eventList);
-
+            reEvadt = adapter2;
             rv2.setAdapter(adapter2);
             adapter2.notifyDataSetChanged();
 
@@ -333,7 +349,7 @@ public class FirstFragment extends Fragment {
             }
             //카드 리스트뷰 어댑터에 연결
             TodoAdapter adapter3 = new TodoAdapter(getActivity(), todoList);
-
+            reToadt = adapter3;
             rv3.setAdapter(adapter3);
             adapter3.notifyDataSetChanged();
 
