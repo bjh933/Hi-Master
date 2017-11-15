@@ -31,7 +31,7 @@ import java.util.HashMap;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
     Context context;
     ArrayList<HashMap<String, String>> eventList; //일정 정보 담겨있음
-    String urlDel = "223.195.9.198:8080/deleteevent";
+    String urlDel = "http://192.168.21.213:8080/deleteevent";
     String str = "";
 
     public EventAdapter(Context context, ArrayList<HashMap<String, String>> eventList) {

@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.example.a1.himaster.Adapter.EventAdapter;
 import com.example.a1.himaster.Adapter.NoticeAdapter;
 import com.example.a1.himaster.Adapter.TodoAdapter;
@@ -73,7 +73,7 @@ public class FirstFragment extends Fragment {
         url = "http://192.168.0.6:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://223.195.15.173:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://58.233.244.25:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-        //url = "http://223.195.9.198:8080/home?userid="+userId;
+        //url = "http://192.168.21.213:8080/home?userid="+userId;
         //url = "http://223.195.31.217:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://192.168.21.129:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         scheduleList = new ArrayList<HashMap<String, String>>();
@@ -134,6 +134,13 @@ public class FirstFragment extends Fragment {
         SimpleDateFormat toDate = new SimpleDateFormat("MMM . dd / EEE", Locale.ENGLISH);
         String todayDate = toDate.format(date);
         dateTv.setText(todayDate);
+
+        //FirebaseInstanceId.getInstance().getToken();
+
+        String token = FirebaseInstanceId.getInstance().getToken();
+        if (token!=null) {
+            Log.d("FCM_Token", token);
+        }
 
         getData(url);
 

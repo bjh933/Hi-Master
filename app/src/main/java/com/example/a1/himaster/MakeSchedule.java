@@ -47,9 +47,9 @@ public class MakeSchedule extends AppCompatActivity {
     //String url2 = "http://192.168.0.12:8080/savetodo";
     //String url3 = "http://192.168.0.12:8080/saveevent";
 
-    String url = "http://223.195.9.198:8080/saveschedule";
-    String url2 = "http://223.195.9.198:8080/savetodo";
-    String url3 = "http://223.195.9.198:8080/saveevent";
+    String url = "http://192.168.21.213:8080/saveschedule";
+    String url2 = "http://192.168.21.213:8080/savetodo";
+    String url3 = "http://192.168.21.213:8080/saveevent";
     //String url = "http://223.195.8.171:8080/saveschedule";
     //String url = "http://192.168.21.127:8080/saveschedule";
     //String url = "http://58.233.244.25:8080/saveschedule";
