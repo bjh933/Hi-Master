@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.a1.himaster.PopUp.Popup_NetworkExcept;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.example.a1.himaster.Adapter.EventAdapter;
 import com.example.a1.himaster.Adapter.NoticeAdapter;
@@ -62,7 +64,6 @@ public class FirstFragment extends Fragment {
     EventAdapter reEvadt;
     TodoAdapter reToadt;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -70,10 +71,11 @@ public class FirstFragment extends Fragment {
         SharedPreferences saveInfo = this.getActivity().getSharedPreferences("loginFlag", MODE_PRIVATE);
         final String userId = saveInfo.getString("USERID", "");   //  userId 가져옴
 
-        url = "http://192.168.0.6:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://192.168.0.6:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://172.16.13.107:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-        //url = "http://58.233.244.25:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-        //url = "http://172.16.13.107:8080/home?userid="+userId;
+        //url = "http://10.10.44.218:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://10.10.20.73:8080/home?userid="+userId;
+        url = "http://192.168.0.6:8080/home?userid="+userId;
         //url = "http://223.195.31.217:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://192.168.21.129:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         scheduleList = new ArrayList<HashMap<String, String>>();
@@ -167,11 +169,11 @@ public class FirstFragment extends Fragment {
                 //JSON 받아온다.
                 String uri = params[0];
                 BufferedReader br = null;
+                StringBuilder sb = new StringBuilder();
                 try {
                     URL url = new URL(uri);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                    StringBuilder sb = new StringBuilder();
+                    conn.setConnectTimeout(8000);
 
                     br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -180,11 +182,14 @@ public class FirstFragment extends Fragment {
                         sb.append(json+"\n");
                     }
                     Log.d("ssssss", String.valueOf(sb));
-                    return sb.toString().trim();
+
                 }catch (Exception e) {
                     Log.d("nonono", "null");
-                    return null;
+                    e.printStackTrace();
+                    HandleNetworkError(e);
+                    //return null;
                 }
+                return sb.toString().trim();
             }
             @Override
             protected void onPostExecute(String myJSON) {
@@ -194,6 +199,12 @@ public class FirstFragment extends Fragment {
         }
         GetDataJSON g = new GetDataJSON();
         g.execute(url);
+    }
+
+    void HandleNetworkError(Exception e) {
+        // Do whatever with the exception message, eg display it in a dialog.
+        Intent intent = new Intent(getActivity(), Popup_NetworkExcept.class);
+        startActivity(intent);
     }
 
 

@@ -21,6 +21,8 @@ import com.example.a1.himaster.Adapter.EventAdapter;
 import com.example.a1.himaster.Adapter.NoticeAdapter;
 import com.example.a1.himaster.Adapter.TodoAdapter;
 import com.example.a1.himaster.Adapter.ListItemAdapter;
+import com.example.a1.himaster.PopUp.Popup_NetworkExcept;
+import com.example.a1.himaster.PopUp.Popup_deletechk;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,8 +86,9 @@ public class FourthFragment extends Fragment {
         eventList = new ArrayList<HashMap<String, String>>();
         todoList = new ArrayList<HashMap<String, String>>();
         ht = new Hashtable<String, ArrayList>();
-        url = "http://192.168.0.6:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-        //url = "http://192.168.21.213:8080/home?userid="+userId;
+        //url = "http://192.168.0.6:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://10.10.44.218:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        url = "http://10.10.20.73:8080/home?userid="+userId;
         //url = "http://172.16.13.107:8080/home?userid="+userId;
         //url = "http://223.195.31.217:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://223.195.8.171:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
@@ -364,11 +367,11 @@ public class FourthFragment extends Fragment {
                 //JSON 받아온다.
                 String uri = params[0];
                 BufferedReader br = null;
+                StringBuilder sb = new StringBuilder();
                 try {
                     URL url = new URL(uri);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                    StringBuilder sb = new StringBuilder();
+                    conn.setConnectTimeout(8000);
 
                     br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -377,10 +380,14 @@ public class FourthFragment extends Fragment {
                         sb.append(json+"\n");
                     }
                     Log.d("ssssss", String.valueOf(sb));
-                    return sb.toString().trim();
+
                 }catch (Exception e) {
-                    return null;
+                    Log.d("nonono", "null");
+                    e.printStackTrace();
+                    HandleNetworkError(e);
+
                 }
+                return sb.toString().trim();
             }
             @Override
             protected void onPostExecute(String myJSON) {
@@ -392,6 +399,11 @@ public class FourthFragment extends Fragment {
         g.execute(url);
     }
 
+    void HandleNetworkError(Exception e) {
+        // Do whatever with the exception message, eg display it in a dialog.
+        Intent intent = new Intent(getActivity(), Popup_NetworkExcept.class);
+        startActivity(intent);
+    }
 
     public void makeList(String myJSON) {
         try {

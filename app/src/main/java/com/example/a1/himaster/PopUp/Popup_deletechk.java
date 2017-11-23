@@ -26,10 +26,10 @@ public class Popup_deletechk extends Activity {
     TextView tvPop;
     String delFlag = "";
     String str = "";
-    String urlsche = "http://172.16.13.107:8080/deleteschedule";
+    String urlsche = "http://10.10.20.73:8080/deleteschedule";
     //String urlsche = "http://223.195.31.217:8080/deleteschedule";
-    String urltodo = "http://172.16.13.107:8080/deletetodo";
-    String urlevent = "http://172.16.13.107:8080/deleteevent";
+    String urltodo = "http://10.10.20.73:8080:8080/deletetodo";
+    String urlevent = "http://10.10.20.73:8080:8080/deleteevent";
     //String urlevent = "http://192.168.0.12:8080/deleteevent";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

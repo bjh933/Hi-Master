@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -64,6 +65,7 @@
         <activity android:name=".SKPlanet.Tmap.AddressActivity"/>
         <activity android:name=".SKPlanet.Tmap.MapActivity"/>
         <activity android:name=".Popup" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".PopUp.Popup_NetworkExcept" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".PopUp.Popup_emailchk" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".PopUp.Popup_titlechk" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".PopUp.Popup_deletechk" android:theme="@android:style/Theme.Dialog"/>

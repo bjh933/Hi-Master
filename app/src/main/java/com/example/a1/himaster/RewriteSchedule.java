@@ -43,7 +43,7 @@ public class RewriteSchedule extends AppCompatActivity {
             spinner9, spinner10;
     ArrayAdapter<CharSequence> adapter;
 
-    String urlPost = "http://172.16.13.107:8080/postschedule";
+    String urlPost = "http://10.10.20.73:8080/postschedule";
     //String urlPost = "http://233.195.9.198/postschedule";
 
     String subTitle = "";
