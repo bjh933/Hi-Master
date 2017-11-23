@@ -46,10 +46,10 @@ public class MakeSchedule extends AppCompatActivity {
     //String url = "http://192.168.0.12:8080/saveschedule";
     //String url2 = "http://192.168.0.12:8080/savetodo";
     //String url3 = "http://192.168.0.12:8080/saveevent";
-
-    String url = "http://192.168.21.213:8080/saveschedule";
-    String url2 = "http://192.168.21.213:8080/savetodo";
-    String url3 = "http://192.168.21.213:8080/saveevent";
+    //url = "http://172.16.13.107:8080/home?userid="+userId;
+    String url = "http://172.16.13.107:8080/saveschedule";
+    String url2 = "http://172.16.13.107:8080/savetodo";
+    String url3 = "http://172.16.13.107:8080/saveevent";
     //String url = "http://223.195.8.171:8080/saveschedule";
     //String url = "http://192.168.21.127:8080/saveschedule";
     //String url = "http://58.233.244.25:8080/saveschedule";
@@ -387,7 +387,7 @@ public class MakeSchedule extends AppCompatActivity {
                         try {
                             jsonOb.put("userId", userId);
                             jsonOb.put("title", doTitle);
-                            jsonOb.put("dueDate", dueDate);
+                            jsonOb.put("dueDate", startDate);
                             jsonOb.put("memo", memo);
                             destEdit.setText("");
 

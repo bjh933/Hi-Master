@@ -48,7 +48,7 @@
 
         <ImageView
             android:id="@+id/addBtn"
-            android:src="@drawable/addsche"
+            android:src="@drawable/addscheclk"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginRight="15dp"/>

@@ -71,9 +71,9 @@ public class FirstFragment extends Fragment {
         final String userId = saveInfo.getString("USERID", "");   //  userId 가져옴
 
         url = "http://192.168.0.6:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-        //url = "http://223.195.15.173:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
+        //url = "http://172.16.13.107:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://58.233.244.25:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
-        //url = "http://192.168.21.213:8080/home?userid="+userId;
+        //url = "http://172.16.13.107:8080/home?userid="+userId;
         //url = "http://223.195.31.217:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         //url = "http://192.168.21.129:8080/home?userid="+userId+"&date=2017-08-16 20:20:20";
         scheduleList = new ArrayList<HashMap<String, String>>();
@@ -142,7 +142,7 @@ public class FirstFragment extends Fragment {
             Log.d("FCM_Token", token);
         }
 
-        getData(url);
+        //getData(url);
 
 
         return view;

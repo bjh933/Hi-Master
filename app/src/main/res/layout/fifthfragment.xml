@@ -61,7 +61,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/searchDepartTv"
                     android:text="  검색"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:textColor="@color/selector_textcolor"/>
 
         </LinearLayout>
 
@@ -92,7 +93,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/searchDestTv"
                     android:text="  검색"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:textColor="@color/selector_textcolor"/>
 
         </LinearLayout>
 

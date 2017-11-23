@@ -52,7 +52,7 @@
                 android:layout_width="20dp"
                 android:layout_height="35dp"
                 android:id="@+id/todoDelBtn"
-                android:src="@drawable/delete"/>
+                android:src="@drawable/delclk"/>
 
     </LinearLayout>
 </LinearLayout>
